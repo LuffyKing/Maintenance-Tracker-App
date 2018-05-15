@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster|Pacifico|Sedgwick+Ave+Display');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web');
+.ubuntu {
+  font-family: 'Ubuntu', sans-serif;
+}
+.lobster {
+  font-family: 'Lobster', cursive;
+}
+.pacifico {
+  font-family: 'Pacifico', cursive;
+}
+.sedgwick {
+  font-family: 'Sedgwick Ave Display', cursive;
+}
+html {
+  font-size: 10px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+}
+.Logo {
+  font-size: 2.5rem;
+  padding-left: 1rem;
+}
+a:link.Logo, #navbar li a, #footer li a {
+  text-decoration: none;
+}
+a {
+color:inherit;
+}
+
+
+.dark-primary-color    { background: #0288D1; }
+.default-primary-color { background: #03A9F4; }
+.light-primary-color   { background: #B3E5FC; }
+.text-primary-color    { color: #FFFFFF; }
+.accent-color          { background: #FFEB3B; }
+.primary-text-color    { color: #212121; }
+.secondary-text-color  { color: #757575; }
+.divider-color         { border-color: #BDBDBD; }
+.lb-text   { color: #B3E5FC; }
+.db-text{ color: #03A9F4;}
+.default-primary-color-btn{ background: #03A9F4; }
+.default-primary-color-btn:hover{ background: #0288D1; }
+.active-logo{ color: #0288D1;}
+#navbar{
+  display: flex;
+  flex-direction: row;
+}
+#navbar ul {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  font-size: 1.4rem;
+  justify-content: end;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width:100%
+}
+#navbar li {
+  margin-right: 1rem;
+}
+#footer ul {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  font-size: 1.4rem;
+  height: 4.45rem;
+  justify-content: space-around;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  width:100%;
+}
+
+body {
+  font-family: 'Titillium Web', sans-serif;
+}
