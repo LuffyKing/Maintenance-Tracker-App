@@ -1,0 +1,66 @@
+.request {
+  background: url('../media/images/service.jpeg') no-repeat center center fixed;
+  background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+}
+.request::after{
+  background-image: linear-gradient(to bottom right,#002f4b,#000000);
+  bottom: 0;
+  content: '';
+  left: 0;
+  opacity: .5;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: -9999;
+}
+
+
+
+@media (min-width:1024px) {
+  html{
+    font-size: 6.5px;
+  }
+  .form-control {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    padding: 2rem;
+  }
+  #submitRow{
+    display: flex;
+    justify-content: center;
+  }
+  input, select,textarea{
+    flex:2;
+  }
+  p{
+    flex:1;
+  }
+  .button{
+    width:100%;
+  }
+  #loginPanel2{
+      padding: 1rem;
+  }
+
+
+
+}
+@media (max-width:600px) {
+  #loginPanel2{
+      padding: 2rem;
+
+  }
+  h2{
+    text-align: center;
+  }
+  .form-control{
+    margin-bottom: 1%;
+    margin-top: 1%;
+  }
+}
