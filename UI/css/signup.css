@@ -31,9 +31,9 @@ input{
 }
 @media (min-width:1024px) {
   #loginPanel2 {
-    width:75%;
-    padding: 2rem;
     font-size: 1.5rem;
+    padding: 2rem;
+    width:75%;
     }
     .inputLabel{
       font-size: 2.25rem;
