@@ -3,10 +3,13 @@
   border-radius: 0.4rem;
   display: flex;
   flex-direction: column;
-  height: 75vh;
-  margin-top: 5rem;
   justify-content: center;
   width:300px;
+  opacity: 0.9;
+
+}
+html{
+  font-size: 9.5px;
 }
 .formSubmit {
   margin-right: 0;
@@ -14,15 +17,12 @@
 input{
   margin :0 0;
 }
-html{
-  font-size: 8.15px;
-}
+
 .inputLabel{
   font-size: 1.25rem;
 }
 @media (max-height:568px) {
   #loginPanel2{
-    margin-top: 7.5rem;
     height: 400px;
   }
   html{
@@ -31,11 +31,11 @@ html{
 }
 @media (min-width:1024px) {
   #loginPanel2 {
-    height: 100%;
     width:75%;
-    padding: 7rem;
+    padding: 2rem;
+    font-size: 1.5rem;
     }
     .inputLabel{
-      font-size: 1.75rem;
+      font-size: 2.25rem;
     }
 }
