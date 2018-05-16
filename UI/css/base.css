@@ -48,8 +48,14 @@ input {
   padding:0.75rem;
   margin: 1rem 0;
 }
-.inputLabel{
-  font-size: 1.5rem;
+.formInfo{
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.25rem;
+  text-align: center;
+}
+.inputLabel, .formInfo{
+  font-size: 1.25rem;
 }
 * {
   box-sizing: border-box;
@@ -63,7 +69,7 @@ input {
   padding-left: 1rem;
 }
 
-a:link.Logo, #navbar li a, #footer li a {
+a:link.Logo, #navbar li a, #footer li a, .formInfo a {
   text-decoration: none;
 }
 
@@ -152,7 +158,7 @@ label{
   background-color: #FFFFFF;
   color: #0288D1;
   cursor: pointer;
-  padding: 1.25rem;
+  padding: 0.5rem;
 }
 
 #footer ul {

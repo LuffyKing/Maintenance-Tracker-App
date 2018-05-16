@@ -1,13 +1,13 @@
 #loginPanel {
+align-items: center;
+border-radius: 0.4rem;
 display: flex;
 flex-direction: column;
-align-items: center;
+height: 400px;
 justify-content: center;
 width:300px;
-height: 300px;
-border-radius: 0.4rem;
-
 }
+
 main{
   height: 100%;
 }
@@ -15,21 +15,32 @@ main{
   margin: 1rem 0;
 }
 .formSubmit {
+margin-right: 1rem;
 margin-top: 2rem;
-float: right;
+
 }
-
-
+#submitRow{
+  display: flex;
+  justify-content: flex-end;
+}
+@media (max-height:568px) {
+  #loginPanel{
+    margin-top: 7.5rem;
+    height: 300px;
+    width:250px;
+  }
+  html{
+    font-size: 7.5px;
+  }
+}
 @media (min-width:1024px) {
   html {
     font-size: 12.5px;
   }
   #loginPanel {
-
-    width:75%;
-    height: 75%;
-
-
+    height: 85%;
+    width: 75%;
+    padding: 3rem;
     }
     form, .form-control{
       width:100%;
@@ -50,5 +61,8 @@ float: right;
     input{
       font-size: 1.25rem;
     }
+    .formSubmit {
+      margin-right: 0;
+  }
 
 }
