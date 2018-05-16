@@ -1,57 +1,139 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster|Pacifico|Sedgwick+Ave+Display');
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
 @import url('https://fonts.googleapis.com/css?family=Titillium+Web');
+
 .ubuntu {
   font-family: 'Ubuntu', sans-serif;
 }
+
 .lobster {
   font-family: 'Lobster', cursive;
 }
+
 .pacifico {
   font-family: 'Pacifico', cursive;
 }
+
 .sedgwick {
   font-family: 'Sedgwick Ave Display', cursive;
 }
+
 html {
   font-size: 10px;
 }
+.box-shadow-lighter{
+  -webkit-box-shadow: 0px -1px 10px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px -1px 10px 0px rgba(0,0,0,0.75);
+box-shadow: 0px -1px 10px 0px rgba(0,0,0,0.75);
+}
+.box-shadow{
+  -webkit-box-shadow: -2px 3px 13px -1px rgba(0,0,0,0.72);
+  -moz-box-shadow: -2px 3px 13px -1px rgba(0,0,0,0.72);
+  box-shadow: -2px 3px 13px -1px rgba(0,0,0,0.72);
+}
 
+.box-shadow-darker{
+  -webkit-box-shadow: 0px -1px 10px 6px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px -1px 10px 6px rgba(0,0,0,0.75);
+  box-shadow: 0px -1px 10px 6px rgba(0,0,0,0.75);
+}
+.box-shadow-much-darker{
+  -webkit-box-shadow: 0px -1px 10px 11px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px -1px 10px 11px rgba(0,0,0,0.75);
+box-shadow: 0px -1px 10px 11px rgba(0,0,0,0.75);
+}
+input {
+  border:none;
+  border-radius: 0.4rem;
+  padding:0.75rem;
+  margin: 1rem 0;
+}
+.formInfo{
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.25rem;
+  text-align: center;
+}
+.inputLabel, .formInfo{
+  font-size: 1.25rem;
+}
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 
 }
+
 .Logo {
   font-size: 2.5rem;
   padding-left: 1rem;
 }
-a:link.Logo, #navbar li a, #footer li a {
+
+a:link.Logo, #navbar li a, #footer li a, .formInfo a {
   text-decoration: none;
 }
+
 a {
 color:inherit;
 }
 
+.button{
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.75rem;
+  cursor: pointer;
+}
 
+.center-container{
+display: flex;
+align-items: center;
+justify-content: center;
+height: 75vh;
+}
+
+label{
+
+}
 .dark-primary-color    { background: #0288D1; }
+
 .default-primary-color { background: #03A9F4; }
+
 .light-primary-color   { background: #B3E5FC; }
+
 .text-primary-color    { color: #FFFFFF; }
+
 .accent-color          { background: #FFEB3B; }
+
 .primary-text-color    { color: #212121; }
+
 .secondary-text-color  { color: #757575; }
+
 .divider-color         { border-color: #BDBDBD; }
+
 .lb-text   { color: #B3E5FC; }
+
 .db-text{ color: #03A9F4;}
+
 .default-primary-color-btn{ background: #03A9F4; }
+
 .default-primary-color-btn:hover{ background: #0288D1; }
+
 .active-logo{ color: #0288D1;}
+
+.btn-white{
+  background: #FFFFFF;
+  color: #03A9F4;
+}
+
+.btn-white:hover{
+  background: #F5F5F5;
+}
+
 #navbar{
   display: flex;
   flex-direction: row;
 }
+
 #navbar ul {
   align-items: center;
   display: flex;
@@ -63,9 +145,22 @@ color:inherit;
   padding: 0;
   width:100%
 }
+
+
 #navbar li {
   margin-right: 1rem;
+  height: 100%;
+  align-items: center;
+  display: flex;
 }
+
+#navbar li:hover {
+  background-color: #FFFFFF;
+  color: #0288D1;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
 #footer ul {
   align-items: center;
   bottom: 0;
@@ -80,7 +175,37 @@ color:inherit;
   position: fixed;
   width:100%;
 }
-
+.hamburger{
+  display: none;
+}
 body {
   font-family: 'Titillium Web', sans-serif;
+  background-color: #FFFFFF;
+}
+
+@media (max-width:600px){
+  #navbar ul{
+    display: none;
+
+  }
+  .hamburger{
+    display: inline-block;
+    position: absolute;
+    top:1%;
+    right: 1.5%;
+    font-size: 2rem;
+  }
+
+}
+@media (max-width:600px) {
+  #navbar.responsive ul, #navbar{
+    flex-direction: column;
+    display: flex;
+  }
+  #navbar li {
+    width:100%;
+    display: flex;
+    justify-content: center;
+    margin-right: 0;
+  }
 }

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/LandingPage.css">
   <link rel="stylesheet" href="../css/signin.css">
+  <link rel="stylesheet" href="../css/signup.css">
 </head>
 <body class="landing">
   <header>
@@ -26,19 +27,38 @@
   </header>
   <main>
     <section class="center-container">
-      <div  id="loginPanel" class="default-primary-color box-shadow-lighter">
+      <div  id="loginPanel2" class="default-primary-color box-shadow-lighter">
         <p class="text-primary-color Logo pacifico">TrackerHero</p>
         <h3 class="text-primary-color sub-logo ubuntu">Log in to start making requests!</h3>
         <form>
           <div class="form-control">
+            <p class="inputLabel text-primary-color">First name</p>
+            <input id="firstname" type="text" name="firstname" placeholder="Enter your first name e.g. Damola" required>
+          </div>
+          <div class="form-control">
+            <p class="inputLabel text-primary-color">Last name</p>
+            <input id="lastname" type="text" name="lastname" placeholder="Enter your last name e.g. Damola" required>
+          </div>
+          <div class="form-control">
             <p class="inputLabel text-primary-color">Username</p>
             <input id="username" type="email" name="email" placeholder="Enter your username e.g. somebody@email.com" required>
-
           </div>
           <div class="form-control">
             <p class="inputLabel text-primary-color">Password</p>
             <input id="password" type="password" name="password" placeholder="Enter your password" required>
 
+          </div>
+          <div class="form-control">
+            <p class="inputLabel text-primary-color">Confirm Password</p>
+            <input id="password2" type="password" name="password2" placeholder="Enter your password" required>
+          </div>
+          <div class="form-control">
+            <p class="inputLabel text-primary-color">Job Title</p>
+            <input id="jobTitle" type="text" name="jobTitle" placeholder="Enter your Job Title" required>
+          </div>
+          <div class="form-control">
+            <p class="inputLabel text-primary-color">Department</p>
+            <input id="Department" type="text" name="Department" placeholder="Enter your Departmen" required>
           </div>
           <div class="form-control btnOveride" id="submitRow">
             <button type="submit" name="button" class="button btn-white formSubmit">Login</button>
@@ -47,7 +67,7 @@
             <a class="text-primary-color" href="#">Forgot Your Password?</a>
           </div>
           <div class="form-control formInfo">
-            <p>Don't have an account? <a class="text-primary-color" href="SignupPage.html">Sign up!</a></p>
+            <p>Have an account? <a class="text-primary-color" href="SigninPage.html">Sign in!</a></p>
           </div>
         </form>
       </div>
