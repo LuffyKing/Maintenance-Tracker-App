@@ -4,3 +4,15 @@
   -moz-background-size: cover;
   background-size: cover;
 }
+.landing::after{
+content: '';
+top: 0;
+left: 0;
+width: 100%;
+position: fixed;
+right: 0;
+bottom: 0;
+background-image: linear-gradient(to bottom right,#002f4b,#000000);
+opacity: .5;
+z-index: -9999;
+}
