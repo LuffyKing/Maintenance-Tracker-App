@@ -20,6 +20,7 @@
 
 html {
   font-size: 10px;
+  height: 100%;
 }
 .box-shadow-lighter{
   -webkit-box-shadow: 0px -1px 10px 0px rgba(0,0,0,0.75);
@@ -42,7 +43,10 @@ box-shadow: 0px -1px 10px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 0px -1px 10px 11px rgba(0,0,0,0.75);
 box-shadow: 0px -1px 10px 11px rgba(0,0,0,0.75);
 }
-input {
+textarea{
+  font-family: inherit;
+}
+input, textarea {
   border:none;
   border-radius: 0.4rem;
   padding:0.75rem;
@@ -55,7 +59,7 @@ input {
   text-align: center;
 }
 .inputLabel, .formInfo{
-  font-size: 1.25rem;
+  font-size: 1.75rem;
 }
 * {
   box-sizing: border-box;
@@ -88,7 +92,7 @@ color:inherit;
 display: flex;
 align-items: center;
 justify-content: center;
-height: 75vh;
+height: 100%;
 }
 
 label{
@@ -139,7 +143,7 @@ label{
   display: flex;
   flex-direction: row;
   font-size: 1.4rem;
-  justify-content: end;
+  justify-content: flex-end;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -172,7 +176,6 @@ label{
   list-style-type: none;
   margin: 0;
   padding: 0;
-  position: fixed;
   width:100%;
 }
 .hamburger{
@@ -181,6 +184,9 @@ label{
 body {
   font-family: 'Titillium Web', sans-serif;
   background-color: #FFFFFF;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width:600px){
