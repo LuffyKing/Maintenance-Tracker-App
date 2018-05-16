@@ -1,0 +1,41 @@
+#loginPanel2{
+  align-items: center;
+  border-radius: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width:300px;
+  opacity: 0.9;
+
+}
+html{
+  font-size: 7.5px;
+}
+.formSubmit {
+  margin-right: 0;
+}
+input{
+  margin :0 0;
+}
+
+.inputLabel{
+  font-size: 1.25rem;
+}
+@media (max-height:568px) {
+  #loginPanel2{
+    height: 400px;
+  }
+  html{
+    font-size: 6.5px;
+  }
+}
+@media (min-width:1024px) {
+  #loginPanel2 {
+    font-size: 1.5rem;
+    padding: 2rem;
+    width:75%;
+    }
+    .inputLabel{
+      font-size: 2.25rem;
+  }
+}

@@ -1,0 +1,64 @@
+#loginPanel {
+align-items: center;
+border-radius: 0.4rem;
+display: flex;
+flex-direction: column;
+height: 400px;
+justify-content: center;
+opacity: 0.9;
+width:300px;
+}
+.button, input,textarea, select{
+  width:75%;
+}
+main{
+  height: 100%;
+}
+.sub-logo{
+  margin: 1rem 0;
+}
+.formSubmit {
+margin-top: 2rem;
+
+}
+.form-control {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (max-height:568px) {
+  #loginPanel{
+    height: 300px;
+    width:250px;
+  }
+  html{
+    font-size: 7.5px;
+  }
+}
+@media (min-width:1024px) {
+  html {
+    font-size: 12.5px;
+  }
+  #loginPanel {
+    height: auto;
+    padding: 3rem;
+    width: 75%;
+    }
+    .inputLabel{
+      font-size: 2rem;
+    }
+    form, .form-control{
+      width:100%;
+    }
+    .button{
+      font-size: 1.5rem;
+    }
+    input, select{
+      font-size: 2rem;
+    }
+    .formSubmit {
+      margin-right: 0;
+  }
+
+}
