@@ -4,8 +4,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width:300px;
   opacity: 0.9;
+  width:300px;
 
 }
 html{
