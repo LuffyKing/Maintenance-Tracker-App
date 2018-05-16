@@ -42,7 +42,10 @@ box-shadow: 0px -1px 10px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 0px -1px 10px 11px rgba(0,0,0,0.75);
 box-shadow: 0px -1px 10px 11px rgba(0,0,0,0.75);
 }
-input {
+textarea{
+  font-family: inherit;
+}
+input, textarea {
   border:none;
   border-radius: 0.4rem;
   padding:0.75rem;
@@ -139,7 +142,7 @@ label{
   display: flex;
   flex-direction: row;
   font-size: 1.4rem;
-  justify-content: end;
+  justify-content: flex-end;
   list-style-type: none;
   margin: 0;
   padding: 0;
