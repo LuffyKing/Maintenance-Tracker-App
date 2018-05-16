@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Signin</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-  <link rel="stylesheet" href="UI/css/base.css">
-  <link rel="stylesheet" href="UI/css/LandingPage.css">
-  <link rel="stylesheet" href="UI/css/signin.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/LandingPage.css">
+  <link rel="stylesheet" href="../css/signin.css">
 </head>
 <body class="landing">
   <header>
@@ -40,8 +40,14 @@
             <input id="password" type="password" name="password" placeholder="Enter your password" required>
 
           </div>
-          <div class="form-control btnOveride">
+          <div class="form-control btnOveride" id="submitRow">
             <button type="submit" name="button" class="button btn-white formSubmit">Login</button>
+          </div>
+          <div class="form-control formInfo">
+            <a class="text-primary-color" href="#">Forgot Your Password?</a>
+          </div>
+          <div class="form-control formInfo">
+            <p>Don't have an account? <a class="text-primary-color" href="UI/html/SignupPage.html">Sign up!</a></p>
           </div>
         </form>
       </div>
@@ -57,6 +63,6 @@
     </ul>
 
   </footer>
-  <script type="text/javascript" src="UI/js/hamburgerDropdown.js"></script>
+  <script type="text/javascript" src="../js/hamburgerDropdown.js"></script>
 </body>
 </html>
