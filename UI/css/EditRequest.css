@@ -1,0 +1,22 @@
+#status{
+  font-size: 3rem;
+  background: #FFFFFF;
+  border-radius: 0.4rem;
+  padding:0.75rem;
+}
+@media (max-width:600px) {
+  #loginPanel2{
+      padding: 2rem;
+
+  }
+  h2{
+    text-align: center;
+  }
+  .form-control{
+    margin-bottom: 1%;
+    margin-top: 1%;
+  }
+  input, select,textarea,.inputLabel,#status{
+    font-size: 1.65rem;
+  }
+}
