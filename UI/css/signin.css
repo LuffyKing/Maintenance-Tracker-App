@@ -11,6 +11,7 @@ width:300px;
 .button, input,textarea, select{
   width:75%;
 }
+
 main{
   height: 100%;
 }
@@ -26,6 +27,7 @@ margin-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+
 }
 @media (max-height:568px) {
   #loginPanel{
@@ -55,6 +57,7 @@ margin-top: 2rem;
       font-size: 1.5rem;
     }
     input, select{
+
       font-size: 2rem;
     }
     .formSubmit {
