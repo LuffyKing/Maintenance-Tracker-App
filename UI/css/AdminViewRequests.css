@@ -1,31 +1,46 @@
-a.approvebtn, a.disapprovebtn, a.resolvebtn,a.placeholder {
+a.approvebtn, a.disapprovebtn, a.resolvebtn,a.placeholder,a.editDetailBtn, a.deleteBtn {
     border-radius: 4px;
     color: #FFFFFF;
     font-size: 2rem;
     padding: 1rem;
     text-align: center;
     text-decoration: none;
-    width: 100%;
+
 }
 a.approvebtn{
   background-color: #32CD32;
+  width: 100%;
 }
 a.approvebtn:hover{
   background-color: #98FB98;
+
 }
 a.disapprovebtn {
     background-color: #e60000;
+    width: 100%;
 }
 a.disapprovebtn:hover{
   background-color: #ff3333;
 }
-
 a.resolvebtn {
-    background-color: #DAA520;
+  background-color: #DAA520;
+  width: 100%;
 }
 a.resolvebtn:hover{
   background-color:  #EEE8AA;
 }
 a.placeholder{
   cursor: default;
+}
+a.deleteBtn{
+  background-color: #e60000;
+}
+a.deleteBtn:hover{
+  background-color: #ff3333;
+}
+a.editDetailBtn{
+  background-color: #0288D1;
+}
+a.editDetailBtn:hover{
+  background-color: #03A9F4;
 }
