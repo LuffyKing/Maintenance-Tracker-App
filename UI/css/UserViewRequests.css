@@ -1,0 +1,160 @@
+#requests{
+  background-color: #FFFFFF;
+  margin:auto;
+  padding: 2em;
+  width:100%;
+}
+body{
+  background-color: #000000;
+}
+main{
+  overflow: auto;
+}
+.requestsTable{
+display: flex;
+flex-direction: column;
+height: 100%;
+
+}
+.disabled{
+  cursor: not-allowed;
+  opacity: 0.2;
+}
+
+.requestRow{
+  border-top: 0.25rem #0288D1 solid;
+  display: flex;
+  flex-direction: row;
+  height: 216px;
+  justify-content: space-between;
+  padding: 1rem;
+  width:100%;
+}
+.requestImageContainer{
+  height: 196px;
+  margin: 0 1%;
+  width: 18%;
+
+}
+  img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+.filterRow{
+align-items: center;
+display: flex;
+justify-content: space-between;
+
+}
+select{
+  font-size:0.75em;
+  padding:0.95em;
+  width:40%;
+}
+.filterSpan{
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+a.but {
+    background-color: #0288D1;
+    border-radius: 4px;
+    color: #FFFFFF;
+    font-size: 2rem;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+}
+a.but:hover{
+  background-color: #03A9F4;
+}
+
+.infoColumn1 p{
+  font-size: 2rem;
+}
+
+.infoColumn1, .infoColumn2{
+  display: flex;
+  flex-direction: column;
+  height: 75%;
+  justify-content: space-between;
+}
+
+.requestImageContainer,.infoColumn1,.infoColumn2{
+  flex:1;
+}
+.introduction{
+  font-size: 1.75rem;
+}
+.filterRow{
+  font-size: 1.75rem;
+}
+#navbar ul, #footer ul{
+  font-size: 2.35rem;
+}
+.Logo{
+  font-size: 3rem;
+}
+@media (min-width:601px) {
+  .pagRow{
+    height: 10vh;
+    font-size: 2rem;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .pagRow a{
+    margin-top:1rem;
+    text-decoration: none;
+  }
+  .active,.pagRow a:hover{
+    background-color: #0288D1;
+    color: #FFFFFF;
+    padding: 1rem;
+  }
+
+}
+
+@media (max-width: 600px) {
+  .requestRow{
+    display: flex;
+    flex-direction: column;
+  }
+  .requestRow{
+    height: 100vh;
+  }
+  .pagRow{
+    align-items: center;
+    font-size: 2rem;
+    height: 10vh;
+    padding: 1rem;
+  }
+  .pagRow a{
+    margin-top:1rem;
+    text-decoration: none;
+  }
+  .active,.pagRow a:hover{
+    background-color: #0288D1;
+    color: #FFFFFF;
+    padding: 1rem;
+  }
+
+  .requestImageContainer{
+    height: 25%;
+    width: 100%;
+  }
+  .requestImageContainer, .infoColumn1,.infoColumn2{
+    margin-bottom: 2rem;
+  }
+  .introduction{
+    font-size: 1.5rem;
+  }
+  .filterRow{
+    font-size: 1.45rem;
+  }
+  img{
+    width:100%;
+  }
+}
