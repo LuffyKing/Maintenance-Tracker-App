@@ -28,7 +28,26 @@
     font-size: 1.5rem;
   }
   #loginPanel2{
-      padding: 2rem;
-
+      font-size: 1.5rem;
+      padding: 1rem;
+  }
+  .inputLabel{
+    font-size: 1.75rem;
+  }
+}
+@media (min-width:1024px) {
+  .inputLabel{
+    font-size: 3.25rem;
+  }
+  input, select{
+    font-size: 3rem;
+  }
+  .formSubmit{
+    padding: 1rem;
+    font-size: 3rem;
+    width:25%;
+  }
+  #submitRow{
+    justify-content: flex-end;
   }
 }
