@@ -20,8 +20,18 @@
 
 
 @media (min-width:1024px) {
+
   html{
-    font-size: 6.5px;
+    font-size: 5.5px;
+  }
+  .sub-logo{
+    font-size: 3rem;
+  }
+  #navbar ul,#footer ul{
+    font-size: 2.65rem;
+  }
+  .Logo{
+    font-size: 4rem;
   }
   .form-control {
     align-items: center;
@@ -35,10 +45,10 @@
     display: flex;
     justify-content: center;
   }
-  input, select,textarea{
+  input, select,textarea, #status{
     flex:2;
   }
-  p{
+  p:not(#status){
     flex:1;
   }
   .button{
@@ -47,6 +57,10 @@
   #loginPanel2{
       padding: 1rem;
   }
+  .formSubmit{
+    font-size: 1.25em;
+    padding: 1.25em;
+  }
 
 
 
@@ -54,6 +68,7 @@
 @media (max-width:600px) {
   #loginPanel2{
       padding: 2rem;
+      width:300px;
 
   }
   h2{
@@ -62,5 +77,14 @@
   .form-control{
     margin-bottom: 1%;
     margin-top: 1%;
+  }
+  input, select,textarea,.inputLabel,#status{
+    font-size: 1rem;
+  }
+}
+@media (max-width:960px) {
+  #loginPanel2{
+      padding: 2rem;
+
   }
 }
