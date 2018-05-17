@@ -7,6 +7,12 @@
   opacity: 0.9;
   width:50%;
 }
+#navbar ul, #footer ul{
+  font-size: 2.25rem;
+}
+.Logo{
+  font-size: 3rem;
+}
 html{
   font-size: 7.5px;
 }
