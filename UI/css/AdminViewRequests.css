@@ -44,3 +44,10 @@ a.editDetailBtn{
 a.editDetailBtn:hover{
   background-color: #03A9F4;
 }
+a.approveDetailBtn{
+  background-color: #32CD32;
+}
+a.approveDetailBtn:hover{
+  background-color: #98FB98;
+
+}
