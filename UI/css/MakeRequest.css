@@ -22,7 +22,7 @@
 @media (min-width:1024px) {
 
   html{
-    font-size: 6.5px;
+    font-size: 5.5px;
   }
   .sub-logo{
     font-size: 3rem;
@@ -68,6 +68,7 @@
 @media (max-width:600px) {
   #loginPanel2{
       padding: 2rem;
+      width:300px;
 
   }
   h2{
@@ -79,5 +80,11 @@
   }
   input, select,textarea,.inputLabel,#status{
     font-size: 1rem;
+  }
+}
+@media (max-width:960px) {
+  #loginPanel2{
+      padding: 2rem;
+
   }
 }
