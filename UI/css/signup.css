@@ -5,8 +5,7 @@
   flex-direction: column;
   justify-content: center;
   opacity: 0.9;
-  width:300px;
-
+  width:50%;
 }
 html{
   font-size: 7.5px;
@@ -26,16 +25,16 @@ input{
     height: 400px;
   }
   html{
-    font-size: 6.5px;
+    font-size: 5.5px;
   }
 }
 @media (min-width:1024px) {
   #loginPanel2 {
-    font-size: 1.5rem;
     padding: 2rem;
+    font-size: 1.5rem;
     width:75%;
     }
     .inputLabel{
       font-size: 2.25rem;
-  }
+    }
 }
