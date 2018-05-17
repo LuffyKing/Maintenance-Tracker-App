@@ -97,8 +97,8 @@ a.but:hover{
 }
 @media (min-width:601px) {
   .pagRow{
-    height: 10vh;
     font-size: 2rem;
+    height: 10vh;
     justify-content: center;
     padding: 1rem;
   }
