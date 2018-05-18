@@ -31,6 +31,7 @@ describe('Requests API Tests', () => {
           res.body.request.userid.should.eql(newRequest.userid);
           res.body.request.should.have.property('id');
           res.body.request.should.have.property('dateSubmitted');
+          res.body.request.should.have.property('status');
           done();
         });
     });
