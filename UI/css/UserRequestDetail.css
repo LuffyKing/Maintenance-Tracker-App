@@ -9,7 +9,7 @@ main{
 .requestImageContainer2{
   height: 100%;
 }
-a.editDetailBtn{
+a.editDetailBtn, a.approveDetailBtn{
   margin-right: 2.5%;
 }
 img{
