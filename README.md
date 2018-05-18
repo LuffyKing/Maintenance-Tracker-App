@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/LuffyKing/Maintenance-Tracker-App.svg?branch=ft-ModifyARequest-API-157581106)](https://travis-ci.org/LuffyKing/Maintenance-Tracker-App)
+[![Coverage Status](https://coveralls.io/repos/github/LuffyKing/Maintenance-Tracker-App/badge.svg?branch=ft-ModifyARequest-API-157581106)](https://coveralls.io/github/LuffyKing/Maintenance-Tracker-App?branch=ft-ModifyARequest-API-157581106)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a2d1970c212fdbc11a63/maintainability)](https://codeclimate.com/github/LuffyKing/Maintenance-Tracker-App/maintainability)
+
 # Maintenance-Tracker-App
 This exciting new project aims to create a new web app called Maintenance-Tracker-App.Maintenance-Tracker-App provides a platform for employees to easily make repair or maintenance requests to the operations or repairs department. The platform aims to make it easier to keep track of repair or maintenance requests for both non-admin users and admin users. Admin users can view all the requests on the app, and they also have the ability to resolve, disapprove or approve all requests. Non-admin users have the ability to make requests, and see all the requests they have made.
 
