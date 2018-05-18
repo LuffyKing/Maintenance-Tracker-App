@@ -11,18 +11,7 @@ const emptyFieldsFinder = (reqBody) => {
     .map(element => element.replace(/([A-Z])/g, ' $1').toUpperCase());
   return emptyFieldsArr;
 };
-/**
-* It finds the fields that are not supposed to have an integer as a value
-* @param {Object} reqBody - object containing the relevant field values
-* @returns {string[]} - an array of the invalid integer fields as strings
-*/
-const intFieldFinder = (reqBody) => {
-  const arrayOfFields = Object.keys(reqBody);
-  const intFieldsArr = arrayOfFields.filter(element =>
-    Object.prototype.toString.call(reqBody[element]) === '[object Number]' && element !== 'userid')
-    .map(element => element.replace(/([A-Z])/g, ' $1').toUpperCase());
-  return intFieldsArr;
-};
+
 /**
 * It finds the fields that are supposed to have a string as a value but
 * possesses any data type instead
@@ -104,12 +93,7 @@ const createARequestChecker = (req, res, next) => {
     title,
     location
   };
-  // check for integers
-  const invalidIntArr = intFieldFinder(reqBody);
-  if (invalidIntArr.length > 0) {
-    const word = invalidIntArr.length === 1 ? 'an integer' : 'integers';
-    return message(res, invalidIntArr, `not supposed to be ${word}`);
-  }
+
   // check if the fields are empty
   const emptyFieldsArr = emptyFieldsFinder(reqBody);
   if (emptyFieldsArr.length > 0) {
@@ -136,6 +120,5 @@ export {
   invalidFieldsChecker,
   message,
   specialMessages,
-  intFieldFinder,
   emptyFieldsFinder
 };

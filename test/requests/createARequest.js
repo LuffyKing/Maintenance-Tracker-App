@@ -70,7 +70,7 @@ describe('Requests API Tests', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('message');
-          res.body.message.should.eql('The request could not be created because the fields TYPE ,LOCATION were not supposed to be integers');
+          res.body.message.should.eql('The request could not be created because the fields TYPE ,LOCATION were supposed to be strings');
           done();
         });
     });
@@ -102,7 +102,7 @@ describe('Requests API Tests', () => {
     });
   });
   describe('/POST requests', () => {
-    it('should POST the details of a request with non string fields and fail', (done) => {
+    it('should POST the details of a request with empty strings and fail', (done) => {
       chai.request(server)
         .post('/api/v1/users/requests')
         .send(newRequestFieldsEmpty)
