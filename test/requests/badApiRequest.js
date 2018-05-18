@@ -12,7 +12,7 @@ describe('Requests API Tests', () => {
   describe('/GET requests', () => {
     it('it should GET all requests', (done) => {
       chai.request(server)
-        .get('/api/v1/users/fakeAPI')
+        .get('/api/v1/fakeAPI')
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('message');
