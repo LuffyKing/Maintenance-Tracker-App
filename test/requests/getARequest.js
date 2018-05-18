@@ -35,4 +35,17 @@ describe('Requests API Tests', () => {
         });
     });
   });
+
+  describe('/GET requests', () => {
+    it('should try to GET a request with an invalid requestid and fail', (done) => {
+      chai.request(server)
+        .get('/api/v1/users/requests/badid')
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('message');
+          res.body.message.should.eql('The id provided is invalid because it is not an integer');
+          done();
+        });
+    });
+  });
 });
