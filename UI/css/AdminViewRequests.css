@@ -1,4 +1,4 @@
-a.approvebtn, a.disapprovebtn, a.resolvebtn,a.placeholder,a.editDetailBtn, a.deleteBtn {
+a.approvebtn, a.disapprovebtn, a.resolvebtn,a.placeholder,a.editDetailBtn, a.deleteBtn,a.approveDetailBtn {
     border-radius: 4px;
     color: #FFFFFF;
     font-size: 2rem;
@@ -43,4 +43,11 @@ a.editDetailBtn{
 }
 a.editDetailBtn:hover{
   background-color: #03A9F4;
+}
+a.approveDetailBtn{
+  background-color: #32CD32;
+}
+a.approveDetailBtn:hover{
+  background-color: #98FB98;
+
 }
