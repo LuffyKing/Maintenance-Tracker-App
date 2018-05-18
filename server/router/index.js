@@ -7,5 +7,5 @@ const router = express.Router();
 router.get('/users/requests', RequestsController.getAllRequests);
 router.get('/users/requests/:requestid', getARequestChecker, RequestsController.getARequest);
 router.post('/users/requests/', RequestsController.createARequest);
-router.put('/users/requests/:requestid', RequestsController.updateARequest);
+router.put('/users/requests/:requestid', getARequestChecker, RequestsController.updateARequest);
 export default router;
