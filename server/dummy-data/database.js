@@ -6,7 +6,7 @@ const requests = [
     location: 'Room 404, Kingsbury Factory',
     type: 'Repair',
     status: 'Not Approved/Rejected/Resolved',
-    date: new Date(2000, 10, 17).toString(),
+    dateSubmitted: new Date(2000, 10, 17).toString(),
     userid: 0
   },
   {
@@ -16,7 +16,7 @@ const requests = [
     location: 'Room 405, Kingsbury Factory',
     type: 'Maintenance',
     status: 'Approved',
-    date: new Date(2017, 11, 17).toString(),
+    dateSubmitted: new Date(2017, 11, 17).toString(),
     userid: 1
   },
   {
@@ -26,7 +26,7 @@ const requests = [
     location: 'Room 400, Kingsbury Factory',
     type: 'Repair',
     status: 'Rejected',
-    date: new Date(1995, 1, 17).toString(),
+    dateSubmitted: new Date(1995, 1, 17).toString(),
     userid: 0
   },
   {
@@ -36,7 +36,7 @@ const requests = [
     location: 'Room 400, Kingsbury Factory',
     type: 'Repair',
     status: 'Resolved',
-    date: new Date(1995, 1, 17).toString(),
+    dateSubmitted: new Date(1995, 1, 17).toString(),
     userid: 2
   }
 ];
