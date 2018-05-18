@@ -1,0 +1,53 @@
+#status{
+  background: #FFFFFF;
+  border-radius: 0.4rem;
+  font-size: 3rem;
+  padding:0.75rem;
+}
+@media (max-width:601px) {
+  #loginPanel2{
+      padding: 2rem;
+
+  }
+  #status{
+    font-size: 1.5rem;
+  }
+  h2{
+    text-align: center;
+  }
+  .form-control{
+    margin-bottom: 1%;
+    margin-top: 1%;
+  }
+  input, select,textarea,.inputLabel,#status{
+    font-size: 1.65rem;
+  }
+}
+@media (max-width:960px) {
+  #status{
+    font-size: 1.5rem;
+  }
+  #loginPanel2{
+      font-size: 1.5rem;
+      padding: 1rem;
+  }
+  .inputLabel{
+    font-size: 1.75rem;
+  }
+}
+@media (min-width:1024px) {
+  .inputLabel{
+    font-size: 3.25rem;
+  }
+  input, select{
+    font-size: 3rem;
+  }
+  .formSubmit{
+    font-size: 3rem;
+    padding: 1rem;
+    width:25%;
+  }
+  #submitRow{
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,46 @@
+#loginPanel2{
+  align-items: center;
+  border-radius: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0.9;
+  width:50%;
+}
+#navbar ul, #footer ul{
+  font-size: 2.25rem;
+}
+.Logo{
+  font-size: 3rem;
+}
+html{
+  font-size: 7.5px;
+}
+.formSubmit {
+  margin-right: 0;
+}
+input{
+  margin :0 0;
+}
+
+.inputLabel{
+  font-size: 1.25rem;
+}
+@media (max-height:568px) {
+  #loginPanel2{
+    height: 400px;
+  }
+  html{
+    font-size: 5.5px;
+  }
+}
+@media (min-width:1024px) {
+  #loginPanel2 {
+    padding: 2rem;
+    font-size: 1.5rem;
+    width:75%;
+    }
+    .inputLabel{
+      font-size: 2.25rem;
+    }
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signin</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/LandingPage.css">
+  <link rel="stylesheet" href="../css/signin.css">
+</head>
+<body class="landing" id="overlay">
+  <header>
+    <nav id="navbar">
+      <a class="default-primary-color text-primary-color Logo pacifico" href="SigninPage.html">TrackerHero</a>
+      <ul class="default-primary-color text-primary-color">
+        <li><a href="MakeRequest.html">Make Request &nbsp<i class="fas fa-bullhorn"></i></a></li>
+        <li><a href="#">Profile &nbsp<i class="fas fa-user"></i></a></li>
+        <li><a href="UserViewRequests.html">My Requests &nbsp<i class="far fa-eye"></i></a></li>
+        <li><a href="SigninPage.html">Logout&nbsp<i class="fas fa-door-open"></i></a></li>
+      </ul>
+      <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
+    </nav>
+
+  </header>
+  <main>
+    <section class="center-container">
+      <div  id="loginPanel" class="box-shadow-darker">
+        <p class="text-primary-color Logo pacifico">TrackerHero</p>
+        <h2 class="text-primary-color sub-logo ubuntu">Log in to start making requests!</h2>
+        <form>
+          <div class="form-control">
+            <p class="inputLabel text-primary-color">Email</p>
+            <input id="username" type="email" name="email" placeholder="Enter your email" required>
+
+          </div>
+          <div class="form-control">
+            <p class="inputLabel text-primary-color">Password</p>
+            <input id="password" type="password" name="password" placeholder="Enter your password" required>
+
+          </div>
+          <div class="form-control btnOveride" id="submitRow">
+            <button type="submit" name="button" class="button btn-white formSubmit">Login</button>
+          </div>
+          <div class="form-control formInfo">
+            <a class="text-primary-color" href="#">Forgot Your Password?</a>
+          </div>
+          <div class="form-control formInfo">
+            <p class="db-text">If you do not have an account you can <a class="text-primary-color" href="SignupPage.html">Sign up!</a></p>
+          </div>
+        </form>
+      </div>
+
+    </section>
+  </main>
+  <footer id="footer">
+    <ul class="default-primary-color text-primary-color">
+      <li><p>&copy; InVective Tech.</p></li>
+      <li><a href="#">Contact Us</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Help</a></li>
+    </ul>
+
+  </footer>
+  <script type="text/javascript" src="../js/hamburgerDropdown.js"></script>
+</body>
+</html>
