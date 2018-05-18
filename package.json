@@ -1,0 +1,55 @@
+{
+  "name": "maintenance-tracker-app",
+  "version": "1.0.0",
+  "description": "An app for managing repair and maintenance requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc ./node_modules/.bin/mocha --exit --require babel-register test/index.js",
+    "build": "npm run clean-dist && npm run build-babel",
+    "start": "npm run build && node build/server.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "build-babel": "babel server -d build",
+    "heroku-postbuild": "npm run migrate",
+    "clean-dist": "rm -rf build && mkdir build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuffyKing/Maintenance-Tracker-App.git"
+  },
+  "keywords": [
+    "tracker",
+    "repair",
+    "maintenance"
+  ],
+  "author": "Oyindamola Aderinwale",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LuffyKing/Maintenance-Tracker-App/issues"
+  },
+  "homepage": "https://github.com/LuffyKing/Maintenance-Tracker-App#readme",
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "validator": "^10.2.0"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "coveralls": "^3.0.1",
+    "dotenv": "^5.0.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "mocha": "^5.1.1",
+    "mocha-lcov-reporter": "^1.3.0",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.17.4",
+    "nyc": "^11.8.0"
+  }
+}
