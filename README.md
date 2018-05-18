@@ -32,7 +32,22 @@ npm run test
 ```
 ## APIs
 
-APIs are documented at
+APIs are hosted at https://trackerhero.herokuapp.com/api/v1
+
+APIs available
+```
+Get all maintenance and repair requests
+GET /users/requests
+
+Get a maintenance or repair request
+GET /users/requests/:requestid
+
+Create a maintenance or service request
+POST /users/requests
+
+Modify a maintenance or service request
+PUT /users/requests/<requestId>
+```
 ##
 ## Deployment
 
