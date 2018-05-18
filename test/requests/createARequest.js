@@ -16,7 +16,7 @@ describe('Requests API Tests', () => {
    * Testing post request on the Requests API -success case
    */
   describe('/POST requests', () => {
-    it('it should GET all requests', (done) => {
+    it('it should POST the details of valid request and succeed', (done) => {
       chai.request(server)
         .post('/api/v1/users/requests')
         .send(newRequest)
