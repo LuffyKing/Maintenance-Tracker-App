@@ -10,11 +10,11 @@ npm v5.7.1+
 
 ### Installing
 ```
-mkdir WeConnect
-cd WeConnect
+mkdir Maintenance-Tracker-App
+cd Maintenance-Tracker-App
 git init
 git clone https://github.com/LuffyKing/Maintenance-Tracker-App.git
-cd WeConnect
+cd Maintenance-Tracker-App
 npm install
 npm start
 ```
