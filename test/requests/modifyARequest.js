@@ -30,12 +30,25 @@ describe('Requests API Tests', () => {
   describe('/PUT requests', () => {
     it('it should try to PUT details on a request with an id that does not exist and fail', (done) => {
       chai.request(server)
-        .put('/api/v1/users/requests/fakeId')
+        .put('/api/v1/users/requests/90')
         .send(requestUpdateDetails)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('message');
           res.body.message.should.eql('Maintenance/Repair with the specified id was not found');
+          done();
+        });
+    });
+  });
+  describe('/PUT requests', () => {
+    it('it should try to PUT details on a request with an inavlid id and fail', (done) => {
+      chai.request(server)
+        .put('/api/v1/users/requests/fakeId')
+        .send(requestUpdateDetails)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('message');
+          res.body.message.should.eql('The id provided is invalid because it is not an integer');
           done();
         });
     });
