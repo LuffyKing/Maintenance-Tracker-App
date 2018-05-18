@@ -82,11 +82,11 @@ request is made
     const {
       requestid
     } = req.params;
-    const result = requests.filter(request => request.id === Number(requestid));
-
+    let result = requests.filter(request => request.id === Number(requestid));
     if (result.length > 0) {
+      [result] = result;
       const updatedRequest = {
-        id: requestid,
+        id: result.id,
         userid: result.userid,
         status: result.status,
         dateSubmitted: result.dateSubmitted,
