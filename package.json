@@ -4,13 +4,13 @@
   "description": "An app for managing repair and maintenance requests",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ./node_modules/.bin/mocha --exit --require babel-register test/index.js",
     "build": "npm run clean-dist && npm run build-babel",
     "start": "npm run build && node build/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build-babel": "babel server -d build",
     "heroku-postbuild": "npm run migrate",
-    "clean-dist": "rm -rf build && mkdir build"
+    "clean-dist": "rm -rf build && mkdir build",
+    "test": "nyc ./node_modules/.bin/mocha --exit --require babel-register test/index.js",
   },
   "repository": {
     "type": "git",
