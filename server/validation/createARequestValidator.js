@@ -20,9 +20,9 @@ const emptyFieldsFinder = (reqBody) => {
 */
 const nonStringFieldFinder = (reqBody) => {
   const arrayOfFields = Object.keys(reqBody);
-  const emptyFieldsArr = arrayOfFields.filter(element => Object.prototype.toString.call(reqBody[element]) !== '[object String]' && element !== 'userid')
+  const nonStringFieldsArr = arrayOfFields.filter(element => Object.prototype.toString.call(reqBody[element]) !== '[object String]' && element !== 'userid')
     .map(element => element.replace(/([A-Z])/g, ' $1').toUpperCase());
-  return emptyFieldsArr;
+  return nonStringFieldsArr;
 };
 
 const specialValidation = {
@@ -41,14 +41,15 @@ const specialMessages = {
 /**
 * It finds the fields that are supposed to have a string as a value but
 * possesses any data type instead
+* @param {number} statusCode - status code
 * @param {Object} res - response object that conveys the result of the request
 * @param {string[]} invalidFieldsArray - an array of invalid fields
 * @param {string} end - an array of invalid fields
 *@returns {Object} - a 400 response object with a customized message attribute
 */
-const message = (res, invalidFieldsArray, end) => {
+const message = (statusCode, res, invalidFieldsArray, end) => {
   const verb = invalidFieldsArray.length === 1 ? ['field', 'was'] : ['fields', 'were'];
-  return res.status(400).send({
+  return res.status(statusCode).send({
     message: `The request could not be created because the ${verb[0]} ${invalidFieldsArray.join(' ,')} ${verb[1]} ${end}`
   });
 };
@@ -78,32 +79,24 @@ const invalidFieldsChecker = reqBody => Object.keys(reqBody).filter((elm) => {
 * all the fields do not have the proper data type or string values
 */
 const createARequestChecker = (req, res, next) => {
-  const {
-    description,
-    type,
-    userid,
-    title,
-    location
-  } = req.body;
-
   const reqBody = {
-    description,
-    type,
-    userid,
-    title,
-    location
+    description: req.body.description,
+    type: req.body.type,
+    userid: req.body.userid,
+    title: req.body.title,
+    location: req.body.location
   };
 
   // check if the fields are empty
   const emptyFieldsArr = emptyFieldsFinder(reqBody);
   if (emptyFieldsArr.length > 0) {
-    return message(res, emptyFieldsArr, 'not provided');
+    return message(400, res, emptyFieldsArr, 'not provided');
   }
   // check for strings
   const nonStringFieldFinderArr = nonStringFieldFinder(reqBody);
   if (nonStringFieldFinderArr.length > 0) {
     const word = nonStringFieldFinderArr.length === 1 ? 'a string' : 'strings';
-    return message(res, nonStringFieldFinderArr, `supposed to be ${word}`);
+    return message(400, res, nonStringFieldFinderArr, `supposed to be ${word}`);
   }
 
   // check for valid types
@@ -120,5 +113,6 @@ export {
   invalidFieldsChecker,
   message,
   specialMessages,
-  emptyFieldsFinder
+  emptyFieldsFinder,
+  nonStringFieldFinder
 };
