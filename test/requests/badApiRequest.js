@@ -10,7 +10,7 @@ describe('Requests API Tests', () => {
    * Testing get request on the Requests API -success case
    */
   describe('/GET requests', () => {
-    it('it should GET all requests', (done) => {
+    it('should GET all requests', (done) => {
       chai.request(server)
         .get('/api/v1/fakeAPI')
         .end((err, res) => {
