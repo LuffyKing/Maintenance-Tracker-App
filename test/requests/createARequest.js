@@ -4,8 +4,19 @@ import server from '../../server/server';
 
 chai.should();
 chai.use(chaiHttp);
+const newRequestDuplicate = {
+  id: 0,
+  title: 'Broken Printer',
+  description: 'The printer is printing blanks',
+  location: 'Room 404, Kingsbury Factory',
+  type: 'Repair',
+  status: 'Not Approved/Rejected/Resolved',
+  dateSubmitted: new Date(2000, 10, 17).toString(),
+  userid: 0
+};
+
 const newRequest = {
-  title: 'Broken Desk',
+  title: 'Broken',
   description: 'The desk is broken',
   location: 'Room 404, Kingsbury Factory',
   type: 'Repair',
@@ -97,6 +108,19 @@ describe('Requests API Tests', () => {
           res.should.have.status(400);
           res.body.should.have.property('message');
           res.body.message.should.eql('The request could not be created because the field LOCATION was supposed to be a string');
+          done();
+        });
+    });
+  });
+  describe('/POST requests', () => {
+    it('should POST the details of an already existing request and fail', (done) => {
+      chai.request(server)
+        .post('/api/v1/users/requests')
+        .send(newRequestDuplicate)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('message');
+          res.body.message.should.eql('The request could not be created because a request with the same LOCATION, DESCRIPTION,TYPE AND TITLE already exists');
           done();
         });
     });

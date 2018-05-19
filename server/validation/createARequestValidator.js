@@ -1,3 +1,35 @@
+import { requests } from '../dummy-data/database';
+
+const getReqBody = (req) => {
+  const reqBody = {
+    description: req.body.description,
+    type: req.body.type,
+    userid: req.body.userid,
+    title: req.body.title,
+    location: req.body.location
+  };
+  return reqBody;
+};
+
+const duplicateRequestHandler = (reqBody, res) => {
+  const duplicateRequest = requests.find(request => request.title === reqBody.title &&
+    reqBody.description === request.description &&
+    reqBody.type === request.type &&
+    reqBody.location === request.location);
+  if (Object.prototype.toString.call(duplicateRequest) === '[object Object]') {
+    return res.status(400).send({
+      message: 'The request could not be created because a request with the same LOCATION, DESCRIPTION,TYPE AND TITLE already exists'
+    });
+  }
+};
+const trimmer = (reqBody, req) => {
+  Object.keys(reqBody).forEach((key) => {
+    if (key !== 'userid') {
+      reqBody[key] = reqBody[key].trim();
+    }
+  });
+  req.reqBody = reqBody;
+};
 /**
 * It finds the fields that are undefined or null
 * @param {Object} reqBody - object containing the relevant field values
@@ -70,6 +102,22 @@ const invalidFieldsChecker = reqBody => Object.keys(reqBody).filter((elm) => {
   }
   return `the ${key.toUpperCase()} field did not contain a single letter of the alphabet`;
 });
+
+const nonStringFieldHandler = (reqBody, res) => {
+  const nonStringFieldFinderArr = nonStringFieldFinder(reqBody);
+  if (nonStringFieldFinderArr.length > 0) {
+    const word = nonStringFieldFinderArr.length === 1 ? 'a string' : 'strings';
+    return message(400, res, nonStringFieldFinderArr, `supposed to be ${word}`);
+  }
+};
+const invalidFieldHandler = (reqBody, res) => {
+  const invalidFieldsArr = invalidFieldsChecker(reqBody);
+  if (invalidFieldsArr.length > 0) {
+    return res.status(400).json({
+      message: `The request could not be created because ${invalidFieldsArr.join(' ,')}`
+    });
+  }
+};
 /**
 * It validates the fields and renders the appropriate response
 * @param {Object} req - request object containing params and body
@@ -79,13 +127,8 @@ const invalidFieldsChecker = reqBody => Object.keys(reqBody).filter((elm) => {
 * all the fields do not have the proper data type or string values
 */
 const createARequestChecker = (req, res, next) => {
-  const reqBody = {
-    description: req.body.description,
-    type: req.body.type,
-    userid: req.body.userid,
-    title: req.body.title,
-    location: req.body.location
-  };
+  const reqBody = getReqBody(req);
+  let reply;
 
   // check if the fields are empty
   const emptyFieldsArr = emptyFieldsFinder(reqBody);
@@ -93,18 +136,18 @@ const createARequestChecker = (req, res, next) => {
     return message(400, res, emptyFieldsArr, 'not provided');
   }
   // check for strings
-  const nonStringFieldFinderArr = nonStringFieldFinder(reqBody);
-  if (nonStringFieldFinderArr.length > 0) {
-    const word = nonStringFieldFinderArr.length === 1 ? 'a string' : 'strings';
-    return message(400, res, nonStringFieldFinderArr, `supposed to be ${word}`);
+  reply = nonStringFieldHandler(reqBody, res);
+  if (reply) {
+    return reply;
   }
-
-  // check for valid types
-  const invalidFieldsArr = invalidFieldsChecker(reqBody);
-  if (invalidFieldsArr.length > 0) {
-    return res.status(400).send({
-      message: `The request could not be created because ${invalidFieldsArr.join(' ,')}`
-    });
+  reply = invalidFieldHandler(reqBody, res);
+  if (reply) {
+    return reply;
+  }
+  trimmer(reqBody, req);
+  reply = duplicateRequestHandler(reqBody, res);
+  if (reply) {
+    return reply;
   }
   next();
 };
@@ -114,5 +157,9 @@ export {
   message,
   specialMessages,
   emptyFieldsFinder,
-  nonStringFieldFinder
+  nonStringFieldFinder,
+  getReqBody,
+  nonStringFieldHandler,
+  invalidFieldHandler,
+  trimmer
 };
