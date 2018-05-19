@@ -74,12 +74,6 @@ request is made
 */
   updateARequest: (req, res) => {
     const {
-      title,
-      description,
-      location,
-      type
-    } = req.body;
-    const {
       requestid
     } = req.params;
     let result = requests.filter(request => request.id === Number(requestid));
@@ -90,10 +84,10 @@ request is made
         userid: result.userid,
         status: result.status,
         dateSubmitted: result.dateSubmitted,
-        title: title || result.title,
-        description: description || result.description,
-        location: location || result.location,
-        type: type || result.type,
+        title: req.body.title || result.title,
+        description: req.body.description || result.description,
+        location: req.body.location || result.location,
+        type: req.body.type || result.type,
       };
       requests.push(updatedRequest);
       return res.status(200).send({
@@ -105,6 +99,5 @@ request is made
       message: 'Maintenance/Repair with the specified id was not found'
     });
   }
-
 };
 export default Requests;
