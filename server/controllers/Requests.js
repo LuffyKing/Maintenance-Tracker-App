@@ -46,7 +46,7 @@ request is made
       location,
       type,
       userid
-    } = req.body;
+    } = req.reqBody;
     const id = requests.length;
     const newRequest = {
       id,
@@ -84,10 +84,10 @@ request is made
         userid: result.userid,
         status: result.status,
         dateSubmitted: result.dateSubmitted,
-        title: req.body.title || result.title,
-        description: req.body.description || result.description,
-        location: req.body.location || result.location,
-        type: req.body.type || result.type,
+        title: req.reqBody.title || result.title,
+        description: req.reqBody.description || result.description,
+        location: req.reqBody.location || result.location,
+        type: req.reqBody.type || result.type,
       };
       requests.push(updatedRequest);
       return res.status(200).send({
