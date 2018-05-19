@@ -1,3 +1,5 @@
+import { requests } from '../dummy-data/database';
+
 const getReqBody = (req) => {
   const reqBody = {
     description: req.body.description,
@@ -9,6 +11,25 @@ const getReqBody = (req) => {
   return reqBody;
 };
 
+const duplicateRequestHandler = (reqBody, res) => {
+  const duplicateRequest = requests.find(request => request.title === reqBody.title &&
+    reqBody.description === request.description &&
+    reqBody.type === request.type &&
+    reqBody.location === request.location);
+  if (Object.prototype.toString.call(duplicateRequest) === '[object Object]') {
+    return res.status(400).send({
+      message: 'The request could not be created because a request with the same LOCATION, DESCRIPTION,TYPE AND TITLE already exists'
+    });
+  }
+};
+const trimmer = (reqBody, req) => {
+  Object.keys(reqBody).forEach((key) => {
+    if (key !== 'userid') {
+      reqBody[key] = reqBody[key].trim();
+    }
+  });
+  req.reqBody = reqBody;
+};
 /**
 * It finds the fields that are undefined or null
 * @param {Object} reqBody - object containing the relevant field values
@@ -92,7 +113,7 @@ const nonStringFieldHandler = (reqBody, res) => {
 const invalidFieldHandler = (reqBody, res) => {
   const invalidFieldsArr = invalidFieldsChecker(reqBody);
   if (invalidFieldsArr.length > 0) {
-    return res.status(400).send({
+    return res.status(400).json({
       message: `The request could not be created because ${invalidFieldsArr.join(' ,')}`
     });
   }
@@ -107,6 +128,7 @@ const invalidFieldHandler = (reqBody, res) => {
 */
 const createARequestChecker = (req, res, next) => {
   const reqBody = getReqBody(req);
+  let reply;
 
   // check if the fields are empty
   const emptyFieldsArr = emptyFieldsFinder(reqBody);
@@ -114,10 +136,19 @@ const createARequestChecker = (req, res, next) => {
     return message(400, res, emptyFieldsArr, 'not provided');
   }
   // check for strings
-  nonStringFieldHandler(reqBody, res);
-
-  // check for valid types
-  invalidFieldHandler(reqBody, res);
+  reply = nonStringFieldHandler(reqBody, res);
+  if (reply) {
+    return reply;
+  }
+  reply = invalidFieldHandler(reqBody, res);
+  if (reply) {
+    return reply;
+  }
+  trimmer(reqBody, req);
+  reply = duplicateRequestHandler(reqBody, res);
+  if (reply) {
+    return reply;
+  }
   next();
 };
 export {
@@ -129,5 +160,6 @@ export {
   nonStringFieldFinder,
   getReqBody,
   nonStringFieldHandler,
-  invalidFieldHandler
+  invalidFieldHandler,
+  trimmer
 };
