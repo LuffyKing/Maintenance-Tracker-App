@@ -1,4 +1,4 @@
-import { nonStringFieldHandler, getReqBody, invalidFieldHandler } from './createARequestValidator';
+import { nonStringFieldHandler, trimmer, getReqBody, invalidFieldHandler } from './createARequestValidator';
 
 /**
 * It finds the fields that are not undefined or null
@@ -30,6 +30,7 @@ const filledFieldsFinder = (reqBody) => {
 const modifyARequestChecker = (req, res, next) => {
   const reqBody = getReqBody(req);
   // check if the fields are filled
+  let reply;
   const filledFieldsObj = filledFieldsFinder(reqBody);
   if (Object.keys(filledFieldsObj).length === 0) {
     return res.status(200).send({
@@ -37,10 +38,17 @@ const modifyARequestChecker = (req, res, next) => {
     });
   }
   // check for strings
-  nonStringFieldHandler(filledFieldsObj, res);
+  reply = nonStringFieldHandler(filledFieldsObj, res);
+  if (reply) {
+    return reply;
+  }
 
   // check for valid types
-  invalidFieldHandler(filledFieldsObj, res);
+  reply = invalidFieldHandler(filledFieldsObj, res);
+  if (reply) {
+    return reply;
+  }
+  trimmer(filledFieldsObj, req);
   next();
 };
 export default modifyARequestChecker;
