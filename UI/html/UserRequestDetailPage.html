@@ -17,6 +17,7 @@
     <nav id="navbar">
       <a class="default-primary-color text-primary-color Logo pacifico" href="SigninPage.html">TrackerHero</a>
       <ul class="default-primary-color text-primary-color">
+        <li><a href="AdminUserRequestDetailPage.html">Admin View<i class="fas fa-door-open"></i></a></li>
         <li><a href="MakeRequest.html">Make Request &nbsp<i class="fas fa-bullhorn"></i></a></li>
         <li><a href="#">Profile &nbsp<i class="fas fa-user"></i></a></li>
         <li><a href="UserViewRequests.html">My Requests &nbsp<i class="far fa-eye"></i></a></li>
@@ -26,23 +27,44 @@
     </nav>
   </header>
   <main>
+    <div class="modalBox displayNone">
+      <div class="modalHeader delModalHeader">
+        <p id="modalMessage">Delete A Request</p>
+      </div>
+      <div class="modalBody">
+        <p>This action can not be undone!</p>
+        <p>Are sure you want to delete this request?</p>
+      </div>
+      <div class="modalFooter delModalFooter">
+        <a class="modalDelApprove">Delete Request</a>
+        <a class="modalCancel">Cancel</a>
+      </div>
+    </div>
+    <section class="modal displayNone">
+    </section>
+    <section id="alerts" class="displayNone">
+      <p id="alertMessage"></p>
+      <span><i id="alertClose" class="fas fa-times"></i></span>
+    </section>
     <section id="detailBoard">
       <div class="detailBoardPicColumn">
         <div class="requestImageContainer2">
-          <img src="../media/images/brokenPrinter.jpeg" alt="">
+          <img src="../media/images/lightBulb.jpeg" alt="">
         </div>
       </div>
       <div class="detailBoardInfoColumn">
         <div class="titleAndDescription">
-          <h1>Broken Printer</h1>
+          <h1>Broken Lightbulb</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga labore eum natus amet voluptatem velit vel quaerat magni deserunt culpa aliquam quibusdam suscipit, architecto rem libero numquam iusto distinctio. Veniam quisquam similique iusto soluta nostrum quam ducimus provident temporibus molestias, pariatur excepturi, quibusdam. Mollitia quidem nobis nesciunt, est molestiae assumenda?</p>
         </div>
         <div class="detailsAndLocation">
           <div class="details">
             <h3>Details</h3>
+            <p>RequestId:- 000000</p>
             <p>Type:- Repair</p>
-            <p>Status:- Not Approved/Rejected/Resolved</p>
+            <p>Status:- Not Approved/Rejected</p>
             <p>Date Submitted:- 19/12/2017</p>
+            <p>Scheduled Date of Completion:- 26/12/2017</p>
           </div>
           <div class="location">
             <h3>Location</h3>
@@ -59,7 +81,7 @@
         </div>
         <div class="actionRow">
           <a href="EditRequest.html" class="editDetailBtn">Edit Request</a>
-          <a href="#" class="deleteBtn">Delete Request</a>
+          <a class="deleteBtn">Delete Request</a>
         </div>
       </div>
     </section>
@@ -71,8 +93,8 @@
       <li><a href="#">About Us</a></li>
       <li><a href="#">Help</a></li>
     </ul>
-
   </footer>
   <script type="text/javascript" src="../js/hamburgerDropdown.js"></script>
+  <script type="text/javascript" src="../js/alert.js"></script>
 </body>
 </html>
