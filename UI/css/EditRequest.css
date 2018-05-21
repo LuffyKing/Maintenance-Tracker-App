@@ -28,6 +28,7 @@
   }
 
 }
+
 @media (max-width:960px) {
 
   #status{
@@ -44,6 +45,7 @@
   }
 
 }
+
 @media (min-width:1024px) {
 
   .inputLabel{
@@ -59,5 +61,5 @@
     padding: 1rem;
     width:25%;
   }
-  
+
 }
