@@ -4,6 +4,7 @@
   -moz-background-size: cover;
   -webkit-background-size: cover;
 }
+
 .landing::after{
 background-image: linear-gradient(to bottom right,#002f4b,#000000);
 bottom: 0;
