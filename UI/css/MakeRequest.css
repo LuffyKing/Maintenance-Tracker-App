@@ -44,6 +44,7 @@
     font-size: 5.68rem;
     padding-left: 2.27rem;
   }
+
   .form-control {
     align-items: center;
     display: flex;
@@ -72,7 +73,7 @@
 
   #loginPanel2{
     padding: 5rem;
-  width: 85%;
+    width: 85%;
   }
 
   .formSubmit{
@@ -81,6 +82,7 @@
   }
 
 }
+
 @media (max-width:600px) {
 
   #loginPanel2{
@@ -102,11 +104,12 @@
   }
 
 }
+
 @media (max-width:960px) {
 
   #loginPanel2{
       padding: 2rem;
 
   }
-  
+
 }
