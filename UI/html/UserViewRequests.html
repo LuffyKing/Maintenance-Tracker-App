@@ -10,12 +10,14 @@
   <link rel="stylesheet" href="../css/signin.css">
   <link rel="stylesheet" href="../css/signup.css">
   <link rel="stylesheet" href="../css/UserViewRequests.css">
+  <link rel="stylesheet" href="../css/AdminViewRequests.css">
 </head>
 <body>
   <header>
     <nav id="navbar">
       <a class="default-primary-color text-primary-color Logo pacifico" href="SigninPage.html">TrackerHero</a>
       <ul class="default-primary-color text-primary-color">
+        <li><a href="AdminUserViewRequests.html">Admin View<i class="fas fa-door-open"></i></a></li>
         <li><a href="MakeRequest.html">Make Request &nbsp<i class="fas fa-bullhorn"></i></a></li>
         <li><a href="#">Profile &nbsp<i class="fas fa-user"></i></a></li>
         <li><a href="UserViewRequests.html">My Requests &nbsp<i class="far fa-eye"></i></a></li>
@@ -23,10 +25,27 @@
       </ul>
       <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
     </nav>
-
-
   </header>
   <main>
+    <section id="alerts" class="displayNone">
+      <p id="alertMessage"></p>
+      <span><i id="alertClose" class="fas fa-times"></i></span>
+    </section>
+    <div class="modalBox displayNone">
+      <div class="modalHeader delModalHeader">
+        <p id="modalMessage">Delete A Request</p>
+      </div>
+      <div class="modalBody">
+        <p>This action can not be undone!</p>
+        <p>Are sure you want to delete this request?</p>
+      </div>
+      <div class="modalFooter delModalFooter">
+        <a class="modalDelApprove">Delete Request</a>
+        <a class="modalCancel">Cancel</a>
+      </div>
+    </div>
+    <section class="modal displayNone">
+    </section>
     <section id="requests" class="db-text">
       <div class="introduction">
         <h2>TrackerHero Maintenance and Repair Requests</h2>
@@ -37,7 +56,7 @@
           <option value="Approved">Approved</option>
           <option value="Rejected">Rejected</option>
           <option value="Resolved">Resolved</option>
-          <option value="Undecide">Not Approved/Rejected/Resolved</option>
+          <option value="Undecided">Not Approved/Rejected</option>
           <option value="All">All</option>
         </select>
       </p>
@@ -46,116 +65,68 @@
         <div class="requestRow">
           <div class="requestImageContainer">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
-
           </div>
           <div class="infoColumn1">
             <p>Title:- <span>Broken Printer</span></p>
             <p>Type:- <span>Repair</span></p>
-            <p>Status:-<span>Not Approved/Rejected/Resolved</span></p>
-          </div>
-          <div class="infoColumn2">
-
+            <p>Status:-<span>Not Approved/Rejected</span></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
             <a href="EditRequest.html" class="but">Edit</a>
-            <a href="#" class="but">Delete</a>
+            <a href="#" class="but del">Delete</a>
           </div>
-
-
         </div>
         <div class="requestRow">
           <div class="requestImageContainer">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
-
           </div>
           <div class="infoColumn1">
             <p>Title:- <span>Broken Printer</span></p>
             <p>Type:- <span>Repair</span></p>
             <p>Status:-<span>Approved</span></p>
-          </div>
-          <div class="infoColumn2">
-
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
             <a class="but disabled">Edit</a>
-            <a class="but disabled">Delete</a>
+            <a class="but del disabled">Delete</a>
           </div>
-
-
         </div>
         <div class="requestRow">
           <div class="requestImageContainer">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
-
           </div>
           <div class="infoColumn1">
             <p>Title:- <span>Broken Printer</span></p>
             <p>Type:- <span>Repair</span></p>
-            <p>Status:-<span>Not Approved/Rejected/Resolved</span></p>
-          </div>
-          <div class="infoColumn2">
-
+            <p>Status:-<span>Not Approved/Rejected</span></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
             <a href="EditRequest.html" class="but">Edit</a>
-            <a href="#" class="but">Delete</a>
+            <a href="#" class="but del">Delete</a>
           </div>
-
-
         </div>
         <div class="requestRow">
           <div class="requestImageContainer">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
-
           </div>
           <div class="infoColumn1">
             <p>Title:- <span>Broken Printer</span></p>
             <p>Type:- <span>Repair</span></p>
-            <p>Status:-<span>Not Approved/Rejected/Resolved</span></p>
-          </div>
-          <div class="infoColumn2">
-
+            <p>Status:-<span>Not Approved/Rejected</span></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
             <a href="EditRequest.html" class="but">Edit</a>
-            <a href="#" class="but">Delete</a>
+            <a href="#" class="but del">Delete</a>
           </div>
-
-
         </div>
         <div class="requestRow">
           <div class="requestImageContainer">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
-
           </div>
           <div class="infoColumn1">
             <p>Title:- <span>Broken Printer</span></p>
             <p>Type:- <span>Repair</span></p>
-            <p>Status:-<span>Not Approved/Rejected/Resolved</span></p>
-          </div>
-          <div class="infoColumn2">
-
+            <p>Status:-<span>Not Approved/Rejected</span></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
             <a href="EditRequest.html" class="but">Edit</a>
-            <a href="#" class="but">Delete</a>
+            <a href="#" class="but del">Delete</a>
           </div>
-
-
         </div>
-        <div class="requestRow">
-          <div class="requestImageContainer">
-            <img src="../media/images/brokenPrinter.jpeg" alt="">
-
-          </div>
-          <div class="infoColumn1">
-            <p>Title:- <span>Broken Printer</span></p>
-            <p>Type:- <span>Repair</span></p>
-            <p>Status:-<span>Not Approved/Rejected/Resolved</span></p>
-          </div>
-          <div class="infoColumn2">
-
-            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a href="EditRequest.html" class="but">Edit</a>
-            <a href="#" class="but">Delete</a>
-          </div>
-
-
         </div>
       </div>
       <div class="requestRow pagRow">
@@ -166,14 +137,9 @@
           <a href="#">3</a>
           <a href="#">Next</a>
         </div>
-
-
       </div>
     </div>
-
     </section>
-
-
   </main>
   <footer id="footer">
     <ul class="default-primary-color text-primary-color">
@@ -182,8 +148,8 @@
       <li><a href="#">About Us</a></li>
       <li><a href="#">Help</a></li>
     </ul>
-
   </footer>
   <script type="text/javascript" src="../js/hamburgerDropdown.js"></script>
+  <script type="text/javascript" src="../js/alertUserViewRequests.js"></script>
 </body>
 </html>

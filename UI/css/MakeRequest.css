@@ -4,6 +4,7 @@
   -moz-background-size: cover;
   -webkit-background-size: cover;
 }
+
 .request::after{
   background-image: linear-gradient(to bottom right,#002f4b,#000000);
   bottom: 0;
@@ -17,22 +18,33 @@
   z-index: -9999;
 }
 
-
-
 @media (min-width:1024px) {
 
   html{
     font-size: 5.5px;
   }
+
   .sub-logo{
     font-size: 3rem;
   }
+
   #navbar ul,#footer ul{
-    font-size: 2.65rem;
+    font-size: 3.18rem;
   }
+
+  #navbar li {
+    margin-right: 9.09rem;
+  }
+
+  #footer ul{
+    height: 10.11rem;
+  }
+
   .Logo{
-    font-size: 4rem;
+    font-size: 5.68rem;
+    padding-left: 2.27rem;
   }
+
   .form-control {
     align-items: center;
     display: flex;
@@ -41,50 +53,63 @@
     margin-top: 1%;
     padding: 2rem;
   }
+
   #submitRow{
     display: flex;
     justify-content: center;
   }
+
   input, select,textarea, #status{
     flex:2;
   }
+
   p:not(#status){
     flex:1;
   }
+
   .button{
     width:100%;
   }
+
   #loginPanel2{
-      padding: 1rem;
+    padding: 5rem;
+    width: 85%;
   }
+
   .formSubmit{
     font-size: 1.25em;
     padding: 1.25em;
   }
 
-
-
 }
+
 @media (max-width:600px) {
+
   #loginPanel2{
       padding: 2rem;
       width:300px;
-
   }
+
   h2{
     text-align: center;
   }
+
   .form-control{
     margin-bottom: 1%;
     margin-top: 1%;
   }
+
   input, select,textarea,.inputLabel,#status{
     font-size: 1rem;
   }
+
 }
+
 @media (max-width:960px) {
+
   #loginPanel2{
       padding: 2rem;
 
   }
+
 }

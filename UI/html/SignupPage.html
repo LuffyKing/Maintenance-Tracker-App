@@ -22,8 +22,6 @@
       </ul>
       <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
     </nav>
-
-
   </header>
   <main>
     <section class="center-container">
@@ -33,45 +31,44 @@
         <form>
           <div class="form-control">
             <p class="inputLabel text-primary-color">First name</p>
-            <input id="firstname" type="text" name="firstname" placeholder="Enter your first name e.g. Damola" required>
+            <input id="firstname" class="inputSignup" type="text" name="firstname" placeholder="Enter your first name e.g. Damola" required>
           </div>
           <div class="form-control">
             <p class="inputLabel text-primary-color">Last name</p>
-            <input id="lastname" type="text" name="lastname" placeholder="Enter your last name e.g. Damola" required>
+            <input id="lastname" type="text" class="inputSignup" name="lastname" placeholder="Enter your last name e.g. Damola" required>
           </div>
           <div class="form-control">
             <p class="inputLabel text-primary-color">Email</p>
-            <input id="username" type="email" name="email" placeholder="Enter your email" required>
+            <input id="username" type="email" name="email" class="inputSignup" placeholder="Enter your email" required>
           </div>
           <div class="form-control">
             <p class="inputLabel text-primary-color">Password</p>
-            <input id="password" type="password" name="password" placeholder="Enter your password" required>
+            <input id="password" type="password" name="password" class="inputSignup" placeholder="Enter your password" required>
 
           </div>
           <div class="form-control">
             <p class="inputLabel text-primary-color">Confirm Password</p>
-            <input id="password2" type="password" name="password2" placeholder="Enter your password" required>
+            <input id="password2" type="password" class="inputSignup" name="password2" placeholder="Enter your password" required>
           </div>
           <div class="form-control">
             <p class="inputLabel text-primary-color">Job Title</p>
-            <input id="jobTitle" type="text" name="jobTitle" placeholder="Enter your Job Title" required>
+            <input id="jobTitle" type="text" name="jobTitle" class="inputSignup" placeholder="Enter your Job Title" required>
           </div>
           <div class="form-control">
             <p class="inputLabel text-primary-color">Department</p>
-            <input id="Department" type="text" name="Department" placeholder="Enter your Department" required>
+            <input id="Department" type="text" name="Department" class="inputSignup" placeholder="Enter your Department" required>
           </div>
           <div class="form-control btnOveride" id="submitRow">
-            <button type="submit" name="button" class="button btn-white formSubmit">Sign Up</button>
+            <button type="submit" name="button" class="button btn-white inputSignup formSubmit">Sign Up</button>
           </div>
           <div class="form-control formInfo">
-            <a class="text-primary-color" href="#">Forgot Your Password?</a>
+            <a class="text-primary-color infoLabelsSignup" href="#">Forgot Your Password?</a>
           </div>
           <div class="form-control formInfo">
-            <p class="db-text">If you have an account <a class="text-primary-color" href="SigninPage.html">Sign in!</a></p>
+            <p class="db-text infoLabelsSignup">If you have an account <a class="text-primary-color" href="SigninPage.html">Sign in!</a></p>
           </div>
         </form>
       </div>
-
     </section>
   </main>
   <footer id="footer">
@@ -81,7 +78,6 @@
       <li><a href="#">About Us</a></li>
       <li><a href="#">Help</a></li>
     </ul>
-
   </footer>
   <script type="text/javascript" src="../js/hamburgerDropdown.js"></script>
 </body>
