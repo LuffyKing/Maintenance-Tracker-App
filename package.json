@@ -7,9 +7,14 @@
     "build": "npm run clean-dist && npm run build-babel",
     "start": "npm run build && node build/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "build-babel": "babel server -d build",
+    "build-babel": "./node_modules/.bin/babel server -d build",
     "clean-dist": "rm -rf build && mkdir build",
-    "test": "nyc ./node_modules/.bin/mocha --exit --require babel-register test/index.js"
+    "test": "nyc mocha --exit"
+  },
+  "nyc": {
+    "require": [
+      "babel-register"
+    ]
   },
   "repository": {
     "type": "git",
@@ -30,10 +35,10 @@
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "uuid": "^3.2.1",
     "validator": "^10.2.0"
   },
   "devDependencies": {
-    "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
