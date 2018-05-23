@@ -9,7 +9,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build-babel": "./node_modules/.bin/babel server -d build",
     "clean-dist": "rm -rf build && mkdir build",
-    "test": "NODE_ENV=test nyc mocha --exit",
+    "test": "NODE_ENV=test nyc mocha test/index.js --exit",
     "setupDb": "npm run build && node build/db",
     "testDev": "npm run setupDb && npm run test"
   },

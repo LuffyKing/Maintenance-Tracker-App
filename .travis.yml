@@ -11,7 +11,7 @@ cache:
     - "node_modules"
 
 before_script:
-   - psql -c "CREATE DATABASE TrackerHero-dev;" -U postgres
+  - psql -c "CREATE DATABASE TrackerHero-dev;" -U postgres
   - psql -c "CREATE USER damola WITH PASSWORD 'damola';" -U postgres
 after_success:
 -  npm run coverage
