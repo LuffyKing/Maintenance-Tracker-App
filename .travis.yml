@@ -3,7 +3,8 @@ env:
   - DB_TEST_DATABASE_URL=postgres://damola:damola@localhost:5432/TrackerHero
   - SECRET_KEY='TEST'
 node_js:
-- "stable"
+  - "iojs"
+  - "7"
 before_install:
   - npm install -g npm@latest
 cache:
@@ -14,6 +15,6 @@ before_script:
   - psql -c "CREATE DATABASE TrackerHero;" -U postgres
   - psql -c "CREATE USER damola WITH PASSWORD 'damola';" -U postgres
 after_success:
--  npm run coverage
+  - npm run coverage
 services:
   - postgresql
