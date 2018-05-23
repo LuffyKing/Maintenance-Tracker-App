@@ -86,7 +86,7 @@ describe('Requests API Tests', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('message');
-          res.body.message.should.eql('The request could not be created because the fields DESCRIPTION ,TITLE were supposed to be strings');
+          res.body.message.should.eql('The request could not be created because the fields TITLE ,DESCRIPTION were supposed to be strings');
           done();
         });
     });
