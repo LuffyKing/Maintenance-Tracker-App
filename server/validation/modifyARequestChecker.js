@@ -38,13 +38,13 @@ const modifyARequestChecker = (req, res, next) => {
     });
   }
   // check for strings
-  reply = nonStringFieldHandler(filledFieldsObj, res);
+  reply = nonStringFieldHandler(filledFieldsObj, res, 'The request could not be created because');
   if (reply) {
     return reply;
   }
 
   // check for valid types
-  reply = invalidFieldHandler(filledFieldsObj, res);
+  reply = invalidFieldHandler(filledFieldsObj, res, 'The request could not be created because');
   if (reply) {
     return reply;
   }
