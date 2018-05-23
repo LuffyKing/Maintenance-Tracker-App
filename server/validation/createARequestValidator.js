@@ -79,10 +79,10 @@ const specialMessages = {
 * @param {string} end - an array of invalid fields
 *@returns {Object} - a 400 response object with a customized message attribute
 */
-const message = (statusCode, res, invalidFieldsArray, end) => {
+const message = (statusCode, res, invalidFieldsArray, end, failReason) => {
   const verb = invalidFieldsArray.length === 1 ? ['field', 'was'] : ['fields', 'were'];
   return res.status(statusCode).send({
-    message: `The request could not be created because the ${verb[0]} ${invalidFieldsArray.join(' ,')} ${verb[1]} ${end}`
+    message: `${failReason} the ${verb[0]} ${invalidFieldsArray.join(' ,')} ${verb[1]} ${end}`
   });
 };
 /**
@@ -103,25 +103,25 @@ const invalidFieldsChecker = reqBody => Object.keys(reqBody).filter((elm) => {
   return `the ${key.toUpperCase()} field did not contain a single letter of the alphabet`;
 });
 
-const nonStringFieldHandler = (reqBody, res) => {
+const nonStringFieldHandler = (reqBody, res, failReason) => {
   const nonStringFieldFinderArr = nonStringFieldFinder(reqBody);
   if (nonStringFieldFinderArr.length > 0) {
     const word = nonStringFieldFinderArr.length === 1 ? 'a string' : 'strings';
-    return message(400, res, nonStringFieldFinderArr, `supposed to be ${word}`);
+    return message(400, res, nonStringFieldFinderArr, `supposed to be ${word}`, failReason);
   }
 };
-const invalidFieldHandler = (reqBody, res) => {
+const invalidFieldHandler = (reqBody, res, failReason) => {
   const invalidFieldsArr = invalidFieldsChecker(reqBody);
   if (invalidFieldsArr.length > 0) {
     return res.status(400).json({
-      message: `The request could not be created because ${invalidFieldsArr.join(' ,')}`
+      message: `${failReason} ${invalidFieldsArr.join(' ,')}`
     });
   }
 };
-const emptyFieldsHandler = (reqBody, res) => {
+const emptyFieldsHandler = (reqBody, res, failReason) => {
   const emptyFieldsArr = emptyFieldsFinder(reqBody);
   if (emptyFieldsArr.length > 0) {
-    return message(400, res, emptyFieldsArr, 'not provided');
+    return message(400, res, emptyFieldsArr, 'not provided', failReason);
   }
 };
 /**
@@ -137,16 +137,16 @@ const createARequestChecker = (req, res, next) => {
   let reply;
 
   // check if the fields are empty
-  reply = emptyFieldsHandler(reqBody, res);
+  reply = emptyFieldsHandler(reqBody, res, 'The request could not be created because');
   if (reply) {
     return reply;
   }
   // check for strings
-  reply = nonStringFieldHandler(reqBody, res);
+  reply = nonStringFieldHandler(reqBody, res, 'The request could not be created because');
   if (reply) {
     return reply;
   }
-  reply = invalidFieldHandler(reqBody, res);
+  reply = invalidFieldHandler(reqBody, res, 'The request could not be created because');
   if (reply) {
     return reply;
   }
