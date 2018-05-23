@@ -1,13 +1,11 @@
+import validator from 'validator';
 import { requests } from '../dummy-data/database';
 
-const getReqBody = (req) => {
-  const reqBody = {
-    description: req.body.description,
-    type: req.body.type,
-    userid: req.body.userid,
-    title: req.body.title,
-    location: req.body.location
-  };
+const getReqBody = (req, listOfProps) => {
+  const reqBody = listOfProps.reduce((accumulator, property) => {
+    accumulator[property] = req.body[property];
+    return accumulator;
+  }, {});
   return reqBody;
 };
 
@@ -62,13 +60,15 @@ const specialValidation = {
   type: (typeValue) => {
     const typeValueRegex = /^Maintenance$|^Repair$/i;
     return typeValueRegex.test(typeValue.trim());
-  }
+  },
+  email: validator.isEmail
 };
 
 
 const specialMessages = {
   userid: 'the userid value is not an integer',
-  type: 'the type value is not Repair or Maintenance'
+  type: 'the type value is not Repair or Maintenance',
+  email: 'the email value is not an email'
 };
 /**
 * It finds the fields that are supposed to have a string as a value but
@@ -118,6 +118,12 @@ const invalidFieldHandler = (reqBody, res) => {
     });
   }
 };
+const emptyFieldsHandler = (reqBody, res) => {
+  const emptyFieldsArr = emptyFieldsFinder(reqBody);
+  if (emptyFieldsArr.length > 0) {
+    return message(400, res, emptyFieldsArr, 'not provided');
+  }
+};
 /**
 * It validates the fields and renders the appropriate response
 * @param {Object} req - request object containing params and body
@@ -127,13 +133,13 @@ const invalidFieldHandler = (reqBody, res) => {
 * all the fields do not have the proper data type or string values
 */
 const createARequestChecker = (req, res, next) => {
-  const reqBody = getReqBody(req);
+  const reqBody = getReqBody(req, ['title', 'description', 'type', 'userid', 'title', 'location']);
   let reply;
 
   // check if the fields are empty
-  const emptyFieldsArr = emptyFieldsFinder(reqBody);
-  if (emptyFieldsArr.length > 0) {
-    return message(400, res, emptyFieldsArr, 'not provided');
+  reply = emptyFieldsHandler(reqBody, res);
+  if (reply) {
+    return reply;
   }
   // check for strings
   reply = nonStringFieldHandler(reqBody, res);
@@ -156,7 +162,7 @@ export {
   invalidFieldsChecker,
   message,
   specialMessages,
-  emptyFieldsFinder,
+  emptyFieldsHandler,
   nonStringFieldFinder,
   getReqBody,
   nonStringFieldHandler,
