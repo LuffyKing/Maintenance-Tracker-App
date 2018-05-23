@@ -28,7 +28,7 @@ const filledFieldsFinder = (reqBody) => {
 * all the fields do not have the proper data type or string values
 */
 const modifyARequestChecker = (req, res, next) => {
-  const reqBody = getReqBody(req);
+  const reqBody = getReqBody(req, ['title', 'description', 'type', 'userid', 'title', 'location']);
   // check if the fields are filled
   let reply;
   const filledFieldsObj = filledFieldsFinder(reqBody);

@@ -133,7 +133,7 @@ describe('Requests API Tests', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('message');
-          res.body.message.should.eql('The request could not be created because the DESCRIPTION field did not contain a single letter of the alphabet ,the type value is not Repair or Maintenance ,the TITLE field did not contain a single letter of the alphabet ,the LOCATION field did not contain a single letter of the alphabet');
+          res.body.message.should.eql('The request could not be created because the TITLE field did not contain a single letter of the alphabet ,the DESCRIPTION field did not contain a single letter of the alphabet ,the type value is not Repair or Maintenance ,the LOCATION field did not contain a single letter of the alphabet');
           done();
         });
     });

@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/LuffyKing/Maintenance-Tracker-App.svg?branch=ft-ModifyARequest-API-157581106)](https://travis-ci.org/LuffyKing/Maintenance-Tracker-App)
-[![Coverage Status](https://coveralls.io/repos/github/LuffyKing/Maintenance-Tracker-App/badge.svg?branch=ft-ModifyARequest-API-157581106)](https://coveralls.io/github/LuffyKing/Maintenance-Tracker-App?branch=ft-ModifyARequest-API-157581106)
+[![Build Status](https://travis-ci.org/LuffyKing/Maintenance-Tracker-App.svg?branch=develop)](https://travis-ci.org/LuffyKing/Maintenance-Tracker-App)
+[![Coverage Status](https://coveralls.io/repos/github/LuffyKing/Maintenance-Tracker-App/badge.svg?branch=develop)](https://coveralls.io/github/LuffyKing/Maintenance-Tracker-App?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a2d1970c212fdbc11a63/maintainability)](https://codeclimate.com/github/LuffyKing/Maintenance-Tracker-App/maintainability)
 
 # Maintenance-Tracker-App
