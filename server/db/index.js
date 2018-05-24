@@ -9,6 +9,7 @@ const connectionString = config.DATABASE_URL || process.env.DATABASE_URL;
 const pool = new Pool({
   connectionString
 });
+
 pool.connect((err, client, done) => {
   if (err) throw err;
   if (process.env.NODE_ENV === 'test') {
