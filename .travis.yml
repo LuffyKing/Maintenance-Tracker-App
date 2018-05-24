@@ -1,6 +1,6 @@
 language: node_js
 env:
-  - DB_TEST_DATABASE_URL=postgres://damola:damola@localhost:5432/travis SECRET_KEY=TEST
+  - DB_TEST_DATABASE_URL=postgres://postgres:@localhost:5432/travis SECRET_KEY=TEST
 node_js:
   - "stable"
 before_install:
