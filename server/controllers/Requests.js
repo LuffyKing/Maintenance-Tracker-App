@@ -57,7 +57,7 @@ const Requests = {
           });
         }
         return response.status(404).send({
-          message: 'A request with that id does not exist on TrackerHero, but it is not too late to create it!',
+          message: 'You do not have any request on TrackerHero with that id',
         });
       });
     });
