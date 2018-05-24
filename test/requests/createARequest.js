@@ -83,7 +83,7 @@ describe('Requests API Tests', () => {
             .send(newRequestFieldsEmpty)
             .set('authorization', responseLogin.body.token)
             .end((err, response) => {
-              response.body.message.should.eql('Your request was successfully created.');
+              response.body.message.should.eql('-The request could not be created because the TITLE field did not contain a single letter of the alphabet ,the DESCRIPTION field did not contain a single letter of the alphabet ,the type value is not Repair or Maintenance ,the LOCATION field did not contain a single letter of the alphabet');
               response.should.have.status(201);
               response.body.should.have.property('message');
               response.body.request.title.should.eql(newRequest.title);
@@ -174,26 +174,6 @@ describe('Requests API Tests', () => {
               response.should.have.status(400);
               response.body.should.have.property('message');
               response.body.message.should.eql('The request could not be created because the fields TYPE ,LOCATION were supposed to be strings');
-              done();
-            });
-        });
-    });
-  });
-  describe('/POST requests', () => {
-    it('should POST the details of a request with empty strings and fail', (done) => {
-      chai.request(server)
-        .post('/api/v1/auth/login')
-        .send(existingUser)
-        .then((responseLogin) => {
-          responseLogin.body.should.have.property('token');
-          chai.request(server)
-            .post('/api/v1/users/requests')
-            .send(newRequestInvalidIntFields)
-            .set('authorization', responseLogin.body.token)
-            .end((err, response) => {
-              response.should.have.status(400);
-              response.body.should.have.property('message');
-              response.body.message.should.eql('The request could not be created because the TITLE field did not contain a single letter of the alphabet ,the DESCRIPTION field did not contain a single letter of the alphabet ,the type value is not Repair or Maintenance ,the LOCATION field did not contain a single letter of the alphabet');
               done();
             });
         });
