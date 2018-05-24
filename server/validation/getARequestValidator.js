@@ -5,7 +5,7 @@ import validator from 'validator';
 * @returns {boolean} - boolean which is true if the string id is an integer
 *and vice-versa
 */
-const checkId = id => validator.isInt(id);
+const checkId = id => validator.isUUID(id, 4);
 
 /**
 * It gets all the requests on the application
@@ -16,11 +16,11 @@ const checkId = id => validator.isInt(id);
 * requestid is in valid
 */
 const getARequestChecker = (request, response, next) => {
-  if (checkId(request.params.requestid.trim())) {
+  if (checkId(request.params.requestid.trim()) && !/[^a-zA-Z0-9-]/.test(request.params.requestid)) {
     request.params.requestid = request.params.requestid.trim();
     next();
   } else {
-    return response.status(400).send({ message: 'The id provided is invalid because it is not an integer' });
+    return response.status(400).send({ message: 'The id provided is invalid because it is not of the type UUID 4' });
   }
 };
 export { checkId, getARequestChecker };

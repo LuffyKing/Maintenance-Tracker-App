@@ -42,13 +42,24 @@ const Requests = {
 * does not match an existing request
 */
   getARequest: (request, response) => {
-    const { requestid } = request.params;
-    const result = requests.filter(aRequest => aRequest.id === Number(requestid));
-    return result.length > 0 ? response.status(200).send({
-      message: 'Success - repair/maintenance request retrieved.',
-      request: result[0]
-    }) : response.status(404).send({
-      message: 'Maintenance/Repair with the specified id was not found'
+    const { decodedUser, params } = request;
+    pool.connect((error, client, done) => {
+      if (error) response.status(500).send({ message: error.stack });
+      client.query(`SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}';`, (error1, requestRow) => {
+        done();
+        if (error1) {
+          return response.status(500).send({ message: error1.stack });
+        }
+        if (requestRow.rows.length > 0) {
+          return response.status(200).send({
+            message: 'Your request has been found',
+            request: requestRow.rows[0]
+          });
+        }
+        return response.status(404).send({
+          message: 'You do not have any request on TrackerHero with that id',
+        });
+      });
     });
   },
   /**

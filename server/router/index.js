@@ -13,7 +13,7 @@ const router = express.Router();
 router.post('/auth/signup', signUpAUserChecker, UsersController.signUp);
 router.post('/auth/login', loginAUserChecker, UsersController.login);
 router.get('/users/requests', verifyToken, RequestsController.getAllRequests);
-router.get('/users/requests/:requestid', getARequestChecker, RequestsController.getARequest);
+router.get('/users/requests/:requestid', verifyToken, getARequestChecker, RequestsController.getARequest);
 router.post('/users/requests/', createARequestChecker, RequestsController.createARequest);
 router.put('/users/requests/:requestid', getARequestChecker, modifyARequestChecker, RequestsController.updateARequest);
 export default router;
