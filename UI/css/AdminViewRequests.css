@@ -1,0 +1,84 @@
+a.modalDelResolve,a.approvebtn, a.modalDeldisapprove,a.modalCancel,
+a.modalDelApprove,a.disapprovebtn, a.resolvebtn,a.placeholder,
+a.editDetailBtn, a.deleteBtn,a.approveDetailBtn {
+    border-radius: 4px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+a.approvebtn{
+  background-color: #32CD32;
+  width: 100%;
+}
+
+a.approvebtn:hover{
+  background-color: #98FB98;
+}
+
+a.disapprovebtn {
+    background-color: #e60000;
+    width: 100%;
+}
+
+a.disapprovebtn:hover{
+  background-color: #ff3333;
+}
+
+a.resolvebtn {
+  background-color: #DAA520;
+  width: 100%;
+}
+
+a.resolvebtn:hover, a.resolveBtnNon100:hover{
+  background-color:  #EEE8AA;
+  cursor: pointer;
+}
+
+a.resolveBtnNon100{
+  background-color: #DAA520;
+}
+
+a.placeholder{
+  cursor: default;
+}
+
+a.deleteBtn, a.modalCancel, .requestDisapproved{
+  background-color: #e60000;
+}
+
+a.deleteBtn:hover, a.modalCancel:hover, .requestDisapproved:hover{
+  background-color: #ff3333;
+}
+
+a.editDetailBtn{
+  background-color: #0288D1;
+}
+
+a.editDetailBtn:hover{
+  background-color: #03A9F4;
+}
+
+a.approveDetailBtn, .requestApproved,.modalDelApprove,.modalDeldisapprove,.modalDelResolve{
+  background-color: #32CD32 !important;
+}
+
+a.approveDetailBtn:hover, .requestApproved:hover,.modalDelApprove:hover,.modalDeldisapprove:hover, .modalDelResolve:hover{
+  background-color: #98FB98 !important;
+  cursor: pointer;
+}
+
+.requestRow{
+  height: 300px;
+}
+
+.requestImageContainer{
+  height: 285px;
+}
+
+.requestRowFooter{
+  height: 10vh !important;
+}
