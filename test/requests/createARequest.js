@@ -83,7 +83,7 @@ describe('Requests API Tests', () => {
             .send(newRequestFieldsEmpty)
             .set('authorization', responseLogin.body.token)
             .end((err, response) => {
-              response.body.message.should.eql('-The request could not be created because the TITLE field did not contain a single letter of the alphabet ,the DESCRIPTION field did not contain a single letter of the alphabet ,the type value is not Repair or Maintenance ,the LOCATION field did not contain a single letter of the alphabet');
+              response.body.message.should.eql('The request could not be created because the TITLE field did not contain a single letter of the alphabet ,the DESCRIPTION field did not contain a single letter of the alphabet ,the type value is not Repair or Maintenance ,the LOCATION field did not contain a single letter of the alphabet');
               response.should.have.status(201);
               response.body.should.have.property('message');
               response.body.request.title.should.eql(newRequest.title);
