@@ -1,8 +1,10 @@
-CREATE USER 'damola'@'localhost' IDENTIFIED BY 'damola';
-GRANT ALL PRIVILEGES ON *.* TO 'damola'@'localhost';
 CREATE DATABASE travis;
-USE travis;
-DROP TABLE IF EXISTS USERS,REQUESTS;
+\c travis
+CREATE DATABASE travis;
+DROP TYPE status,reqtype,profile;
+CREATE TYPE status AS ENUM('Not Approved/Rejected', 'Approved', 'Rejected', 'Resolved');
+CREATE TYPE reqtype AS ENUM('Maintenance', 'Repair');
+CREATE TYPE profile AS ENUM('Admin', 'User');
 CREATE TABLE IF NOT EXISTS USERS(
 ID UUID PRIMARY KEY NOT NULL,
 FIRST_NAME VARCHAR(80) NOT NULL,
@@ -18,11 +20,13 @@ CREATE TABLE IF NOT EXISTS REQUESTS(
 ID UUID PRIMARY KEY NOT NULL,
 TITLE VARCHAR(50) NOT NULL,
 DESCRIPTION VARCHAR(288) NOT NULL,
-status status default 'Not Aprroved/Rejected' NOT NULL,
+status status default 'Not Approved/Rejected' NOT NULL,
 type reqtype NOT NULL,
 date_submitted date NOT NULL,
 last_edited date NOT NULL,
 date_resolved date,
 LOCATION VARCHAR(160) NOT NULL,
-REASON VARCHAR(288) NOT NULL,
+REASON VARCHAR(288),
 userid UUID references users(ID));
+\dt
+\du
