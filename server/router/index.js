@@ -4,10 +4,12 @@ import UsersController from '../controllers/Users';
 import loginAUserChecker from '../validation/loginAUSerValidator';
 import { getARequestChecker } from '../validation/getARequestValidator';
 import { createARequestChecker } from '../validation/createARequestValidator';
+import signUpAUserChecker from '../validation/signUpAUserValidator';
 import modifyARequestChecker from '../validation/modifyARequestChecker';
 
 const router = express.Router();
 
+router.post('/auth/signup', signUpAUserChecker, UsersController.signUp);
 router.post('/auth/login', loginAUserChecker, UsersController.login);
 router.get('/users/requests', RequestsController.getAllRequests);
 router.get('/users/requests/:requestid', getARequestChecker, RequestsController.getARequest);
