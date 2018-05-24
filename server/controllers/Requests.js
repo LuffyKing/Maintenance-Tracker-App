@@ -1,4 +1,5 @@
 import { requests } from '../dummy-data/database';
+import { pool } from '../db';
 /**
  * An  object that handles the requests api operation
  */
@@ -8,12 +9,30 @@ const Requests = {
 * @param {Object} request - request object containing params and body
 * @param {Object} response - response object that conveys the result of the request
 * @returns {Object} - response object that has a status code of 200 as long as a
-request is made
+* with a verified token
 */
-  getAllRequests: (request, response) => response.status(200).send({
-    message: 'Success - All repair/maintenance requests retrieved.',
-    requests
-  }),
+  getAllRequests: (request, response) => {
+    const { decodedUser } = request;
+    pool.connect((error, client, done) => {
+      if (error) response.status(500).send({ message: error.stack });
+      client.query(`SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}';`, (error1, requestRow) => {
+        done();
+        if (error1) {
+          return response.status(500).send({ message: error1.stack });
+        }
+        if (requestRow.rows.length > 0) {
+          const requestPluSing = requestRow.rows.length === 1 ? 'request has' : 'requests have';
+          return response.status(200).send({
+            message: `Your ${requestRow.rows.length} ${requestPluSing} been found`,
+            requests: requestRow.rows
+          });
+        }
+        return response.status(404).send({
+          message: 'You do not have any requests on TrackerHero, but it is not too late to start making them!',
+        });
+      });
+    });
+  },
   /**
 * It gets a requests on the application
 * @param {Object} request - request object containing params and body
