@@ -10,8 +10,6 @@ cache:
     - "node_modules"
 
 before_script:
-  - psql -c "CREATE DATABASE travis;" -U postgres
-  - psql -c "CREATE USER damola WITH PASSWORD 'damola';" -U postgres
   - psql -U postgres -d postgres -a -f ./server/db/travisIndexTest.sql
 after_success:
   -  npm run coverage
