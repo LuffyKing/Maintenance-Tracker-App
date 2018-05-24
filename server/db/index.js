@@ -38,11 +38,6 @@ const seedAuto = (table, columns, values, poolClient) => {
   });
 };
 
-createEnum('status', ['Not Aprroved/Rejected', 'Approved', 'Rejected', 'Resolved']);
-
-createEnum('profile', ['Admin', 'User']);
-
-createEnum('reqtype', ['Maintenance', 'Repair']);
 pool.connect((err, client, done) => {
   if (err) throw err;
   if (process.env.NODE_ENV === 'test') {
