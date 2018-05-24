@@ -57,18 +57,18 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .post('/api/v1/users/requests')
         .send(newRequest)
-        .end((err, res) => {
-          res.body.message.should.eql('Success - repair/maintenance request created.');
-          res.should.have.status(201);
-          res.body.should.have.property('message');
-          res.body.request.title.should.eql(newRequest.title);
-          res.body.request.description.should.eql(newRequest.description);
-          res.body.request.location.should.eql(newRequest.location);
-          res.body.request.type.should.eql(newRequest.type);
-          res.body.request.userid.should.eql(newRequest.userid);
-          res.body.request.should.have.property('id');
-          res.body.request.should.have.property('dateSubmitted');
-          res.body.request.should.have.property('status');
+        .end((err, response) => {
+          response.body.message.should.eql('Success - repair/maintenance request created.');
+          response.should.have.status(201);
+          response.body.should.have.property('message');
+          response.body.request.title.should.eql(newRequest.title);
+          response.body.request.description.should.eql(newRequest.description);
+          response.body.request.location.should.eql(newRequest.location);
+          response.body.request.type.should.eql(newRequest.type);
+          response.body.request.userid.should.eql(newRequest.userid);
+          response.body.request.should.have.property('id');
+          response.body.request.should.have.property('dateSubmitted');
+          response.body.request.should.have.property('status');
           done();
         });
     });
@@ -78,10 +78,10 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .post('/api/v1/users/requests')
         .send(newRequestInvalidIntFields)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('The request could not be created because the fields TYPE ,LOCATION were supposed to be strings');
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('The request could not be created because the fields TYPE ,LOCATION were supposed to be strings');
           done();
         });
     });
@@ -91,10 +91,10 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .post('/api/v1/users/requests')
         .send(newRequestEmptyFields)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('The request could not be created because the fields TYPE ,USERID were not provided');
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('The request could not be created because the fields TYPE ,USERID were not provided');
           done();
         });
     });
@@ -104,10 +104,10 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .post('/api/v1/users/requests')
         .send(newRequestNonStringFields)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('The request could not be created because the field LOCATION was supposed to be a string');
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('The request could not be created because the field LOCATION was supposed to be a string');
           done();
         });
     });
@@ -117,10 +117,10 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .post('/api/v1/users/requests')
         .send(newRequestDuplicate)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('The request could not be created because a request with the same LOCATION, DESCRIPTION,TYPE AND TITLE already exists');
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('The request could not be created because a request with the same LOCATION, DESCRIPTION,TYPE AND TITLE already exists');
           done();
         });
     });
@@ -130,10 +130,10 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .post('/api/v1/users/requests')
         .send(newRequestFieldsEmpty)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('The request could not be created because the TITLE field did not contain a single letter of the alphabet ,the DESCRIPTION field did not contain a single letter of the alphabet ,the type value is not Repair or Maintenance ,the LOCATION field did not contain a single letter of the alphabet');
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('The request could not be created because the TITLE field did not contain a single letter of the alphabet ,the DESCRIPTION field did not contain a single letter of the alphabet ,the type value is not Repair or Maintenance ,the LOCATION field did not contain a single letter of the alphabet');
           done();
         });
     });

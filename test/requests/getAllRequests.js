@@ -13,11 +13,11 @@ describe('Requests API Tests', () => {
     it('should GET all requests', (done) => {
       chai.request(server)
         .get('/api/v1/users/requests')
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('Success - All repair/maintenance requests retrieved.');
-          res.body.requests.should.eql(requests);
+        .end((err, response) => {
+          response.should.have.status(200);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('Success - All repair/maintenance requests retrieved.');
+          response.body.requests.should.eql(requests);
           done();
         });
     });

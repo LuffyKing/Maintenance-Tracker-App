@@ -44,17 +44,17 @@ describe('Requests signup Tests', () => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send(newUser)
-        .end((err, res) => {
-          res.body.message.should.eql('Signup successful');
-          res.should.have.status(200);
-          res.body.should.have.property('message');
-          res.body.user.firstName.should.eql('Oyindamola');
-          res.body.user.lastName.should.eql('Aderinwale');
-          res.body.user.email.should.eql('aderino@gmail.com');
-          res.body.user.jobTitle.should.eql('King slayer');
-          res.body.user.department.should.eql('Guardians');
-          res.body.user.profile.should.eql('User');
-          res.body.user.location.should.eql('4 Tawdry Lane');
+        .end((err, response) => {
+          response.body.message.should.eql('Signup successful');
+          response.should.have.status(200);
+          response.body.should.have.property('message');
+          response.body.user.firstName.should.eql('Oyindamola');
+          response.body.user.lastName.should.eql('Aderinwale');
+          response.body.user.email.should.eql('aderino@gmail.com');
+          response.body.user.jobTitle.should.eql('King slayer');
+          response.body.user.department.should.eql('Guardians');
+          response.body.user.profile.should.eql('User');
+          response.body.user.location.should.eql('4 Tawdry Lane');
           done();
         });
     });
@@ -64,10 +64,10 @@ describe('Requests signup Tests', () => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send(newUser)
-        .end((err, res) => {
-          res.body.message.should.eql('Your sign up attempt was unsuccessful because the EMAIL you provided already exists!');
-          res.should.have.status(400);
-          res.body.should.have.property('message');
+        .end((err, response) => {
+          response.body.message.should.eql('Your sign up attempt was unsuccessful because the EMAIL you provided already exists!');
+          response.should.have.status(400);
+          response.body.should.have.property('message');
           done();
         });
     });
@@ -77,10 +77,10 @@ describe('Requests signup Tests', () => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send(newUserNonStringFields)
-        .end((err, res) => {
-          res.body.message.should.eql('Your sign up attempt was unsuccessful because the fields FIRST NAME ,LAST NAME were supposed to be strings');
-          res.should.have.status(400);
-          res.body.should.have.property('message');
+        .end((err, response) => {
+          response.body.message.should.eql('Your sign up attempt was unsuccessful because the fields FIRST NAME ,LAST NAME were supposed to be strings');
+          response.should.have.status(400);
+          response.body.should.have.property('message');
           done();
         });
     });
@@ -90,10 +90,10 @@ describe('Requests signup Tests', () => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send(newUserIncompleteFields)
-        .end((err, res) => {
-          res.body.message.should.eql('Your sign up attempt was unsuccessful because the fields PASSWORD ,JOB TITLE ,DEPARTMENT were not provided');
-          res.should.have.status(400);
-          res.body.should.have.property('message');
+        .end((err, response) => {
+          response.body.message.should.eql('Your sign up attempt was unsuccessful because the fields PASSWORD ,JOB TITLE ,DEPARTMENT were not provided');
+          response.should.have.status(400);
+          response.body.should.have.property('message');
           done();
         });
     });
@@ -103,10 +103,10 @@ describe('Requests signup Tests', () => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send(newUserInvalidInfo)
-        .end((err, res) => {
-          res.body.message.should.eql('Your sign up attempt was unsuccessful because the LASTNAME field did not contain a single letter of the alphabet ,the email value is not an email');
-          res.should.have.status(400);
-          res.body.should.have.property('message');
+        .end((err, response) => {
+          response.body.message.should.eql('Your sign up attempt was unsuccessful because the LASTNAME field did not contain a single letter of the alphabet ,the email value is not an email');
+          response.should.have.status(400);
+          response.body.should.have.property('message');
           done();
         });
     });

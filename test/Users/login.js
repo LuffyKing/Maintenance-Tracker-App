@@ -34,17 +34,17 @@ describe('Requests login Tests', () => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send(existingUser)
-        .end((err, res) => {
-          res.body.message.should.eql('Login successful');
-          res.should.have.status(200);
-          res.body.should.have.property('message');
-          res.body.user.first_name.should.eql('Oyindamola');
-          res.body.user.last_name.should.eql('Aderinwale');
-          res.body.user.email.should.eql('aderinwale17@gmail.com');
-          res.body.user.job_title.should.eql('King slayer');
-          res.body.user.department.should.eql('Guardians');
-          res.body.user.profile.should.eql('User');
-          res.body.user.location.should.eql('4 Tawdry Lane');
+        .end((err, response) => {
+          response.body.message.should.eql('Login successful');
+          response.should.have.status(200);
+          response.body.should.have.property('message');
+          response.body.user.first_name.should.eql('Oyindamola');
+          response.body.user.last_name.should.eql('Aderinwale');
+          response.body.user.email.should.eql('aderinwale17@gmail.com');
+          response.body.user.job_title.should.eql('King slayer');
+          response.body.user.department.should.eql('Guardians');
+          response.body.user.profile.should.eql('User');
+          response.body.user.location.should.eql('4 Tawdry Lane');
           done();
         });
     });
@@ -54,10 +54,10 @@ describe('Requests login Tests', () => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send(existingUserWrongPassword)
-        .end((err, res) => {
-          res.body.message.should.eql('Invalid Username/Password');
-          res.should.have.status(401);
-          res.body.should.have.property('message');
+        .end((err, response) => {
+          response.body.message.should.eql('Invalid Username/Password');
+          response.should.have.status(401);
+          response.body.should.have.property('message');
           done();
         });
     });
@@ -67,10 +67,10 @@ describe('Requests login Tests', () => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send(existingUserInvalidEmail)
-        .end((err, res) => {
-          res.body.message.should.eql('Invalid Username/Password');
-          res.should.have.status(401);
-          res.body.should.have.property('message');
+        .end((err, response) => {
+          response.body.message.should.eql('Invalid Username/Password');
+          response.should.have.status(401);
+          response.body.should.have.property('message');
           done();
         });
     });
@@ -80,10 +80,10 @@ describe('Requests login Tests', () => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send(existingUserEmptyStrings)
-        .end((err, res) => {
-          res.body.message.should.eql('Your log in attempt was unsuccessful because the email value is not an email ,the PASSWORD field did not contain a single letter of the alphabet');
-          res.should.have.status(400);
-          res.body.should.have.property('message');
+        .end((err, response) => {
+          response.body.message.should.eql('Your log in attempt was unsuccessful because the email value is not an email ,the PASSWORD field did not contain a single letter of the alphabet');
+          response.should.have.status(400);
+          response.body.should.have.property('message');
           done();
         });
     });
@@ -93,10 +93,10 @@ describe('Requests login Tests', () => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send(existingUserEmptyObject)
-        .end((err, res) => {
-          res.body.message.should.eql('Your log in attempt was unsuccessful because the fields EMAIL ,PASSWORD were not provided');
-          res.should.have.status(400);
-          res.body.should.have.property('message');
+        .end((err, response) => {
+          response.body.message.should.eql('Your log in attempt was unsuccessful because the fields EMAIL ,PASSWORD were not provided');
+          response.should.have.status(400);
+          response.body.should.have.property('message');
           done();
         });
     });
@@ -106,10 +106,10 @@ describe('Requests login Tests', () => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send(existingUserNonStringInput)
-        .end((err, res) => {
-          res.body.message.should.eql('Your log in attempt was unsuccessful because the fields EMAIL ,PASSWORD were supposed to be strings');
-          res.should.have.status(400);
-          res.body.should.have.property('message');
+        .end((err, response) => {
+          response.body.message.should.eql('Your log in attempt was unsuccessful because the fields EMAIL ,PASSWORD were supposed to be strings');
+          response.should.have.status(400);
+          response.body.should.have.property('message');
           done();
         });
     });
