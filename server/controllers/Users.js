@@ -18,15 +18,15 @@ const Users = {
   },
   /**
 * It gets all the requests on the application
-* @param {Object} req - request object containing params and body
-* @param {Object} res - response object that conveys the result of the request
+* @param {Object} request - request object containing params and body
+* @param {Object} response - response object that conveys the result of the request
 * @returns {Object} - response object that has a status code of 200 as long as a
 request is made
 */
-  login(req, res) {
-    const { email, password } = req.reqBody;
+  login(request, response) {
+    const { email, password } = request.reqBody;
     pool.connect((err, client, done) => {
-      if (err) res.status(500).send({ message: err.stack });
+      if (err) response.status(500).send({ message: err.stack });
       client.query(`SELECT ID,
         FIRST_NAME,
         LAST_NAME,
@@ -38,39 +38,39 @@ request is made
         LOCATION from USERS where EMAIL=$1`, [email], (err, result) => {
         done();
         if (err) {
-          return res.status(500).send({ message: err.stack });
+          return response.status(500).send({ message: err.stack });
         }
         if (result.rows.length > 0) {
           const user = result.rows[0];
           const newUser = Users.removePassword(user);
           if (bcrypt.compareSync(password, user.password) === true) {
             const token = jsonwebtoken.sign({ user }, process.env.SECRET_KEY, { expiresIn: '7d' });
-            return res.status(200).send({
+            return response.status(200).send({
               message: 'Login successful',
               token,
               user: newUser
             });
           }
-          return res.status(401).send({
+          return response.status(401).send({
             message: 'Invalid Username/Password',
           });
         }
-        return res.status(401).send({
+        return response.status(401).send({
           message: 'Invalid Username/Password',
         });
       });
     });
   },
-  signUp(req, res) {
+  signUp(request, response) {
     const newUser = {
-      ...req.reqBody,
+      ...request.reqBody,
       id: uuidv4(),
-      password: bcrypt.hashSync(req.reqBody.password, 8),
+      password: bcrypt.hashSync(request.reqBody.password, 8),
       profile: 'User',
       upgradeId: uuidv4()
     };
     pool.connect((err, client, done) => {
-      if (err) res.status(500).send({ message: err.stack });
+      if (err) response.status(500).send({ message: err.stack });
       client.query(`INSERT INTO USERS(ID,FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION,UPGRADE_ID)
         VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *;`, [
         newUser.id,
@@ -86,11 +86,11 @@ request is made
       ], (err) => {
         done();
         if (err) {
-          return res.status(500).send({ message: err.stack });
+          return response.status(500).send({ message: err.stack });
         }
         const token = jsonwebtoken.sign({ newUser }, process.env.SECRET_KEY, { expiresIn: '7d' });
         const newUserNoPassword = Users.removePassword(newUser);
-        return res.status(200).send({
+        return response.status(200).send({
           message: 'Signup successful',
           token,
           user: newUserNoPassword
