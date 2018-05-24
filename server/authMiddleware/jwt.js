@@ -5,11 +5,13 @@ const verifyToken = (request, response, next) => {
   const hasBearerHeader = typeof bearerHeader === 'string';
   if (hasBearerHeader && bearerHeader) {
     const bearerToken = bearerHeader;
-    jwt.verify(bearerToken, process.env.SECRET_KEY)
-      .then(() => {
-        next();
-      })
-      .catch(err => response.send(401).send(err));
+    jwt.verify(bearerToken, process.env.SECRET_KEY, (error, user) => {
+      if (error) {
+        return response.status(401).send({ message: 'Login Token invalid', error });
+      }
+      request.decodedUser = user;
+      next();
+    });
   } else {
     return response.status(401).send({
       message: 'Missing authentication token'
