@@ -1,7 +1,6 @@
-CREATE USER damola WITH PASSWORD 'damola';
 CREATE DATABASE travis;
-GRANT ALL PRIVILEGES ON travis TO damola;
 \c travis
+CREATE DATABASE travis;
 CREATE TYPE status AS ENUM('Not Aprroved/Rejected', 'Approved', 'Rejected', 'Resolved');
 CREATE TYPE reqtype AS ENUM('Maintenance', 'Repair');
 CREATE TYPE profile AS ENUM('Admin', 'User');
