@@ -1,5 +1,5 @@
 import validator from 'validator';
-import { requests } from '../dummy-data/database';
+import { pool } from '../db';
 
 const getReqBody = (request, listOfProps) => {
   const reqBody = listOfProps.reduce((accumulator, property) => {
@@ -9,22 +9,9 @@ const getReqBody = (request, listOfProps) => {
   return reqBody;
 };
 
-const duplicateRequestHandler = (reqBody, response) => {
-  const duplicateRequest = requests.find(request => request.title === reqBody.title &&
-    reqBody.description === request.description &&
-    reqBody.type === request.type &&
-    reqBody.location === request.location);
-  if (Object.prototype.toString.call(duplicateRequest) === '[object Object]') {
-    return response.status(400).send({
-      message: 'The request could not be created because a request with the same LOCATION, DESCRIPTION,TYPE AND TITLE already exists'
-    });
-  }
-};
 const trimmer = (reqBody, request) => {
   Object.keys(reqBody).forEach((key) => {
-    if (key !== 'userid') {
-      reqBody[key] = reqBody[key].trim();
-    }
+    reqBody[key] = reqBody[key].trim();
   });
   request.reqBody = reqBody;
 };
@@ -50,13 +37,13 @@ const emptyFieldsFinder = (reqBody) => {
 */
 const nonStringFieldFinder = (reqBody) => {
   const arrayOfFields = Object.keys(reqBody);
-  const nonStringFieldsArr = arrayOfFields.filter(element => Object.prototype.toString.call(reqBody[element]) !== '[object String]' && element !== 'userid')
+  const nonStringFieldsArr = arrayOfFields.filter(element => Object.prototype.toString.call(reqBody[element]) !== '[object String]')
     .map(element => element.replace(/([A-Z])/g, ' $1').toUpperCase());
   return nonStringFieldsArr;
 };
 
 const specialValidation = {
-  userid: useridValue => Object.prototype.toString.call(useridValue) === '[object Number]',
+  userid: validator.isUUID,
   type: (typeValue) => {
     const typeValueRegex = /^Maintenance$|^Repair$/i;
     return typeValueRegex.test(typeValue.trim());
@@ -66,7 +53,7 @@ const specialValidation = {
 
 
 const specialMessages = {
-  userid: 'the userid value is not an integer',
+  userid: 'the userid value is not UUID',
   type: 'the type value is not Repair or Maintenance',
   email: 'the email value is not an email'
 };
@@ -77,6 +64,7 @@ const specialMessages = {
 * @param {Object} response - response object that conveys the result of the request
 * @param {string[]} invalidFieldsArray - an array of invalid fields
 * @param {string} end - an array of invalid fields
+* @param {string} failReason - Reason for error message
 *@returns {Object} - a 400 response object with a customized message attribute
 */
 const message = (statusCode, response, invalidFieldsArray, end, failReason) => {
@@ -86,8 +74,7 @@ const message = (statusCode, response, invalidFieldsArray, end, failReason) => {
   });
 };
 /**
-* It finds the fields that are supposed to have the wrong string value or in
-* the case of the userid it checks for the type Number
+* It finds the fields that have the wrong string value
 * @param {Object} reqBody - object containing the relevant field values
 * @returns {string[]} - an array of the invalid integer fields as strings
 */
@@ -133,7 +120,7 @@ const emptyFieldsHandler = (reqBody, response, failReason) => {
 * all the fields do not have the proper data type or string values
 */
 const createARequestChecker = (request, response, next) => {
-  const reqBody = getReqBody(request, ['title', 'description', 'type', 'userid', 'title', 'location']);
+  const reqBody = getReqBody(request, ['title', 'description', 'type', 'location']);
   let reply;
 
   // check if the fields are empty
@@ -151,11 +138,21 @@ const createARequestChecker = (request, response, next) => {
     return reply;
   }
   trimmer(reqBody, request);
-  reply = duplicateRequestHandler(reqBody, response);
-  if (reply) {
-    return reply;
-  }
-  next();
+  pool.connect((error, client, done) => {
+    if (error) response.status(500).send({ message: error.stack });
+    client.query(`SELECT * FROM REQUESTS where LOCATION = '${reqBody.location}' and DESCRIPTION = '${reqBody.description}' and TYPE = '${reqBody.type}' and TITLE = '${reqBody.title}';`, (error1, requestRow) => {
+      done();
+      if (error1) {
+        return response.status(500).send({ message: error1.stack });
+      } else if (requestRow.rows.length === 0) {
+        next();
+      } else {
+        return response.status(400).send({
+          message: 'The request could not be created because a request with the same LOCATION, DESCRIPTION,TYPE AND TITLE already exists',
+        });
+      }
+    });
+  });
 };
 export {
   createARequestChecker,
