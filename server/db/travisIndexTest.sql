@@ -1,6 +1,6 @@
 CREATE USER damola WITH PASSWORD 'damola';
-GRANT ALL PRIVILEGES ON travis TO damola;
 CREATE DATABASE travis;
+GRANT ALL PRIVILEGES ON travis TO damola;
 \c travis
 CREATE TYPE status AS ENUM('Not Aprroved/Rejected', 'Approved', 'Rejected', 'Resolved');
 CREATE TYPE reqtype AS ENUM('Maintenance', 'Repair');
@@ -28,3 +28,5 @@ date_resolved date,
 LOCATION VARCHAR(160) NOT NULL,
 REASON VARCHAR(288) NOT NULL,
 userid UUID references users(ID));
+\dt
+\du
