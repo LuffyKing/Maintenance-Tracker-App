@@ -7,6 +7,10 @@ const existingUser = {
   email: 'aderinwale17@gmail.com',
   password: 'test_password'
 };
+const existingUser2 = {
+  email: 'aderino@gmail.com',
+  password: 'test_password',
+};
 chai.should();
 chai.use(chaiHttp);
 describe('Requests API Tests', () => {
@@ -27,6 +31,24 @@ describe('Requests API Tests', () => {
               response.body.message.should.eql('Your request has been found');
               response.should.have.status(200);
               response.body.request.title.should.eql('Broken Toilet');
+              done();
+            });
+        });
+    });
+  });
+  describe('/GET requests', () => {
+    it('should GET all requests with valid token', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send(existingUser2)
+        .end((err, responseLogin) => {
+          responseLogin.body.should.have.property('token');
+          chai.request(server)
+            .get(`/api/v1/users/requests/${requestsValues[0]}`)
+            .set('authorization', responseLogin.body.token)
+            .end((err, response) => {
+              response.body.message.should.eql('You do not have any request on TrackerHero with that id');
+              response.should.have.status(404);
               done();
             });
         });
