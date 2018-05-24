@@ -18,7 +18,7 @@ describe('Requests API Tests', () => {
    * Testing get request on the Requests API -success case
    */
   describe('/GET requests', () => {
-    it('should GET all requests with valid token', (done) => {
+    it('should GET a request he/she owns with valid token and succeed', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send(existingUser)
@@ -37,7 +37,7 @@ describe('Requests API Tests', () => {
     });
   });
   describe('/GET requests', () => {
-    it('should GET all requests with valid token', (done) => {
+    it('should try GET a request he/she does not own with valid token and fail', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send(existingUser2)
@@ -56,7 +56,7 @@ describe('Requests API Tests', () => {
   });
 
   describe('/GET requests', () => {
-    it('should GET all requests with valid token', (done) => {
+    it('should GET a request with an invalid request with valid token and fail', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send(existingUser)
@@ -75,7 +75,7 @@ describe('Requests API Tests', () => {
   });
 
   describe('/GET requests', () => {
-    it('should GET all requests with valid token', (done) => {
+    it('should GET a request with an invalid request with valid token and fail', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send(existingUser)
