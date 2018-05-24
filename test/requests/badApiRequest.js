@@ -13,10 +13,10 @@ describe('Requests API Tests', () => {
     it('should GET all requests', (done) => {
       chai.request(server)
         .get('/api/v1/fakeAPI')
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('Bad API - Request');
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('Bad API - Request');
           done();
         });
     });

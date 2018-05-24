@@ -29,12 +29,12 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .put('/api/v1/users/requests/0')
         .send(requestUpdateDetails)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('Success - repair/maintenance request updated.');
-          res.body.updatedRequest.title.should.eql(requestUpdateDetails.title);
-          res.body.updatedRequest.description.should.eql(requestUpdateDetails.description);
+        .end((err, response) => {
+          response.should.have.status(200);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('Success - repair/maintenance request updated.');
+          response.body.updatedRequest.title.should.eql(requestUpdateDetails.title);
+          response.body.updatedRequest.description.should.eql(requestUpdateDetails.description);
           done();
         });
     });
@@ -44,10 +44,10 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .put('/api/v1/users/requests/0')
         .send(requestUpdateDetailsEmptyString)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('The request could not be created because the DESCRIPTION field did not contain a single letter of the alphabet');
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('The request could not be created because the DESCRIPTION field did not contain a single letter of the alphabet');
           done();
         });
     });
@@ -57,10 +57,10 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .put('/api/v1/users/requests/0')
         .send({})
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('No update was made to the request');
+        .end((err, response) => {
+          response.should.have.status(200);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('No update was made to the request');
           done();
         });
     });
@@ -70,10 +70,10 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .put('/api/v1/users/requests/0')
         .send(requestUpdateDetailsNonString)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('The request could not be created because the field DESCRIPTION was supposed to be a string');
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('The request could not be created because the field DESCRIPTION was supposed to be a string');
           done();
         });
     });
@@ -83,10 +83,10 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .put('/api/v1/users/requests/0')
         .send(requestUpdateDetailsNonString2)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('The request could not be created because the fields TITLE ,DESCRIPTION were supposed to be strings');
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('The request could not be created because the fields TITLE ,DESCRIPTION were supposed to be strings');
           done();
         });
     });
@@ -96,10 +96,10 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .put('/api/v1/users/requests/90')
         .send(requestUpdateDetails)
-        .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('Maintenance/Repair with the specified id was not found');
+        .end((err, response) => {
+          response.should.have.status(404);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('Maintenance/Repair with the specified id was not found');
           done();
         });
     });
@@ -109,10 +109,10 @@ describe('Requests API Tests', () => {
       chai.request(server)
         .put('/api/v1/users/requests/fakeId')
         .send(requestUpdateDetails)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('message');
-          res.body.message.should.eql('The id provided is invalid because it is not an integer');
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.have.property('message');
+          response.body.message.should.eql('The id provided is invalid because it is not an integer');
           done();
         });
     });

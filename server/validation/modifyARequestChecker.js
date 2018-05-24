@@ -21,34 +21,34 @@ const filledFieldsFinder = (reqBody) => {
 };
 /**
 * It validates the fields and renders the appropriate response
-* @param {Object} req - request object containing params and body
-* @param {Object} res - response object that conveys the result of the request
+* @param {Object} request - request object containing params and body
+* @param {Object} response - response object that conveys the result of the request
 * @param{Object} next - middleware that calls the net middleware in the stack
 * @returns {Object} - response object that has a status code of 400 may returned if
 * all the fields do not have the proper data type or string values
 */
-const modifyARequestChecker = (req, res, next) => {
-  const reqBody = getReqBody(req, ['title', 'description', 'type', 'userid', 'title', 'location']);
+const modifyARequestChecker = (request, response, next) => {
+  const reqBody = getReqBody(request, ['title', 'description', 'type', 'userid', 'title', 'location']);
   // check if the fields are filled
   let reply;
   const filledFieldsObj = filledFieldsFinder(reqBody);
   if (Object.keys(filledFieldsObj).length === 0) {
-    return res.status(200).send({
+    return response.status(200).send({
       message: 'No update was made to the request'
     });
   }
   // check for strings
-  reply = nonStringFieldHandler(filledFieldsObj, res, 'The request could not be created because');
+  reply = nonStringFieldHandler(filledFieldsObj, response, 'The request could not be created because');
   if (reply) {
     return reply;
   }
 
   // check for valid types
-  reply = invalidFieldHandler(filledFieldsObj, res, 'The request could not be created because');
+  reply = invalidFieldHandler(filledFieldsObj, response, 'The request could not be created because');
   if (reply) {
     return reply;
   }
-  trimmer(filledFieldsObj, req);
+  trimmer(filledFieldsObj, request);
   next();
 };
 export default modifyARequestChecker;
