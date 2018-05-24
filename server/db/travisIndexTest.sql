@@ -1,4 +1,4 @@
-CREATE USER 'damola' IDENTIFIED BY PASSWORD 'damola';
+CREATE USER damola WITH PASSWORD 'damola';
 GRANT ALL PRIVILEGES ON travis TO 'damola';
 CREATE DATABASE travis;
 USE travis;
