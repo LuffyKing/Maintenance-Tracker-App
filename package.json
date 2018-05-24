@@ -11,6 +11,7 @@
     "clean-dist": "rm -rf build && mkdir build",
     "test": "NODE_ENV=test nyc mocha test/index.js --exit",
     "setupDb": "npm run build && node build/db",
+    "travisSetupDb": "node server/db",
     "testDev": "psql TrackerHero-dev -f server/db/indexTest.sql && npm run test"
   },
   "nyc": {
