@@ -152,7 +152,7 @@ const Requests = {
     const updateStatement = Object.keys(request.reqBody).map(key => `${key} = '${reqBody[key]}'`).join(',');
     pool.connect((error, client, done) => {
       if (error) response.status(500).send({ message: error.stack });
-      client.query(`UPDATE REQUESTS SET last_edited = $1,${updateStatement} where userid = '${decodedUser.user.id}' and id = '${requestid}' RETURNING *;`, [new Date()], (error1, requestRow) => {
+      client.query(`UPDATE REQUESTS SET last_edited = $1,${updateStatement} where userid = '${decodedUser.user.id}' and status = 'Not Approved/Rejected' and id = '${requestid}' RETURNING *;`, [new Date()], (error1, requestRow) => {
         done();
         if (error1) {
           return response.status(500).send({ message: error1.stack });
@@ -184,7 +184,16 @@ const Requests = {
     const { reqBody, status } = request;
     pool.connect((error, client, done) => {
       if (error) response.status(500).send({ message: error.stack });
-      client.query(`UPDATE REQUESTS SET last_edited = $1,status = $2,reason = $3  where id = '${requestid}' RETURNING *;`, [new Date(), status, reqBody.reason], (error1, requestRow) => {
+      let query;
+      let values;
+      if (status === 'Resolved') {
+        query = `UPDATE REQUESTS SET date_resolved = $1,last_edited = $2,status = $3,reason = $4  where id = '${requestid}' RETURNING *;`;
+        values = [new Date(), new Date(), status, reqBody.reason];
+      } else {
+        query = `UPDATE REQUESTS SET last_edited = $1,status = $2,reason = $3  where id = '${requestid}' RETURNING *;`;
+        values = [new Date(), status, reqBody.reason];
+      }
+      client.query(query, values, (error1, requestRow) => {
         done();
         if (error1) {
           return response.status(500).send({ message: error1.stack });
