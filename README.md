@@ -37,17 +37,25 @@ APIs are hosted at https://trackerhero.herokuapp.com/api/v1
 
 APIs available
 ```
-Get all maintenance and repair requests
-GET /users/requests
+POST /auth/signup Register a user
 
-Get a maintenance or repair request
-GET /users/requests/:requestid
+POST /auth/login Login a user
 
-Create a maintenance or service request
-POST /users/requests
+GET /users/requests Fetch all the requests of a logged in  user
 
-Modify a maintenance or service request
-PUT /users/requests/<requestId>
+GET /users/requests/<requestId> Fetch a request that belongs to a logged in user
+
+POST /users/requests Create a request.
+ 
+PUT /users/requests/<requestId> Modify a request.
+
+Get /requests/
+
+PUT /requests/<requestId>/approve Approve a request admin
+
+PUT /requests/<requestId>/disapprove Disapprove a request admin
+
+PUT /requests/<requestId>/resolve Resolve a request admin
 ```
 ##
 ## Deployment
