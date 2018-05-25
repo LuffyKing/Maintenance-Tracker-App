@@ -168,6 +168,35 @@ const Requests = {
         });
       });
     });
+  },
+  /**
+* It updates a request by chnging the status for admins
+* @param {Object} request - request object containing params and body
+* @param {Object} response - response object that conveys the result of the request
+* @returns {Object} - response object that has a status code of 200 and
+* a repair or maintenance request that has been updated or 404 if
+*the id provided in the request params id does not match an existing request
+*/
+  updateARequestAdmin: (request, response) => {
+    const {
+      requestid
+    } = request.params;
+    const { reqBody, status } = request;
+    pool.connect((error, client, done) => {
+      if (error) response.status(500).send({ message: error.stack });
+      client.query(`UPDATE REQUESTS SET last_edited = $1,status = $2,reason = $3  where id = '${requestid}' RETURNING *;`, [new Date(), status, reqBody.reason], (error1, requestRow) => {
+        done();
+        if (error1) {
+          return response.status(500).send({ message: error1.stack });
+        }
+        if (requestRow.rows.length > 0) {
+          return response.status(200).send({
+            message: 'The request has been updated.',
+            updatedRequest: requestRow.rows[0]
+          });
+        }
+      });
+    });
   }
 };
 export default Requests;
