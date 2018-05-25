@@ -10,6 +10,7 @@ module.exports = {
     PORT: process.env.TEST_PORT
     // might interfere with travis
   },
-  production:{
+  production: {
+
   }
 };
