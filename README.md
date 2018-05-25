@@ -49,7 +49,7 @@ POST /users/requests Create a request.
  
 PUT /users/requests/<requestId> Modify a request.
 
-Get /requests/
+Get /requests/ Fetch all the requests. admin
 
 PUT /requests/<requestId>/approve Approve a request admin
 
