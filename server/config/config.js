@@ -9,5 +9,7 @@ module.exports = {
     DATABASE_URL: process.env.DB_TEST_DATABASE_URL,
     PORT: process.env.TEST_PORT
     // might interfere with travis
+  },
+  production:{
   }
 };
