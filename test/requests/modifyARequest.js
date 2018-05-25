@@ -8,11 +8,6 @@ const existingUser = {
   password: 'test_password'
 };
 
-const existingUser2 = {
-  email: 'aderino@gmail.com',
-  password: 'test_password',
-};
-
 chai.should();
 chai.use(chaiHttp);
 const requestUpdateDetails = {

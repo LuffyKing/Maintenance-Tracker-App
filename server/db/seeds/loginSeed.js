@@ -25,4 +25,17 @@ const loginValues = [
   '4 Tawdry Lane',
   uuidv4()
 ];
-export { loginValues, loginColumns };
+
+const loginValuesAdmin = [
+  uuidv4(),
+  'King',
+  'Arthur',
+  'arthur@gmail.com',
+  bcrypt.hashSync('test_password', 8),
+  'King slayer',
+  'Guardians',
+  'Admin',
+  '4 Tawdry Lane',
+  uuidv4()
+];
+export { loginValues, loginColumns, loginValuesAdmin };
