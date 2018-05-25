@@ -8,9 +8,10 @@ const verifyToken = (request, response, next) => {
     jwt.verify(bearerToken, process.env.SECRET_KEY, (error, user) => {
       if (error) {
         return response.status(401).send({ message: 'Login Token invalid', error });
-      }
+      } else{
       request.decodedUser = user;
       next();
+      }
     });
   } else {
     return response.status(401).send({
