@@ -8,7 +8,8 @@ import signUpAUserChecker from '../validation/signUpAUserValidator';
 import modifyARequestChecker from '../validation/modifyARequestChecker';
 import verifyToken from '../authMiddleware/jwt';
 import { isAdmin, isUser } from '../validation/profileValidator';
-import { approved } from '../validation/ApproveStatusValidator';
+import approved from '../validation/ApproveStatusValidator';
+import resolved from '../validation/ResolveStatusValidator';
 import rejected from '../validation/RejectStatusValidator';
 import reasonChecker from '../validation/reasonValidator';
 
@@ -23,4 +24,5 @@ router.put('/users/requests/:requestid', verifyToken, isUser, getARequestChecker
 router.get('/requests/', verifyToken, isAdmin, RequestsController.getAllRequestsAdmin);
 router.put('/requests/:requestid/approve', verifyToken, isAdmin, getARequestChecker, approved, reasonChecker, RequestsController.updateARequestAdmin);
 router.put('/requests/:requestid/disapprove', verifyToken, isAdmin, getARequestChecker, rejected, reasonChecker, RequestsController.updateARequestAdmin);
+router.put('/requests/:requestid/resolve', verifyToken, isAdmin, getARequestChecker, resolved, reasonChecker, RequestsController.updateARequestAdmin);
 export default router;

@@ -8,3 +8,4 @@ import './requests/modifyARequest';
 import './requests/getAllRequestsAdmin';
 import './requests/approveARequestAdmin';
 import './requests/rejectARequestAdmin';
+import './requests/resolveARequestAdmin';
