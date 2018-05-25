@@ -7,3 +7,4 @@ import './requests/createARequest';
 import './requests/modifyARequest';
 import './requests/getAllRequestsAdmin';
 import './requests/approveARequestAdmin';
+import './requests/rejectARequestAdmin';

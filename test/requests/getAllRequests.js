@@ -31,7 +31,7 @@ describe('Requests API Tests', () => {
             .get('/api/v1/users/requests')
             .set('authorization', responseLogin.body.token)
             .end((err, response) => {
-              response.body.message.should.eql('Your 2 requests have been found');
+              response.body.message.should.eql('Your 4 requests have been found');
               response.should.have.status(200);
               response.body.requests.should.be.an('Array');
               response.body.requests[0].title.should.eql('Broken Toilet');

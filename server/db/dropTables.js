@@ -8,7 +8,6 @@ const pool = new Pool({
 });
 
 if (process.env.NODE_ENV !== 'test') {
-  console.log('running');
   pool.connect().then(client => client.query(`
   DROP TABLE IF EXISTS USERS,REQUESTS;`).then(() => client.release())
     .catch((error) => {
