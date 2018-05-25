@@ -1,5 +1,7 @@
+import uuidv4 from 'uuid/v4';
 import { requests } from '../dummy-data/database';
 import { pool } from '../db';
+import { requestsColumns } from '../db/seeds/requestsSeed';
 /**
  * An  object that handles the requests api operation
  */
@@ -9,7 +11,7 @@ const Requests = {
 * @param {Object} request - request object containing params and body
 * @param {Object} response - response object that conveys the result of the request
 * @returns {Object} - response object that has a status code of 200 as long as a
-* with a verified token
+* with a verified token or 404 if the user does not have any requests
 */
   getAllRequests: (request, response) => {
     const { decodedUser } = request;
@@ -74,24 +76,37 @@ const Requests = {
       title,
       description,
       location,
-      type,
-      userid
+      type
     } = request.reqBody;
-    const id = requests.length;
-    const newRequest = {
-      id,
+    const { decodedUser } = request;
+    const newUserValue = [
+      uuidv4(),
       title,
       description,
-      location,
+      'Not Approved/Rejected',
       type,
-      userid,
-      dateSubmitted: new Date().toString(),
-      status: 'Not Approved/Rejected/Resolved'
-    };
-    requests.push(newRequest);
-    response.status(201).send({
-      request: newRequest,
-      message: 'Success - repair/maintenance request created.'
+      new Date(),
+      new Date(),
+      location,
+      decodedUser.user.id
+    ];
+    pool.connect((error, client, done) => {
+      if (error) response.status(500).send({ message: error.stack });
+      client.query(`INSERT INTO REQUESTS(${requestsColumns}) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *;`, newUserValue, (error1, requestRow) => {
+        done();
+        if (error1) {
+          return response.status(500).send({ message: error1.stack });
+        }
+        if (requestRow.rows.length > 0) {
+          return response.status(201).send({
+            message: 'Your request was successfully created.',
+            request: requestRow.rows[0]
+          });
+        }
+        return response.status(400).send({
+          message: 'Request creation failure',
+        });
+      });
     });
   },
   /**
