@@ -43,7 +43,7 @@ const requestsValues = [
   uuidv4(),
   'Broken chair',
   'The chair is broken please fix it',
-  'Not Approved/Rejected',
+  'Approved',
   'Repair',
   new Date(),
   new Date(),
