@@ -20,6 +20,7 @@ const reasonChecker = (request, response, next) => {
     return reply;
   }
   trimmer(reqBody, request);
+  request.failReason = `Your  ${request.attempt} was unsuccessful because`;
   next();
 };
 export default reasonChecker;
