@@ -48,6 +48,7 @@ const modifyARequestChecker = (request, response, next) => {
   if (reply) {
     return reply;
   }
+  request.failReason = 'The request could not be created because';
   trimmer(filledFieldsObj, request);
   next();
 };

@@ -34,6 +34,7 @@ const signUpAUserChecker = (request, response, next) => {
           throw new Error('Your sign up attempt was unsuccessful because the EMAIL you provided already exists!');
         }
         trimmer(reqBody, request);
+        request.failReason = 'Your sign up attempt was unsuccessful because';
         next();
       }).catch(error => response.status(400).send({ message: error.message }))
       .catch(error => response.status(500).send({ error })));

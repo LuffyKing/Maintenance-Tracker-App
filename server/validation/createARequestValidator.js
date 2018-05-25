@@ -148,6 +148,7 @@ const createARequestChecker = (request, response, next) => {
       if (error1) {
         return response.status(500).send({ message: error1.stack });
       } else if (requestRow.rows.length === 0) {
+        request.failReason = 'The request could not be created because';
         next();
       } else {
         return response.status(400).send({

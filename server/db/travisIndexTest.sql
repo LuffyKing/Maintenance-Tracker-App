@@ -1,6 +1,5 @@
 CREATE DATABASE travis;
 \c travis
-CREATE DATABASE travis;
 DROP TYPE status,reqtype,profile;
 CREATE TYPE status AS ENUM('Not Approved/Rejected', 'Approved', 'Rejected', 'Resolved');
 CREATE TYPE reqtype AS ENUM('Maintenance', 'Repair');
