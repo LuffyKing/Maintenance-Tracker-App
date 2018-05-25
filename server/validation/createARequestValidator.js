@@ -11,6 +11,9 @@ const getReqBody = (request, listOfProps) => {
 
 const trimmer = (reqBody, request) => {
   Object.keys(reqBody).forEach((key) => {
+    if (key === 'type') {
+      reqBody[key] = reqBody[key].toLowerCase().replace(/^\w/, firstLetter => firstLetter.toUpperCase());
+    }
     reqBody[key] = reqBody[key].trim();
   });
   request.reqBody = reqBody;
