@@ -12,8 +12,7 @@
     "test": "NODE_ENV=test nyc mocha test/index.js --exit",
     "setupDb": "npm run build && node build/db",
     "travisSetupDb": "node server/db",
-    "testDev": "psql TrackerHero-dev -f server/db/indexTest.sql && npm run test",
-    "heroku-postbuild": "heroku pg:psql --app trackerhero < ./server/db/travisIndexTest.sql"
+    "testDev": "psql TrackerHero-dev -f server/db/indexTest.sql && npm run test"
   },
   "nyc": {
     "require": [
