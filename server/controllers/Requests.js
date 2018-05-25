@@ -1,5 +1,4 @@
 import uuidv4 from 'uuid/v4';
-import { requests } from '../dummy-data/database';
 import { pool } from '../db';
 import { requestsColumns } from '../db/seeds/requestsSeed';
 /**
@@ -121,27 +120,25 @@ const Requests = {
     const {
       requestid
     } = request.params;
-    let result = requests.filter(aRequest => aRequest.id === Number(requestid));
-    if (result.length > 0) {
-      [result] = result;
-      const updatedRequest = {
-        id: result.id,
-        userid: result.userid,
-        status: result.status,
-        dateSubmitted: result.dateSubmitted,
-        title: request.reqBody.title || result.title,
-        description: request.reqBody.description || result.description,
-        location: request.reqBody.location || result.location,
-        type: request.reqBody.type || result.type,
-      };
-      requests.push(updatedRequest);
-      return response.status(200).send({
-        message: 'Success - repair/maintenance request updated.',
-        updatedRequest
+    const { reqBody, decodedUser } = request;
+    const updateStatement = Object.keys(request.reqBody).map(key => `${key} = '${reqBody[key]}'`).join(',');
+    pool.connect((error, client, done) => {
+      if (error) response.status(500).send({ message: error.stack });
+      client.query(`UPDATE REQUESTS SET last_edited = $1,${updateStatement} where userid = '${decodedUser.user.id}' and id = '${requestid}' RETURNING *;`, [new Date()], (error1, requestRow) => {
+        done();
+        if (error1) {
+          return response.status(500).send({ message: error1.stack });
+        }
+        if (requestRow.rows.length > 0) {
+          return response.status(200).send({
+            message: 'Your request has been updated.',
+            updatedRequest: requestRow.rows[0]
+          });
+        }
+        return response.status(404).send({
+          message: 'You do not have any request on TrackerHero with that id',
+        });
       });
-    }
-    return response.status(404).send({
-      message: 'Maintenance/Repair with the specified id was not found'
     });
   }
 };
