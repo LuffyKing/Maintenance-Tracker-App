@@ -35,6 +35,34 @@ const Requests = {
     });
   },
   /**
+* It gets all the requests on the application for an admin user
+* @param {Object} request - request object containing params and body
+* @param {Object} response - response object that conveys the result of the request
+* @returns {Object} - response object that has a status code of 200 as long as a
+* with a verified token or 404 if the user does not have any requests
+*/
+  getAllRequestsAdmin: (request, response) => {
+    pool.connect((error, client, done) => {
+      if (error) response.status(500).send({ message: error.stack });
+      client.query('SELECT * FROM REQUESTS;', (error1, requestRow) => {
+        done();
+        if (error1) {
+          return response.status(500).send({ message: error1.stack });
+        }
+        if (requestRow.rows.length > 0) {
+          const requestPluSing = requestRow.rows.length === 1 ? 'request has' : 'requests have';
+          return response.status(200).send({
+            message: `Your ${requestRow.rows.length} ${requestPluSing} been found`,
+            requests: requestRow.rows
+          });
+        }
+        return response.status(404).send({
+          message: 'There are no requests on TrackerHero, check back later!',
+        });
+      });
+    });
+  },
+  /**
 * It gets a requests on the application
 * @param {Object} request - request object containing params and body
 * @param {Object} response - response object that conveys the result of the request

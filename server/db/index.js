@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import configJs from '../config/config';
-import { loginValues } from './seeds/loginSeed';
+import { loginValues, loginValuesAdmin } from './seeds/loginSeed';
 import { requestsColumns, requestsValues } from './seeds/requestsSeed';
 
 const env = process.env.NODE_ENV || 'development';
@@ -24,6 +24,14 @@ pool.connect((err, client, done) => {
           requestsValues, (error1) => {
             if (error1) throw error1;
             done();
+
+            client.query(
+              'INSERT INTO USERS(ID,FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION,UPGRADE_ID) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *;',
+              loginValuesAdmin, (error2) => {
+                if (error1) throw error2;
+                done();
+              }
+            );
           }
         );
       }

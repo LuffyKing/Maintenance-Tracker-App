@@ -7,13 +7,15 @@ import { createARequestChecker } from '../validation/createARequestValidator';
 import signUpAUserChecker from '../validation/signUpAUserValidator';
 import modifyARequestChecker from '../validation/modifyARequestChecker';
 import verifyToken from '../authMiddleware/jwt';
+import { isAdmin, isUser } from '../validation/profileValidator';
 
 const router = express.Router();
 
 router.post('/auth/signup', signUpAUserChecker, UsersController.signUp);
 router.post('/auth/login', loginAUserChecker, UsersController.login);
-router.get('/users/requests', verifyToken, RequestsController.getAllRequests);
-router.get('/users/requests/:requestid', verifyToken, getARequestChecker, RequestsController.getARequest);
-router.post('/users/requests/', verifyToken, createARequestChecker, RequestsController.createARequest);
-router.put('/users/requests/:requestid', verifyToken, getARequestChecker, modifyARequestChecker, RequestsController.updateARequest);
+router.get('/users/requests', verifyToken, isUser, RequestsController.getAllRequests);
+router.get('/users/requests/:requestid', verifyToken, isUser, getARequestChecker, RequestsController.getARequest);
+router.post('/users/requests/', verifyToken, isUser, createARequestChecker, RequestsController.createARequest);
+router.put('/users/requests/:requestid', verifyToken, isUser, getARequestChecker, modifyARequestChecker, RequestsController.updateARequest);
+router.get('/requests/', verifyToken, isAdmin, RequestsController.getAllRequestsAdmin);
 export default router;
