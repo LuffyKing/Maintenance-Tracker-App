@@ -10,6 +10,10 @@ const existingUser2 = {
   email: 'aderino@gmail.com',
   password: 'test_password',
 };
+const existingUserAdmin = {
+  email: 'arthur@gmail.com',
+  password: 'test_password',
+};
 chai.should();
 chai.use(chaiHttp);
 describe('Requests API Tests', () => {
@@ -73,6 +77,24 @@ describe('Requests API Tests', () => {
             .end((err, response) => {
               response.body.message.should.eql('You do not have any requests on TrackerHero, but it is not too late to start making them!');
               response.should.have.status(404);
+              done();
+            });
+        });
+    });
+  });
+  describe('/GET requests', () => {
+    it('should try to GET all requests with an valid Admin token and fail', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send(existingUserAdmin)
+        .then((responseLogin) => {
+          responseLogin.body.should.have.property('token');
+          chai.request(server)
+            .get('/api/v1/users/requests')
+            .set('authorization', responseLogin.body.token)
+            .end((err, response) => {
+              response.body.message.should.eql('You are not allowed to use this API because your profile is not User');
+              response.should.have.status(401);
               done();
             });
         });
