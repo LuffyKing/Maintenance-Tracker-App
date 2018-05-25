@@ -84,16 +84,8 @@ describe('Requests API Tests', () => {
             .set('authorization', responseLogin.body.token)
             .end((err, response) => {
               response.body.message.should.eql('The request could not be created because the TITLE field did not contain a single letter of the alphabet ,the DESCRIPTION field did not contain a single letter of the alphabet ,the type value is not Repair or Maintenance ,the LOCATION field did not contain a single letter of the alphabet');
-              response.should.have.status(201);
+              response.should.have.status(400);
               response.body.should.have.property('message');
-              response.body.request.title.should.eql(newRequest.title);
-              response.body.request.description.should.eql(newRequest.description);
-              response.body.request.location.should.eql(newRequest.location);
-              response.body.request.type.should.eql(newRequest.type);
-              response.body.request.should.have.property('id');
-              response.body.request.should.have.property('date_submitted');
-              response.body.request.should.have.property('last_edited');
-              response.body.request.should.have.property('status');
               done();
             });
         });
