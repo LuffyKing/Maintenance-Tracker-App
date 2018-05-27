@@ -23,7 +23,7 @@ app.use(morgan('dev'));
  */
 app.get('/', (req, res) => {
   res.status(200).send({
-    message: 'Welcome to WeConnect api, go to /api/v1/api-docs/ for current api docs. Current version is v1'
+    message: 'Welcome to TrackerHero api, go to /api/v1/api-docs/ for current api docs. Current version is v1'
   });
 });
 
