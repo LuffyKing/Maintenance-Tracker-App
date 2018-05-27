@@ -1,6 +1,6 @@
 import uuidv4 from 'uuid/v4';
-import { pool } from '../db';
 import { requestsColumns } from '../db/seeds/requestsSeed';
+import { RequestsDatabaseHelper } from '../validation/DatabaseHelpers';
 /**
  * An  object that handles the requests api operation
  */
@@ -14,25 +14,11 @@ const Requests = {
 */
   getAllRequests: (request, response) => {
     const { decodedUser } = request;
-    pool.connect((error, client, done) => {
-      if (error) response.status(500).send({ message: error.stack });
-      client.query(`SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}';`, (error1, requestRow) => {
-        done();
-        if (error1) {
-          return response.status(500).send({ message: error1.stack });
-        }
-        if (requestRow.rows.length > 0) {
-          const requestPluSing = requestRow.rows.length === 1 ? 'request has' : 'requests have';
-          return response.status(200).send({
-            message: `Your ${requestRow.rows.length} ${requestPluSing} been found`,
-            requests: requestRow.rows
-          });
-        }
-        return response.status(404).send({
-          message: 'You do not have any requests on TrackerHero, but it is not too late to start making them!',
-        });
-      });
-    });
+    RequestsDatabaseHelper(
+      request, response, `SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}';`,
+      'You do not have any requests on TrackerHero, but it is not too late to start making them!',
+      'get multiple requests'
+    );
   },
   /**
 * It gets all the requests on the application for an admin user
@@ -42,25 +28,11 @@ const Requests = {
 * with a verified token or 404 if the user does not have any requests
 */
   getAllRequestsAdmin: (request, response) => {
-    pool.connect((error, client, done) => {
-      if (error) response.status(500).send({ message: error.stack });
-      client.query('SELECT * FROM REQUESTS;', (error1, requestRow) => {
-        done();
-        if (error1) {
-          return response.status(500).send({ message: error1.stack });
-        }
-        if (requestRow.rows.length > 0) {
-          const requestPluSing = requestRow.rows.length === 1 ? 'request has' : 'requests have';
-          return response.status(200).send({
-            message: `Your ${requestRow.rows.length} ${requestPluSing} been found`,
-            requests: requestRow.rows
-          });
-        }
-        return response.status(404).send({
-          message: 'There are no requests on TrackerHero, check back later!',
-        });
-      });
-    });
+    RequestsDatabaseHelper(
+      request, response, 'SELECT * FROM REQUESTS;',
+      'There are no requests on TrackerHero, check back later!',
+      'get multiple requests'
+    );
   },
   /**
 * It gets a requests on the application
@@ -72,24 +44,11 @@ const Requests = {
 */
   getARequest: (request, response) => {
     const { decodedUser, params } = request;
-    pool.connect((error, client, done) => {
-      if (error) response.status(500).send({ message: error.stack });
-      client.query(`SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}';`, (error1, requestRow) => {
-        done();
-        if (error1) {
-          return response.status(500).send({ message: error1.stack });
-        }
-        if (requestRow.rows.length > 0) {
-          return response.status(200).send({
-            message: 'Your request has been found',
-            request: requestRow.rows[0]
-          });
-        }
-        return response.status(404).send({
-          message: 'You do not have any request on TrackerHero with that id',
-        });
-      });
-    });
+    RequestsDatabaseHelper(
+      request, response, `SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}';`,
+      'You do not have any request on TrackerHero with that id',
+      'get single request'
+    );
   },
   /**
 * It gets a requests on the application
@@ -117,24 +76,12 @@ const Requests = {
       location,
       decodedUser.user.id
     ];
-    pool.connect((error, client, done) => {
-      if (error) response.status(500).send({ message: error.stack });
-      client.query(`INSERT INTO REQUESTS(${requestsColumns}) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *;`, newUserValue, (error1, requestRow) => {
-        done();
-        if (error1) {
-          return response.status(500).send({ message: error1.stack });
-        }
-        if (requestRow.rows.length > 0) {
-          return response.status(201).send({
-            message: 'Your request was successfully created.',
-            request: requestRow.rows[0]
-          });
-        }
-        return response.status(400).send({
-          message: 'Request creation failure',
-        });
-      });
-    });
+    RequestsDatabaseHelper(
+      request, response,
+      `INSERT INTO REQUESTS(${requestsColumns}) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *;`,
+      'Request creation failure', 'create a request', newUserValue, 'Your request was successfully created.',
+      201, 400
+    );
   },
   /**
 * It gets a requests on the application
@@ -150,24 +97,11 @@ const Requests = {
     } = request.params;
     const { reqBody, decodedUser } = request;
     const updateStatement = Object.keys(request.reqBody).map(key => `${key} = '${reqBody[key]}'`).join(',');
-    pool.connect((error, client, done) => {
-      if (error) response.status(500).send({ message: error.stack });
-      client.query(`UPDATE REQUESTS SET last_edited = $1,${updateStatement} where userid = '${decodedUser.user.id}' and status = 'Not Approved/Rejected' and id = '${requestid}' RETURNING *;`, [new Date()], (error1, requestRow) => {
-        done();
-        if (error1) {
-          return response.status(500).send({ message: error1.stack });
-        }
-        if (requestRow.rows.length > 0) {
-          return response.status(200).send({
-            message: 'Your request has been updated.',
-            updatedRequest: requestRow.rows[0]
-          });
-        }
-        return response.status(404).send({
-          message: 'You do not have any request on TrackerHero with that id',
-        });
-      });
-    });
+    RequestsDatabaseHelper(
+      request, response, `UPDATE REQUESTS SET last_edited = $1,${updateStatement} where userid = '${decodedUser.user.id}' and status = 'Not Approved/Rejected' and id = '${requestid}' RETURNING *;`,
+      'You do not have any request on TrackerHero with that id',
+      'update a request', [new Date()], 'Your request has been updated.'
+    );
   },
   /**
 * It updates a request by chnging the status for admins
@@ -182,30 +116,15 @@ const Requests = {
       requestid
     } = request.params;
     const { reqBody, status } = request;
-    pool.connect((error, client, done) => {
-      if (error) response.status(500).send({ message: error.stack });
-      let query;
-      let values;
-      if (status === 'Resolved') {
-        query = `UPDATE REQUESTS SET date_resolved = $1,last_edited = $2,status = $3,reason = $4  where id = '${requestid}' RETURNING *;`;
-        values = [new Date(), new Date(), status, reqBody.reason];
-      } else {
-        query = `UPDATE REQUESTS SET last_edited = $1,status = $2,reason = $3  where id = '${requestid}' RETURNING *;`;
-        values = [new Date(), status, reqBody.reason];
-      }
-      client.query(query, values, (error1, requestRow) => {
-        done();
-        if (error1) {
-          return response.status(500).send({ message: error1.stack });
-        }
-        if (requestRow.rows.length > 0) {
-          return response.status(200).send({
-            message: 'The request has been updated.',
-            updatedRequest: requestRow.rows[0]
-          });
-        }
-      });
-    });
+    let query, values;
+    if (status === 'Resolved') {
+      query = `UPDATE REQUESTS SET date_resolved = $1,last_edited = $2,status = $3,reason = $4  where id = '${requestid}' RETURNING *;`;
+      values = [new Date(), new Date(), status, reqBody.reason];
+    } else {
+      query = `UPDATE REQUESTS SET last_edited = $1,status = $2,reason = $3  where id = '${requestid}' RETURNING *;`;
+      values = [new Date(), status, reqBody.reason];
+    }
+    RequestsDatabaseHelper(request, response, query, 'Request not found', 'update a request', values, 'The request has been updated.');
   }
 };
 export default Requests;
