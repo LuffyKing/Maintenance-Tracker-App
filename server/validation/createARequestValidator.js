@@ -100,13 +100,16 @@ const nonStringFieldHandler = (reqBody, response, failReason) => {
     return message(400, response, nonStringFieldFinderArr, `supposed to be ${word}`, failReason);
   }
 };
-const invalidFieldHandler = (reqBody, response, failReason) => {
-  const invalidFieldsArr = invalidFieldsChecker(reqBody);
+const invalidFieldMessage = (invalidFieldsArr, response, failReason) => {
   if (invalidFieldsArr.length > 0) {
     return response.status(400).json({
       message: `${failReason} ${invalidFieldsArr.join(' ,')}`
     });
   }
+};
+const invalidFieldHandler = (reqBody, response, failReason) => {
+  const invalidFieldsArr = invalidFieldsChecker(reqBody);
+  return invalidFieldMessage(invalidFieldsArr, response, failReason);
 };
 const emptyFieldsHandler = (reqBody, response, failReason) => {
   const emptyFieldsArr = emptyFieldsFinder(reqBody);
@@ -168,5 +171,6 @@ export {
   getReqBody,
   nonStringFieldHandler,
   invalidFieldHandler,
-  trimmer
+  trimmer,
+  invalidFieldMessage
 };

@@ -1,3 +1,4 @@
+import { invalidFieldMessage } from './createARequestValidator';
 
 const maxFieldsChecker = (reqBody, maxLengthObj) => Object.keys(reqBody)
   .filter(elm => elm.length > maxLengthObj[elm])
@@ -5,11 +6,7 @@ const maxFieldsChecker = (reqBody, maxLengthObj) => Object.keys(reqBody)
 
 const maxFieldHandler = (reqBody, response, failReason, maxLengthObj) => {
   const invalidFieldsArr = maxFieldsChecker(reqBody, maxLengthObj);
-  if (invalidFieldsArr.length > 0) {
-    return response.status(400).json({
-      message: `${failReason} ${invalidFieldsArr.join(' ,')}`
-    });
-  }
+  return invalidFieldMessage(invalidFieldsArr, response, failReason);
 };
 
 const maxLengthChecker = (request, response, next) => {
