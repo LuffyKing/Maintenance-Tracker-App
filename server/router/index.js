@@ -1,18 +1,18 @@
 import express from 'express';
-import RequestsController from '../controllers/Requests';
-import UsersController from '../controllers/Users';
-import loginAUserChecker from '../validation/loginAUSerValidator';
-import { getARequestChecker } from '../validation/getARequestValidator';
-import { createARequestChecker } from '../validation/createARequestValidator';
-import signUpAUserChecker from '../validation/signUpAUserValidator';
-import modifyARequestChecker from '../validation/modifyARequestChecker';
-import verifyToken from '../authMiddleware/jwt';
-import { isAdmin, isUser } from '../validation/profileValidator';
 import approved from '../validation/ApproveStatusValidator';
-import resolved from '../validation/ResolveStatusValidator';
-import rejected from '../validation/RejectStatusValidator';
-import reasonChecker from '../validation/reasonValidator';
+import { createARequestChecker } from '../validation/createARequestValidator';
+import { getARequestChecker } from '../validation/getARequestValidator';
+import { isAdmin, isUser } from '../validation/profileValidator';
+import loginAUserChecker from '../validation/loginAUSerValidator';
+import modifyARequestChecker from '../validation/modifyARequestChecker';
 import maxLengthChecker from '../validation/maxLengthValidator';
+import reasonChecker from '../validation/reasonValidator';
+import rejected from '../validation/RejectStatusValidator';
+import resolved from '../validation/ResolveStatusValidator';
+import RequestsController from '../controllers/Requests';
+import signUpAUserChecker from '../validation/signUpAUserValidator';
+import UsersController from '../controllers/Users';
+import verifyToken from '../authMiddleware/jwt';
 
 const router = express.Router();
 

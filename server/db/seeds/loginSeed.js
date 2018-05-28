@@ -1,5 +1,5 @@
-import uuidv4 from 'uuid/v4';
 import bcrypt from 'bcrypt';
+import uuidv4 from 'uuid/v4';
 
 const loginColumns = `
   ID,

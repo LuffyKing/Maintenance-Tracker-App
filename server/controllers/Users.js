@@ -26,7 +26,9 @@ request is made
   login(request, response) {
     const { email, password } = request.reqBody;
     pool.connect((err, client, done) => {
-      if (err) response.status(500).send({ message: err.stack });
+      if (err) {
+        response.status(500).send({ message: err.stack });
+      }
       client.query(`SELECT ID,
         FIRST_NAME,
         LAST_NAME,

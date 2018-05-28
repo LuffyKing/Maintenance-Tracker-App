@@ -145,7 +145,9 @@ const createARequestChecker = (request, response, next) => {
   }
   trimmer(reqBody, request);
   pool.connect((error, client, done) => {
-    if (error) response.status(500).send({ message: error.stack });
+    if (error) {
+      response.status(500).send({ message: error.stack });
+    }
     client.query(`SELECT * FROM REQUESTS where LOCATION = '${reqBody.location}' and DESCRIPTION = '${reqBody.description}' and TYPE = '${reqBody.type}' and TITLE = '${reqBody.title}';`, (error1, requestRow) => {
       done();
       if (error1) {
