@@ -1,10 +1,10 @@
 import 'babel-polyfill';
+import bodyParser from 'body-parser';
 import express from 'express';
 import morgan from 'morgan';
-import bodyParser from 'body-parser';
-import router from './router/index';
 import badApiRequest from './router/badRequests/badApiRequest';
 import configJs from './config/config';
+import router from './router/index';
 
 const env = process.env.NODE_ENV || 'development';
 const config = configJs[env];

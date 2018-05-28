@@ -6,6 +6,7 @@
   "scripts": {
     "build": "npm run clean-dist && npm run build-babel",
     "start": "npm run build && node build/server.js",
+    "startDev": "npm run build && nodemon build/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build-babel": "./node_modules/.bin/babel server -d build",
     "clean-dist": "rm -rf build && mkdir build",

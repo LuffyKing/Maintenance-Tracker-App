@@ -2,7 +2,9 @@ import { pool } from '../db';
 
 const statusChanger = (request, response, next, query, status, attempt, message404) => {
   pool.connect((error, client, done) => {
-    if (error) response.status(500).send({ message: error.stack });
+    if (error) {
+      response.status(500).send({ message: error.stack });
+    }
     client.query(query, (error1, requestRow) => {
       done();
       if (error1) {
@@ -23,7 +25,9 @@ const statusChanger = (request, response, next, query, status, attempt, message4
 
 const RequestsDatabaseHelper = (request, response, query, messageErrCode, operation, value = [], messageSuccCode = '', successCode = 200, errorCode = 404) => {
   pool.connect((error, client, done) => {
-    if (error) response.status(500).send({ message: error.stack });
+    if (error) {
+      response.status(500).send({ message: error.stack });
+    }
     client.query(query, value, (error1, requestRow) => {
       done();
       if (error1) {

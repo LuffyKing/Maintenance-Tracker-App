@@ -10,10 +10,10 @@ const pool = new Pool({
   connectionString
 });
 pool.connect((err, client, done) => {
-  if (err) throw err;
+  if (err) { throw err; }
   if (process.env.NODE_ENV) {
     client.query(
-      'INSERT INTO USERS(ID,FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION,UPGRADE_ID) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *;',
+      'INSERT INTO USERS(ID,FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION,UPGRADE_ID) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);',
       loginValues, (error) => {
         done();
         if (error) {
@@ -26,7 +26,7 @@ pool.connect((err, client, done) => {
             done();
 
             client.query(
-              'INSERT INTO USERS(ID,FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION,UPGRADE_ID) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *;',
+              'INSERT INTO USERS(ID,FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION,UPGRADE_ID) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);',
               loginValuesAdmin, (error2) => {
                 if (error1) throw error2;
                 done();
