@@ -39,7 +39,6 @@ main{
 .requestsTable{
 display: flex;
 flex-direction: column;
-height: 100%;
 }
 
 .disabled{
@@ -76,9 +75,9 @@ img {
 }
 
 select{
-  font-size:0.75em;
-  padding:0.95em;
-  width:40%;
+  font-size: 1em;
+  padding: 0.95em;
+  width: 95%;
 }
 
 .filterSpan{
@@ -143,7 +142,7 @@ a.but:hover{
 }
 
 .Logo{
-  font-size: 4.17rem;
+  font-size: 5rem;
   padding-right: 1.67rem;
 }
 
@@ -153,6 +152,8 @@ a.but:hover{
     height: 10vh;
     justify-content: center;
     padding: 1rem;
+    display: flex;
+    border-top: 0.25rem #0288D1 solid;
   }
 
   .pagRow a{
@@ -183,6 +184,10 @@ a.but:hover{
     font-size: 2rem;
     height: 10vh;
     padding: 1rem;
+    justify-content: center;
+    padding: 1rem;
+    display: flex;
+    border-top: 0.25rem #0288D1 solid;
   }
 
   .pagRow a{
@@ -242,7 +247,7 @@ a.but:hover{
   .infoColumn1{
     width:100%;
   }
-  
+
 }
 
 body{

@@ -1,6 +1,6 @@
-a.modalDelResolve,a.approvebtn, a.modalDeldisapprove,a.modalCancel,
-a.modalDelApprove,a.disapprovebtn, a.resolvebtn,a.placeholder,
-a.editDetailBtn, a.deleteBtn,a.approveDetailBtn {
+.modalDelResolve,.approvebtn, .modalDeldisapprove,.modalCancel,
+.modalDelApprove,.disapprovebtn, .resolvebtn,.placeholder,
+.editDetailBtn, .deleteBtn,.approveDetailBtn,.modalApprove {
     border-radius: 4px;
     color: #FFFFFF;
     cursor: pointer;
@@ -10,63 +10,73 @@ a.editDetailBtn, a.deleteBtn,a.approveDetailBtn {
     text-decoration: none;
 }
 
-a.approvebtn{
+.modalApprove{
+  background-color: #ffffff;
+  color:#004f79;
+}
+
+.modalApprove:hover{
+  background-color: #cccccc;
+  color: #004f79;
+}
+
+.approvebtn{
   background-color: #32CD32;
   width: 100%;
 }
 
-a.approvebtn:hover{
+.approvebtn:hover{
   background-color: #98FB98;
 }
 
-a.disapprovebtn {
+.disapprovebtn {
     background-color: #e60000;
     width: 100%;
 }
 
-a.disapprovebtn:hover{
+.disapprovebtn:hover{
   background-color: #ff3333;
 }
 
-a.resolvebtn {
+.resolvebtn {
   background-color: #DAA520;
   width: 100%;
 }
 
-a.resolvebtn:hover, a.resolveBtnNon100:hover{
+.resolvebtn:hover, .resolveBtnNon100:hover, .modalDelResolve:hover{
   background-color:  #EEE8AA;
   cursor: pointer;
 }
 
-a.resolveBtnNon100{
+.resolveBtnNon100,.modalDelResolve{
   background-color: #DAA520;
 }
 
-a.placeholder{
+.placeholder{
   cursor: default;
 }
 
-a.deleteBtn, a.modalCancel, .requestDisapproved{
+.deleteBtn,.modalDelApprove, .requestDisapproved, .modalDeldisapprove{
   background-color: #e60000;
 }
 
-a.deleteBtn:hover, a.modalCancel:hover, .requestDisapproved:hover{
+.deleteBtn:hover, .modalDelApprove:hover, .requestDisapproved:hover, .modalDeldisapprove:hover{
   background-color: #ff3333;
 }
 
-a.editDetailBtn{
+.editDetailBtn, .approveDetailBtn,.modalCancel{
   background-color: #0288D1;
 }
 
-a.editDetailBtn:hover{
-  background-color: #03A9F4;
+.editDetailBtn:hover, .approveDetailBtn:hover,.modalCancel:hover{
+  background-color: #236B8E;
 }
 
-a.approveDetailBtn, .requestApproved,.modalDelApprove,.modalDeldisapprove,.modalDelResolve{
+.requestApproved{
   background-color: #32CD32 !important;
 }
 
-a.approveDetailBtn:hover, .requestApproved:hover,.modalDelApprove:hover,.modalDeldisapprove:hover, .modalDelResolve:hover{
+.requestApproved:hover{
   background-color: #98FB98 !important;
   cursor: pointer;
 }

@@ -72,18 +72,16 @@ main{
   flex:2;
 }
 
-.detailBoardInfoColumn div:not(:first-child){
-  margin-top: 5%;
-}
-
 .detailsAndLocation{
   display: flex;
   flex-direction: row;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 .actionRow{
   display: flex;
-  justify-content: center;
+  justify-content: start;
 }
 
 @media (max-width:600px) {
@@ -100,6 +98,7 @@ main{
 
  .details{
    word-wrap: break-word;
+
  }
 
  a.editDetailBtn, a.deleteBtn{

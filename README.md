@@ -28,7 +28,7 @@ uuid - NodeJS library that allows for the fast generation of 128-bit numbers use
 validator - NodeJs library used to validate and sanitize strings. It was used in this project to check for valid emails and uuids.
 ```
 
-#Development Dependencies
+### Development Dependencies
 ```
 babel-cli - Command line interface for running babel
 
