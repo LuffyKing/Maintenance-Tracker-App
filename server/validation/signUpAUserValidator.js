@@ -2,26 +2,15 @@ import { nonStringFieldHandler, emptyFieldsHandler, trimmer, getReqBody, invalid
 import { pool } from '../db';
 
 const signUpAUserChecker = (request, response, next) => {
-  const reqBody = getReqBody(request, ['firstName',
-    'lastName',
-    'email',
-    'password',
-    'jobTitle',
-    'department',
-    'location']);
-  // check if the fields are filled
-  let reply;
-  reply = emptyFieldsHandler(reqBody, response, 'Your sign up attempt was unsuccessful because');
+  const reqBody = getReqBody(request, ['firstName', 'lastName', 'email', 'password', 'jobTitle', 'department', 'location']);
+  let reply = emptyFieldsHandler(reqBody, response, 'Your sign up attempt was unsuccessful because');
   if (reply) {
     return reply;
   }
-  // check for strings
   reply = nonStringFieldHandler(reqBody, response, 'Your sign up attempt was unsuccessful because');
   if (reply) {
     return reply;
   }
-
-  // check for valid types
   reply = invalidFieldHandler(reqBody, response, 'Your sign up attempt was unsuccessful because');
   if (reply) {
     return reply;

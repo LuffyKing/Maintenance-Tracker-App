@@ -127,14 +127,10 @@ const emptyFieldsHandler = (reqBody, response, failReason) => {
 */
 const createARequestChecker = (request, response, next) => {
   const reqBody = getReqBody(request, ['title', 'description', 'type', 'location']);
-  let reply;
-
-  // check if the fields are empty
-  reply = emptyFieldsHandler(reqBody, response, 'The request could not be created because');
+  let reply = emptyFieldsHandler(reqBody, response, 'The request could not be created because');
   if (reply) {
     return reply;
   }
-  // check for strings
   reply = nonStringFieldHandler(reqBody, response, 'The request could not be created because');
   if (reply) {
     return reply;
