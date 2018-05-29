@@ -1,11 +1,19 @@
+const getModal = (modalName, index1, index2, operation) => {
+  if (operation === 'add') {
+    document.getElementsByClassName(modalName)[index1].classList.add('displayNone');
+    document.getElementsByClassName('modal')[index2].classList.add('displayNone');
+  } else {
+    document.getElementsByClassName(modalName)[index1].classList.remove('displayNone');
+    document.getElementsByClassName('modal')[index2].classList.remove('displayNone');
+  }
+}
+
 const remove = (modalName, index1 = 0, index2 = 0) => {
-  document.getElementsByClassName(modalName)[index1].classList.remove('displayNone');
-  document.getElementsByClassName('modal')[index2].classList.remove('displayNone');
+  getModal(modalName, index1, index2, 'remove');
 };
 
-const add = (modalName, index1=0, index2=0) => {
-  document.getElementsByClassName(modalName)[index1].classList.add('displayNone');
-  document.getElementsByClassName('modal')[index2].classList.add('displayNone');
+const add = (modalName, index1 = 0, index2 = 0) => {
+  getModal(modalName, index1, index2, 'add');
 };
 
 const  approveDetailBtn = (modalName = 'modalBox') => {
@@ -20,7 +28,7 @@ const resolveBtnNon100 = () => {
   remove('modalBox', 2);
 };
 
-const removeCancel = (modalName) =>{
+const removeCancel = (modalName) => {
   document.getElementById(modalName).classList.add('displayNone');
   document.getElementsByClassName('modal')[0].classList.add('displayNone');
 };

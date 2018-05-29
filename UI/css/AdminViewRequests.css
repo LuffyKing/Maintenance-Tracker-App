@@ -40,16 +40,15 @@
 
 .resolvebtn {
   background-color: #DAA520;
-  width: 100%;
 }
 
 .resolvebtn:hover, .resolveBtnNon100:hover, .modalDelResolve:hover{
-  background-color:  #EEE8AA;
+  background-color:  #EEE8AA !important;
   cursor: pointer;
 }
 
 .resolveBtnNon100,.modalDelResolve{
-  background-color: #DAA520;
+  background-color: #DAA520 !important;
 }
 
 .placeholder{

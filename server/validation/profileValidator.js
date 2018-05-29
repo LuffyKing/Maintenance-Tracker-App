@@ -1,3 +1,9 @@
+const profileCheck = (request, response, profileAllowed) => {
+  const { decodedUser } = request;
+  if (decodedUser.user.profile !== profileAllowed) {
+    return response.status(401).send({ message: `You are not allowed to use this API because your profile is not ${profileAllowed}` });
+  }
+};
 
 /**
 * It checks for User profile
@@ -8,12 +14,11 @@
 * profile is in valid
 */
 const isUser = (request, response, next) => {
-  const { decodedUser } = request;
-  if (decodedUser.user.profile === 'User') {
-    next();
-  } else {
-    return response.status(401).send({ message: 'You are not allowed to use this API because your profile is not User' });
+  const reply = profileCheck(request, response, 'User');
+  if (reply) {
+    return reply;
   }
+  next();
 };
 /**
 * It checks for Admin profile
@@ -24,11 +29,10 @@ const isUser = (request, response, next) => {
 * profile is in valid
 */
 const isAdmin = (request, response, next) => {
-  const { decodedUser } = request;
-  if (decodedUser.user.profile === 'Admin') {
-    next();
-  } else {
-    return response.status(401).send({ message: 'You are not allowed to use this API because your profile is not Admin' });
+  const reply = profileCheck(request, response, 'Admin');
+  if (reply) {
+    return reply;
   }
+  next();
 };
 export { isUser, isAdmin };
