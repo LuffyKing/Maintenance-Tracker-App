@@ -34,8 +34,8 @@
         <textarea name="name" rows="5" cols="80" placeholder="Enter Approval Comment.."></textarea>
       </div>
       <div class="modalFooter delModalFooter">
-        <a class="modalDelApprove">Approve Request</a>
-        <a class="modalCancel">Cancel</a>
+        <a class="modalApprove" onclick="modalDelApprove()">Approve Request</a>
+        <a class="modalCancel" onclick="closeModal()">Cancel</a>
       </div>
     </div>
     <div id="disapproveModal" class="modalBox displayNone">
@@ -46,8 +46,8 @@
         <textarea name="name" rows="5" cols="80" placeholder="Enter Disapproval Comment.."></textarea>
       </div>
       <div class="modalFooter delModalFooter">
-        <a class="modalDeldisapprove">Dispprove Request</a>
-        <a class="modalCancel">Cancel</a>
+        <a class="modalDeldisapprove" onclick="modalDeldisapprove()">Disapprove Request</a>
+        <a class="modalCancel" onclick="disapproveCancel()">Cancel</a>
       </div>
     </div>
     <section class="modal displayNone">
@@ -70,12 +70,11 @@
         <div class="detailsAndLocation">
           <div class="details">
             <h3>Details</h3>
-            <p>RequestId:- 000000</p>
-            <p>Type:- Repair</p>
-            <p>Status:- Not Approved/Rejected</p>
-            <p>Date Submitted:- 19/12/2017</p>
-            <p>Scheduled Date of Completion:- 26/12/2017</p>
-            <p>Requester:- <a href="#">Oyindamola Aderinwale</a></p>
+            <p><b>RequestId:-</b> 000000</p>
+            <p><b>Type:-</b> Repair</p>
+            <p><b>Status:-</b> Not Approved/Rejected</p>
+            <p><b>Date Submitted:-</b> 19/12/2017</p>
+            <p><b>Requester:-</b> <a href="#">Oyindamola Aderinwale</a></p>
           </div>
           <div class="location">
             <h3>Location</h3>
@@ -91,8 +90,8 @@
           </div>
         </div>
         <div class="actionRow">
-          <a class="approveDetailBtn">Approve Request</a>
-          <a class="deleteBtn">Disapprove Request</a>
+          <a class="approveDetailBtn" onclick="approveDetailBtn()">Approve Request</a>
+          <a class="deleteBtn" onclick="del()">Disapprove Request</a>
         </div>
       </div>
     </section>
@@ -106,6 +105,6 @@
     </ul>
   </footer>
   <script type="text/javascript" src="../js/hamburgerDropdown.js"></script>
-  <script type="text/javascript" src="../js/alertRequestDetail.js"></script>
+  <script type="text/javascript" src="../js/alertAdminViewRequests.js"></script>
 </body>
 </html>

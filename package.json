@@ -6,10 +6,14 @@
   "scripts": {
     "build": "npm run clean-dist && npm run build-babel",
     "start": "npm run build && node build/server.js",
+    "startDev": "npm run build && nodemon build/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build-babel": "./node_modules/.bin/babel server -d build",
     "clean-dist": "rm -rf build && mkdir build",
-    "test": "nyc mocha --exit"
+    "test": "NODE_ENV=test nyc mocha test/index.js --exit",
+    "setupDb": "npm run build && node build/db",
+    "travisSetupDb": "node server/db",
+    "testDev": "psql TrackerHero-dev -f server/db/indexTest.sql && npm run test"
   },
   "nyc": {
     "require": [
@@ -35,11 +39,14 @@
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.1",
+    "pg": "^7.4.3",
     "uuid": "^3.2.1",
     "validator": "^10.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",

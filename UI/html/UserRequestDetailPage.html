@@ -27,7 +27,7 @@
     </nav>
   </header>
   <main>
-    <div class="modalBox displayNone">
+    <div id="deleteRequest" class="modalBox displayNone">
       <div class="modalHeader delModalHeader">
         <p id="modalMessage">Delete A Request</p>
       </div>
@@ -36,8 +36,8 @@
         <p>Are sure you want to delete this request?</p>
       </div>
       <div class="modalFooter delModalFooter">
-        <a class="modalDelApprove">Delete Request</a>
-        <a class="modalCancel">Cancel</a>
+        <a class="modalDelApprove" onclick="modalDelDelete()">Delete Request</a>
+        <a class="modalCancel" onclick="closeModal()">Cancel</a>
       </div>
     </div>
     <section class="modal displayNone">
@@ -60,11 +60,11 @@
         <div class="detailsAndLocation">
           <div class="details">
             <h3>Details</h3>
-            <p>RequestId:- 000000</p>
-            <p>Type:- Repair</p>
-            <p>Status:- Not Approved/Rejected</p>
-            <p>Date Submitted:- 19/12/2017</p>
-            <p>Scheduled Date of Completion:- 26/12/2017</p>
+            <p><b>RequestId:-</b> 000000</p>
+            <p><b>Type:-</b> Repair</p>
+            <p><b>Status:-</b> Not Approved/Rejected</p>
+            <p><b>Date Submitted:-</b> 19/12/2017</p>
+            <p><b>Scheduled Date of Completion:-</b> 26/12/2017</p>
           </div>
           <div class="location">
             <h3>Location</h3>
@@ -81,7 +81,7 @@
         </div>
         <div class="actionRow">
           <a href="EditRequest.html" class="editDetailBtn">Edit Request</a>
-          <a class="deleteBtn">Delete Request</a>
+          <a class="deleteBtn" onclick="approveDetailBtn()" >Delete Request</a>
         </div>
       </div>
     </section>
@@ -95,6 +95,6 @@
     </ul>
   </footer>
   <script type="text/javascript" src="../js/hamburgerDropdown.js"></script>
-  <script type="text/javascript" src="../js/alert.js"></script>
+  <script type="text/javascript" src="../js/alertAdminViewRequests.js"></script>
 </body>
 </html>

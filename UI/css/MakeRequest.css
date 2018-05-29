@@ -18,6 +18,10 @@
   z-index: -9999;
 }
 
+button, input, textarea, select, #status {
+    width: 50%;
+}
+
 @media (min-width:1024px) {
 
   html{
@@ -25,7 +29,7 @@
   }
 
   .sub-logo{
-    font-size: 3rem;
+    font-size: 3.5rem;
   }
 
   #navbar ul,#footer ul{
@@ -41,7 +45,7 @@
   }
 
   .Logo{
-    font-size: 5.68rem;
+    font-size: 6.82rem;
     padding-left: 2.27rem;
   }
 
@@ -58,22 +62,21 @@
     display: flex;
     justify-content: center;
   }
-
-  input, select,textarea, #status{
+  .formInput{
     flex:2;
   }
 
-  p:not(#status){
-    flex:1;
-  }
 
   .button{
     width:100%;
   }
 
   #loginPanel2{
-    padding: 5rem;
-    width: 85%;
+    height: 85%;
+    margin-bottom: 2.5%;
+    margin-top: 2.5%;
+    padding: 2.5rem;
+    width: 40%;
   }
 
   .formSubmit{
@@ -105,6 +108,17 @@
 
 }
 
+@media (max-width:960px) {
+  button, input, textarea, select, #status {
+    width: 100%;
+}
+ main{
+   height: 150%;
+ }
+}
+p:not(#status){
+  flex:1;
+}
 @media (max-width:960px) {
 
   #loginPanel2{

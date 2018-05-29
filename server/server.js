@@ -1,13 +1,17 @@
 import 'babel-polyfill';
+import bodyParser from 'body-parser';
 import express from 'express';
 import morgan from 'morgan';
-import bodyParser from 'body-parser';
+import badApiRequest from './router/badRequests/badApiRequest';
+import configJs from './config/config';
 import router from './router/index';
-import badApiRequest from './router/badRequests/badApiRequest'
+
+const env = process.env.NODE_ENV || 'development';
+const config = configJs[env];
 
 const app = express();
 
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || config.PORT;
 
 app.use(bodyParser.json());
 
@@ -19,7 +23,7 @@ app.use(morgan('dev'));
  */
 app.get('/', (req, res) => {
   res.status(200).send({
-    message: 'Welcome to WeConnect api, go to /api/v1/api-docs/ forcurrent api docs. Current version is v1'
+    message: 'Welcome to TrackerHero api, go to /api/v1/api-docs/ for current api docs. Current version is v1'
   });
 });
 

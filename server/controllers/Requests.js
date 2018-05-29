@@ -1,103 +1,130 @@
-import { requests } from '../dummy-data/database';
+import uuidv4 from 'uuid/v4';
+import { requestsColumns } from '../db/seeds/requestsSeed';
+import { RequestsDatabaseHelper } from '../validation/DatabaseHelpers';
 /**
  * An  object that handles the requests api operation
  */
 const Requests = {
   /**
 * It gets all the requests on the application
-* @param {Object} req - request object containing params and body
-* @param {Object} res - response object that conveys the result of the request
+* @param {Object} request - request object containing params and body
+* @param {Object} response - response object that conveys the result of the request
 * @returns {Object} - response object that has a status code of 200 as long as a
-request is made
+* with a verified token or 404 if the user does not have any requests
 */
-  getAllRequests: (req, res) => res.status(200).send({
-    message: 'Success - All repair/maintenance requests retrieved.',
-    requests
-  }),
+  getAllRequests: (request, response) => {
+    const { decodedUser } = request;
+    RequestsDatabaseHelper(
+      request, response, `SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}';`,
+      'You do not have any requests on TrackerHero, but it is not too late to start making them!',
+      'get multiple requests'
+    );
+  },
   /**
-* It gets a requests on the application
-* @param {Object} req - request object containing params and body
-* @param {Object} res - response object that conveys the result of the request
-* @returns {Object} - response object that has a status code of either 200 and
-* a repair or maintenance request or 404 if the id provided in the req params id
-* does not match an existing request
+* It gets all the requests on the application for an admin user
+* @param {Object} request - request object containing params and body
+* @param {Object} response - response object that conveys the result of the request
+* @returns {Object} - response object that has a status code of 200 as long as a
+* with a verified token or 404 if the user does not have any requests
 */
-  getARequest: (req, res) => {
-    const { requestid } = req.params;
-    const result = requests.filter(request => request.id === Number(requestid));
-    return result.length > 0 ? res.status(200).send({
-      message: 'Success - repair/maintenance request retrieved.',
-      request: result[0]
-    }) : res.status(404).send({
-      message: 'Maintenance/Repair with the specified id was not found'
-    });
+  getAllRequestsAdmin: (request, response) => {
+    RequestsDatabaseHelper(
+      request, response, 'SELECT * FROM REQUESTS;',
+      'There are no requests on TrackerHero, check back later!',
+      'get multiple requests'
+    );
   },
   /**
 * It gets a requests on the application
-* @param {Object} req - request object containing params and body
-* @param {Object} res - response object that conveys the result of the request
+* @param {Object} request - request object containing params and body
+* @param {Object} response - response object that conveys the result of the request
+* @returns {Object} - response object that has a status code of either 200 and
+* a repair or maintenance request or 404 if the id provided in the request params id
+* does not match an existing request
+*/
+  getARequest: (request, response) => {
+    const { decodedUser, params } = request;
+    RequestsDatabaseHelper(
+      request, response, `SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}';`,
+      'You do not have any request on TrackerHero with that id',
+      'get single request'
+    );
+  },
+  /**
+* It gets a requests on the application
+* @param {Object} request - request object containing params and body
+* @param {Object} response - response object that conveys the result of the request
 * @returns {Object} - response object that has a status code of 201 and
 * a repair or maintenance request
 */
-  createARequest: (req, res) => {
+  createARequest: (request, response) => {
     const {
       title,
       description,
       location,
-      type,
-      userid
-    } = req.reqBody;
-    const id = requests.length;
-    const newRequest = {
-      id,
+      type
+    } = request.reqBody;
+    const { decodedUser } = request;
+    const newUserValue = [
+      uuidv4(),
       title,
       description,
-      location,
+      'Not Approved/Rejected',
       type,
-      userid,
-      dateSubmitted: new Date().toString(),
-      status: 'Not Approved/Rejected/Resolved'
-    };
-    requests.push(newRequest);
-    res.status(201).send({
-      request: newRequest,
-      message: 'Success - repair/maintenance request created.'
-    });
+      new Date(),
+      new Date(),
+      location,
+      decodedUser.user.id
+    ];
+    RequestsDatabaseHelper(
+      request, response,
+      `INSERT INTO REQUESTS(${requestsColumns}) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *;`,
+      'Request creation failure', 'create a request', newUserValue, 'Your request was successfully created.',
+      201, 400
+    );
   },
   /**
 * It gets a requests on the application
-* @param {Object} req - request object containing params and body
-* @param {Object} res - response object that conveys the result of the request
+* @param {Object} request - request object containing params and body
+* @param {Object} response - response object that conveys the result of the request
 * @returns {Object} - response object that has a status code of 200 and
 * a repair or maintenance request that has been updated or 404 if
-*the id provided in the req params id does not match an existing request
+*the id provided in the request params id does not match an existing request
 */
-  updateARequest: (req, res) => {
+  updateARequest: (request, response) => {
     const {
       requestid
-    } = req.params;
-    let result = requests.filter(request => request.id === Number(requestid));
-    if (result.length > 0) {
-      [result] = result;
-      const updatedRequest = {
-        id: result.id,
-        userid: result.userid,
-        status: result.status,
-        dateSubmitted: result.dateSubmitted,
-        title: req.reqBody.title || result.title,
-        description: req.reqBody.description || result.description,
-        location: req.reqBody.location || result.location,
-        type: req.reqBody.type || result.type,
-      };
-      requests.push(updatedRequest);
-      return res.status(200).send({
-        message: 'Success - repair/maintenance request updated.',
-        updatedRequest
-      });
+    } = request.params;
+    const { reqBody, decodedUser } = request;
+    const updateStatement = Object.keys(request.reqBody).map(key => `${key} = '${reqBody[key]}'`).join(',');
+    RequestsDatabaseHelper(
+      request, response, `UPDATE REQUESTS SET last_edited = $1,${updateStatement} where userid = '${decodedUser.user.id}' and status = 'Not Approved/Rejected' and id = '${requestid}' RETURNING *;`,
+      'You do not have any request on TrackerHero with that id',
+      'update a request', [new Date()], 'Your request has been updated.'
+    );
+  },
+  /**
+* It updates a request by chnging the status for admins
+* @param {Object} request - request object containing params and body
+* @param {Object} response - response object that conveys the result of the request
+* @returns {Object} - response object that has a status code of 200 and
+* a repair or maintenance request that has been updated or 404 if
+*the id provided in the request params id does not match an existing request
+*/
+  updateARequestAdmin: (request, response) => {
+    const {
+      requestid
+    } = request.params;
+    const { reqBody, status } = request;
+    let query, values;
+    if (status === 'Resolved') {
+      query = `UPDATE REQUESTS SET date_resolved = $1,last_edited = $2,status = $3,reason = $4  where id = '${requestid}' RETURNING *;`;
+      values = [new Date(), new Date(), status, reqBody.reason];
+    } else {
+      query = `UPDATE REQUESTS SET last_edited = $1,status = $2,reason = $3  where id = '${requestid}' RETURNING *;`;
+      values = [new Date(), status, reqBody.reason];
     }
-    return res.status(404).send({
-      message: 'Maintenance/Repair with the specified id was not found'
-    });
+    RequestsDatabaseHelper(request, response, query, 'Request not found', 'update a request', values, 'The request has been updated.');
   }
 };
 export default Requests;
