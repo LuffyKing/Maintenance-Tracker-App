@@ -1,0 +1,405 @@
+swagger: "2.0"
+info:
+  description: "This exciting new project aims to create a new web app called Maintenance-Tracker-App.Maintenance-Tracker-App provides a platform for employees to easily make repair or maintenance requests to the operations or repairs department. The platform aims to make it easier to keep track of repair or maintenance requests for both non-admin users and admin users. Admin users can view all the requests on the app, and they also have the ability to resolve, disapprove or approve all requests. Non-admin users have the ability to make requests, and see all the requests they have made."
+  version: "1.0.0"
+  title: "Maintenance-Tracker-App"
+  license:
+    name: "MIT"
+    url: "https://opensource.org/licenses/MIT"
+host: "trackerhero.herokuapp.com"
+basePath: "/api/v1"
+tags:
+- name: "auth"
+  description: "APIs for logging into the app and signing up on the app"
+- name: "requests"
+  description: "APIs accessing, modifying, approving, disapproving and resolving a request."
+
+schemes:
+- "http"
+paths:
+  /auth/signup:
+    post:
+      tags:
+      - "auth"
+      summary: "Register a user"
+      operationId: "signupUser"
+      description: "New user that needs to be added to the database"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/UserSignup"
+      responses:
+        201:
+          description: "successfully created a new user"
+          schema:
+            $ref: "#/definitions/UserSignupRes"
+        400:
+          description: "Error Required Fields can not be empty. / Error Non-Unique Email Or Mobile."
+
+
+  /auth/login:
+    post:
+      tags:
+      - "auth"
+      summary: "Log in to Maintenance-Tracker-App"
+      operationId: "loginUser"
+      description: "User that needs to be gain access to the app"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/UserSignin"
+      responses:
+        200:
+          description: "Login success"
+
+  /users/requests:
+    post:
+      tags:
+      - "requests"
+      summary: "Creates a new request"
+      description: "Requests can be created if you have a profile of User and post valid request information on the application. Only non-admin users can use this route"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/RequestRegister"
+      responses:
+        200:
+          description: "Your request was successfully created."
+          schema:
+            $ref: "#/definitions/RequestRegisterRes"
+
+        400:
+          description: "The request could not be created because the fields TYPE ,LOCATION were supposed to be strings"
+    get:
+      tags:
+      - "requests"
+      summary: "Find all requests belonging to a user"
+      description: "All requests belonging to a particular user can be found on this route, the request will be successful if you provide a valid JWT with the get request. Only non-admin users can use this route."
+      operationId: "getAllRequests"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Your x request/requests have been found"
+          schema:
+            $ref: "#/definitions/ArrayOfRequests"
+        401:
+          description: "Login Token invalid"
+  /requests/:
+    get:
+      tags:
+      - "requests"
+      summary: "Find all the requests on the platform"
+      description: "This API finds all the requests on the platform, provided the get request is made with a valid JWT token. Only admin users can use this route."
+      operationId: "getAllRequestsAdmin"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Your requests has been found."
+          schema:
+            $ref: "#/definitions/ArrayOfRequests"
+        404:
+          description: "There are no requests on TrackerHero, check back later!"
+
+  /requests/{requestId}/approve/:
+    put:
+      tags:
+      - "requests"
+      summary: "Approves a request."
+      description: "This API approves a request based on the request id provided. The update's success will depend on the validity of the information provided, the validity of the JWT, and the request must have a status of 'Not Approved or Rejected'. This API route is available to admins only."
+      operationId: "updateARequestAdminApprove"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "requestId"
+        in: "path"
+        description: "Request Id of the request to be updated."
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: '#/definitions/Reason'
+
+      responses:
+        200:
+          description: "Your request has been updated."
+          schema:
+            $ref: "#/definitions/RequestRegisterRes"
+        404:
+          description: "You do not have an approvable request on TrackerHero with that id"
+
+  /requests/{requestId}/disapprove/:
+    put:
+      tags:
+      - "requests"
+      summary: "Disapproves a request."
+      description: "This API disapproves a request based on the request id provided. The update's success will depend on the validity of the information provided, the validity of the JWT, and the request must have a status of 'Not Approved or Rejected'. This API route is available to admins only."
+      operationId: "updateARequestAdmindisapprove"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "requestId"
+        in: "path"
+        description: "Request Id of the request to be updated."
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: '#/definitions/Reason'
+      responses:
+        200:
+          description: "Your request has been updated."
+          schema:
+            $ref: "#/definitions/RequestRegisterRes"
+        404:
+          description: "You do not have an disapprovable request on TrackerHero with that id"
+  /requests/{requestId}/resolve/:
+    put:
+      tags:
+      - "requests"
+      summary: "Disapproves a request."
+      description: "This API disapproves a request based on the request id provided. The update's success will depend on the validity of the information provided, the validity of the JWT, and the request must have a status of 'Not Approved or Rejected'. This API route is available to admins only."
+      operationId: "updateARequestAdminResolve"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "requestId"
+        in: "path"
+        description: "Request Id of the request to be updated."
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: '#/definitions/Reason'
+      responses:
+        200:
+          description: "Your request has been updated."
+          schema:
+            $ref: "#/definitions/RequestRegisterRes"
+        404:
+          description: "You do not have a resolvable request on TrackerHero with that id"
+
+  /users/requests/{requestId}:
+    get:
+      tags:
+      - "requests"
+      summary: "Find a request by requestId"
+      description: "This API finds the route of the request with that id, provided the request is made with a valid JWT token. Only non-admin users can use this route."
+      operationId: "getARequest"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "requestId"
+        in: "path"
+        description: "requestId of the request that needs to be found and sent as a response to the request"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "Your request has been found."
+          schema:
+            $ref: "#/definitions/RequestRegisterRes"
+        404:
+          description: "You do not have any request on TrackerHero with that id"
+    put:
+      tags:
+      - "requests"
+      summary: "Modifies a request."
+      description: "This API modifies a request based on the request id provided. This request will depend on the validity of the information provided, the validity of the JWT, and the request must have a status of 'Not Approved or Rejected'. This API route is available to non-admins. "
+      operationId: "updateARequest"
+      produces:
+      - "application/json"
+
+      parameters:
+      - name: "requestId"
+        in: "path"
+        description: "Request Id of the request to be updated."
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/RequestRegister"
+      responses:
+        200:
+          description: "Your request has been updated."
+          schema:
+            $ref: "#/definitions/RequestRegisterRes"
+        404:
+          description: "You do not have any request on TrackerHero with that id"
+definitions:
+
+  UserSignup:
+    type: "object"
+    properties:
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+        format: "email"
+      password:
+        type: "string"
+      jobTitle:
+        type: "string"
+      department:
+        type: "string"
+      location:
+        type: "string"
+
+    xml:
+      name: "UserSignup"
+  UserSignupRes:
+    type: "object"
+    properties:
+      token:
+        type: "string"
+      user:
+        type: "object"
+        properties:
+          id:
+            type: "string"
+            format: "uuid"
+          firstName:
+            type: "string"
+          lastName:
+            type: "string"
+          email:
+           type: "string"
+           format: "email"
+          password:
+           type: "string"
+          jobTitle:
+           type: "string"
+          department:
+            type: "string"
+          location:
+            type: "string"
+          profile:
+            type: "string"
+          upgradeId:
+            type: "string"
+    xml:
+      name: "UserSignup"
+  UserSignin:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+        format: "email"
+      password:
+        type: "string"
+
+    xml:
+      name: "UserSignin"
+  RequestRegister:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      description:
+        type: "string"
+      location:
+        type: "string"
+      type:
+        type: "string"
+    xml:
+      name: "RequestRegister"
+  RequestRegisterRes:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+      title:
+        type: "string"
+      description:
+        type: "string"
+      status:
+        type: "string"
+      location:
+        type: "string"
+      userid:
+        type: "string"
+        format: "uuid"
+      dateCreated:
+        type: "string"
+        format: "date"
+      lastEdited:
+        type: "string"
+        format: "date"
+    xml:
+      name: "RequestRegisterRes"
+  Reason:
+    type: "object"
+    properties:
+      reason:
+        type: "string"
+    xml:
+      name: "Reason"
+  ArrayOfRequests:
+    type: array
+    items:
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        title:
+          type: "string"
+        description:
+          type: "string"
+        status:
+          type: "string"
+        type:
+          type: "string"
+        location:
+          type: "string"
+        userid:
+          type: "string"
+          format: "uuid"
+        dateSubmitted:
+          type: "string"
+          format: "date"
+        lastEdited:
+          type: "string"
+          format: "date"
+
+
+externalDocs:
+  description: "API Docs written by Swagger"
+  url: "http://swagger.io"

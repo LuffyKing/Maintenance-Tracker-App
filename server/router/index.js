@@ -1,4 +1,5 @@
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
 import approved from '../validation/ApproveStatusValidator';
 import { createARequestChecker } from '../validation/createARequestValidator';
 import { getARequestChecker } from '../validation/getARequestValidator';
@@ -11,6 +12,7 @@ import rejected from '../validation/RejectStatusValidator';
 import resolved from '../validation/ResolveStatusValidator';
 import RequestsController from '../controllers/Requests';
 import signUpAUserChecker from '../validation/signUpAUserValidator';
+import swaggerDocument from '../swagger/swaggerDocument';
 import UsersController from '../controllers/Users';
 import verifyToken from '../authMiddleware/jwt';
 
@@ -26,4 +28,5 @@ router.get('/requests/', verifyToken, isAdmin, RequestsController.getAllRequests
 router.put('/requests/:requestid/approve', verifyToken, isAdmin, getARequestChecker, approved, reasonChecker, maxLengthChecker, RequestsController.updateARequestAdmin);
 router.put('/requests/:requestid/disapprove', verifyToken, isAdmin, getARequestChecker, rejected, reasonChecker, maxLengthChecker, RequestsController.updateARequestAdmin);
 router.put('/requests/:requestid/resolve', verifyToken, isAdmin, getARequestChecker, resolved, reasonChecker, maxLengthChecker, RequestsController.updateARequestAdmin);
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 export default router;
