@@ -1,7 +1,15 @@
 const profileCheck = (request, response, profileAllowed) => {
   const { decodedUser } = request;
-  if (decodedUser.user.profile !== profileAllowed) {
-    return response.status(401).send({ message: `You are not allowed to use this API because your profile is not ${profileAllowed}` });
+  if (decodedUser.user) {
+    if (decodedUser.user.profile !== profileAllowed) {
+      return response.status(401).send({ message: `You are not allowed to use this API because your profile is not ${profileAllowed}` });
+    }
+  } else if (decodedUser.newUser) {
+    request.decodedUser.user = decodedUser.newUser;
+    decodedUser.user = decodedUser.newUser;
+    if (decodedUser.user.profile !== profileAllowed) {
+      return response.status(401).send({ message: `You are not allowed to use this API because your profile is not ${profileAllowed}` });
+    }
   }
 };
 

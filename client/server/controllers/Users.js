@@ -93,7 +93,7 @@ request is made
         if (err) {
           return response.status(500).send({ message: err.stack });
         }
-        const token = jsonwebtoken.sign({ newUser }, process.env.SECRET_KEY, { expiresIn: '7d' });
+        const token = jsonwebtoken.sign({ user: newUser }, process.env.SECRET_KEY, { expiresIn: '7d' });
         const newUserNoPassword = Users.removePassword(newUser);
         return response.status(200).send({
           message: 'Signup successful',

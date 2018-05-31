@@ -97,12 +97,11 @@ const modalDelResolve = (
   modalAction(modalName, requestAction1, requestAction2, message);
 };
 
-function loginSubmit (){
+function loginSubmit(){
   const form =  document.getElementById('loginForm');
   fetch('/api/v1/auth/login/', {
     method: 'POST',
     headers: new Headers({
-      authorization: localStorage.getItem('token'),
      'Content-Type': 'application/json'
    }),
     body: JSON.stringify({
@@ -119,4 +118,36 @@ function loginSubmit (){
       }
     })
     .catch(err => err);
-};
+}
+function signupSubmit(){
+  const form =  document.getElementById('signupForm');
+  if(form.elements.password !== form.elements.password2){
+    alertAction('requestApproved', 'requestDisapproved', 'Passwords do not match!')
+  }else {
+    fetch('/api/v1/auth/signup/', {
+      method: 'POST',
+      headers: new Headers({
+       'Content-Type': 'application/json'
+     }),
+      body: JSON.stringify({
+        email: form.elements.email.value,
+        password: form.elements.password.value,
+        firstName: form.elements.firstName.value,
+        lastName: form.elements.lastName.value,
+        department: form.elements.department.value,
+        jobTitle: form.elements.jobTitle.value,
+        
+      })
+    })
+      .then(response => response.json()).then((signupResult) => {
+        if (signupResult.status !== 200) {
+          alertAction('requestApproved', 'requestDisapproved', loginResult.message);
+        } else {
+          localStorage.setItem('token', signupResult.token);
+          window.location.replace('../UserViewRequests.html');
+        }
+      })
+      .catch(err => err);
+
+  }
+}

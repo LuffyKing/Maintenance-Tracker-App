@@ -9,7 +9,7 @@ const verifyToken = (request, response, next) => {
       if (error) {
         return response.status(401).send({ message: 'Login Token invalid', error });
       } else {
-        console.log(user);
+      
       request.decodedUser = user;
       next();
     }
