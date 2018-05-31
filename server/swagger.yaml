@@ -16,6 +16,12 @@ tags:
 
 schemes:
 - "http"
+- "https"
+securityDefinitions:
+  JWT:
+    type: apiKey
+    name: authorization
+    in: header
 paths:
   /auth/signup:
     post:
@@ -37,11 +43,11 @@ paths:
           $ref: "#/definitions/UserSignup"
       responses:
         201:
-          description: "Signup successful"
+          description: "successfully created a new user"
           schema:
             $ref: "#/definitions/UserSignupRes"
         400:
-          description: "Your sign up attempt was unsuccessful because the fields PASSWORD ,JOB TITLE ,DEPARTMENT were not provided"
+          description: "Error Required Fields can not be empty. / Error Non-Unique Email Or Mobile."
 
 
   /auth/login:
@@ -76,6 +82,8 @@ paths:
       - "application/json"
       produces:
       - "application/json"
+      security:
+        - JWT: []
       parameters:
       - in: "body"
         name: "body"
@@ -97,6 +105,8 @@ paths:
       summary: "Find all requests belonging to a user"
       description: "All requests belonging to a particular user can be found on this route, the request will be successful if you provide a valid JWT with the get request. Only non-admin users can use this route."
       operationId: "getAllRequests"
+      security:
+        - JWT: []
       produces:
       - "application/json"
       responses:
@@ -115,6 +125,9 @@ paths:
       operationId: "getAllRequestsAdmin"
       produces:
       - "application/json"
+      security:
+        - JWT: []
+      
       responses:
         200:
           description: "Your requests has been found."
@@ -122,7 +135,7 @@ paths:
             $ref: "#/definitions/ArrayOfRequests"
         404:
           description: "There are no requests on TrackerHero, check back later!"
-
+  
   /requests/{requestId}/approve/:
     put:
       tags:
@@ -144,7 +157,9 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/Reason'
-
+      security:
+        - JWT: []
+      
       responses:
         200:
           description: "Your request has been updated."
@@ -152,7 +167,7 @@ paths:
             $ref: "#/definitions/RequestRegisterRes"
         404:
           description: "You do not have an approvable request on TrackerHero with that id"
-
+      
   /requests/{requestId}/disapprove/:
     put:
       tags:
@@ -174,6 +189,8 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/Reason'
+      security:
+        - JWT: []
       responses:
         200:
           description: "Your request has been updated."
@@ -202,6 +219,8 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/Reason'
+      security:
+        - JWT: []
       responses:
         200:
           description: "Your request has been updated."
@@ -209,7 +228,7 @@ paths:
             $ref: "#/definitions/RequestRegisterRes"
         404:
           description: "You do not have a resolvable request on TrackerHero with that id"
-
+  
   /users/requests/{requestId}:
     get:
       tags:
@@ -226,6 +245,8 @@ paths:
         required: true
         type: "string"
         format: "uuid"
+      security:
+        - JWT: []
       responses:
         200:
           description: "Your request has been found."
@@ -241,7 +262,9 @@ paths:
       operationId: "updateARequest"
       produces:
       - "application/json"
-
+      security:
+        - JWT: []
+      
       parameters:
       - name: "requestId"
         in: "path"
@@ -281,7 +304,7 @@ definitions:
         type: "string"
       location:
         type: "string"
-
+        
     xml:
       name: "UserSignup"
   UserSignupRes:
