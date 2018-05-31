@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UserViewRequests</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/LandingPage.css">
+  <link rel="stylesheet" href="../css/signin.css">
+  <link rel="stylesheet" href="../css/signup.css">
+  <link rel="stylesheet" href="../css/UserViewRequests.css">
+  <link rel="stylesheet" href="../css/AdminViewRequests.css">
+</head>
+<body>
+  <header>
+    <nav id="navbar">
+      <a class="default-primary-color text-primary-color Logo pacifico" href="SigninPage.html">TrackerHero</a>
+      <ul class="default-primary-color text-primary-color">
+        <li><a href="MakeRequest.html">Make Request<i class="fas fa-bullhorn"></i></a></li>
+        <li><a href="#">Profile<i class="fas fa-user"></i></a></li>
+        <li><a href="UserViewRequests.html">My Requests<i class="far fa-eye"></i></a></li>
+        <li><a href="SigninPage.html">Logout<i class="fas fa-door-open"></i></a></li>
+      </ul>
+      <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
+    </nav>
+  </header>
+  <main>
+    <div id="approveModal" class="modalBox displayNone">
+      <div class="modalBox__Header">
+        <p id="modalMessage">Approve A Request</p>
+      </div>
+      <div class="modalBox__Body">
+        <textarea name="name" rows="5" cols="80" placeholder="Enter Approval Comment.."></textarea>
+      </div>
+      <div class="modalBox__Footer">
+        <a class="modalBox__Approve--White" onclick="modalDelApprove()">Approve Request</a>
+        <a class="modalBox__Cancel" onclick="closeModal()">Cancel</a>
+      </div>
+    </div>
+    <div id="disapproveModal" class="modalBox displayNone">
+      <div class="modalBox__Header delModalHeader">
+        <p id="modalMessage">Disapprove A Request</p>
+      </div>
+      <div class="modalBox__Body">
+        <textarea name="name" rows="5" cols="80" placeholder="Enter Disapproval Comment.."></textarea>
+      </div>
+      <div class="modalBox__Footer">
+        <a class="modalBox__disapprove" onclick="modalDeldisapprove()">Disapprove Request</a>
+        <a class="modalBox__Cancel" onclick="disapproveCancel()">Cancel</a>
+      </div>
+    </div>
+    <div id="resolveModal" class="modalBox displayNone">
+      <div class="modalBox__Header">
+        <p id="modalMessage">Resolve A Request</p>
+      </div>
+      <div class="modalBox__Body">
+        <textarea name="name" rows="5" cols="80" placeholder="Enter Resolve Comment.."></textarea>
+      </div>
+      <div class="modalBox__Footer">
+        <a class="modalBox__Resolve" onclick="modalDelResolve()">Resolve Request</a>
+        <a class="modalBox__Cancel" onclick="resolveCancel()">Cancel</a>
+      </div>
+    </div>
+    <section class="modal displayNone">
+    </section>
+    <section id="alerts" class="displayNone">
+      <p id="alertMessage"></p>
+      <span><i id="alertClose" class="fas fa-times"></i></span>
+    </section>
+    <section id="requests" class="db-text">
+      <div class="introduction">
+        <h2>TrackerHero Maintenance and Repair Requests</h2>
+      </div>
+      <div class="filterRow">
+        <p>Showing 10 out of 100 Requests</p>
+        <p class="filterSpan">Filter By: <select name="filter" id="filter">
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Undecided">Not Approved/Rejected</option>
+          <option value="All">All</option>
+        </select>
+      </p>
+      </div>
+      <div class="requestsTable">
+        <div class="requestRow">
+          <div class="requestImageContainer">
+            <img src="../media/images/brokenPrinter.jpeg" alt="">
+          </div>
+          <div class="infoColumn1">
+            <p><b>Title:- </b> <span>Broken Printer</span></p>
+            <p><b>Type:- </b><span>Repair</span></p>
+            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
+            <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
+            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
+            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a href="#" onclick="del()"  class="but del">Disapprove</a>
+            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+          </div>
+        </div>
+        <div class="requestRow">
+          <div class="requestImageContainer">
+            <img src="../media/images/brokenPrinter.jpeg" alt="">
+          </div>
+          <div class="infoColumn1">
+            <p><b>Title:- </b> <span>Broken Printer</span></p>
+            <p><b>Type:- </b><span>Repair</span></p>
+            <p><b>Status:- </b><span>Approved</span></p>
+            <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
+            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
+            <a class="but detailBoard__approveBtn disabled">Approve</a>
+            <a class="but disabled del">Disapprove</a>
+            <a onclick="resolveBtnNon100()" class="but resolveBtnNon100">Resolve</a>
+          </div>
+        </div>
+        <div class="requestRow">
+          <div class="requestImageContainer">
+            <img src="../media/images/brokenPrinter.jpeg" alt="">
+          </div>
+          <div class="infoColumn1">
+            <p><b>Title:- </b> <span>Broken Printer</span></p>
+            <p><b>Type:- </b><span>Repair</span></p>
+            <p><b>Status:- </b><span>Rejected</span></p>
+            <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
+            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
+            <a  class="but disabled detailBoard__approveBtn">Approve</a>
+            <a class="but disabled del">Disapprove</a>
+            <a class="but disabled resolveBtnNon100 disabled">Resolve</a>
+          </div>
+        </div>
+        <div class="requestRow">
+          <div class="requestImageContainer">
+            <img src="../media/images/brokenPrinter.jpeg" alt="">
+          </div>
+          <div class="infoColumn1">
+            <p><b>Title:- </b> <span>Broken Printer</span></p>
+            <p><b>Type:- </b><span>Repair</span></p>
+            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
+            <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
+            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
+            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a href="#" onclick="del()"  class="but del">Disapprove</a>
+            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+          </div>
+        </div><div class="requestRow">
+          <div class="requestImageContainer">
+            <img src="../media/images/brokenPrinter.jpeg" alt="">
+          </div>
+          <div class="infoColumn1">
+            <p><b>Title:- </b> <span>Broken Printer</span></p>
+            <p><b>Type:- </b><span>Repair</span></p>
+            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
+            <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
+            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
+            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a href="#" onclick="del()"  class="but del">Disapprove</a>
+            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+          </div>
+        </div><div class="requestRow">
+          <div class="requestImageContainer">
+            <img src="../media/images/brokenPrinter.jpeg" alt="">
+          </div>
+          <div class="infoColumn1">
+            <p><b>Title:- </b> <span>Broken Printer</span></p>
+            <p><b>Type:- </b><span>Repair</span></p>
+            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
+            <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
+            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
+            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a href="#" onclick="del()"  class="but del">Disapprove</a>
+            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+          </div>
+        </div><div class="requestRow">
+          <div class="requestImageContainer">
+            <img src="../media/images/brokenPrinter.jpeg" alt="">
+          </div>
+          <div class="infoColumn1">
+            <p><b>Title:- </b> <span>Broken Printer</span></p>
+            <p><b>Type:- </b><span>Repair</span></p>
+            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
+            <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
+            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
+            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a href="#" onclick="del()"  class="but del">Disapprove</a>
+            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+          </div>
+        </div><div class="requestRow">
+          <div class="requestImageContainer">
+            <img src="../media/images/brokenPrinter.jpeg" alt="">
+          </div>
+          <div class="infoColumn1">
+            <p><b>Title:- </b> <span>Broken Printer</span></p>
+            <p><b>Type:- </b><span>Repair</span></p>
+            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
+            <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
+            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
+            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a href="#" onclick="del()"  class="but del">Disapprove</a>
+            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+          </div>
+        </div><div class="requestRow">
+          <div class="requestImageContainer">
+            <img src="../media/images/brokenPrinter.jpeg" alt="">
+          </div>
+          <div class="infoColumn1">
+            <p><b>Title:- </b> <span>Broken Printer</span></p>
+            <p><b>Type:- </b><span>Repair</span></p>
+            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
+            <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
+            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
+            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a href="#" onclick="del()"  class="but del">Disapprove</a>
+            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+          </div>
+        </div><div class="requestRow">
+          <div class="requestImageContainer">
+            <img src="../media/images/brokenPrinter.jpeg" alt="">
+          </div>
+          <div class="infoColumn1">
+            <p><b>Title:- </b> <span>Broken Printer</span></p>
+            <p><b>Type:- </b><span>Repair</span></p>
+            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
+            <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
+            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
+            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a href="#" onclick="del()"  class="but del">Disapprove</a>
+            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+          </div>
+        </div><div class="requestRow">
+          <div class="requestImageContainer">
+            <img src="../media/images/brokenPrinter.jpeg" alt="">
+          </div>
+          <div class="infoColumn1">
+            <p><b>Title:- </b> <span>Broken Printer</span></p>
+            <p><b>Type:- </b><span>Repair</span></p>
+            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
+            <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
+            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
+            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a href="#" onclick="del()"  class="but del">Disapprove</a>
+            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+          </div>
+        </div>
+      <div class="requestRow requestRowFooter pagRow">
+        <div class="pagination">
+          <a href="#">Previous</a>
+          <a class="active" href="#">1</a>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <a href="#">Next</a>
+        </div>
+      </div>
+    </div>
+    </section>
+  </main>
+  <footer id="footer">
+    <ul class="default-primary-color text-primary-color">
+      <li><p>&copy; InVective Tech.</p></li>
+      <li><a href="#">Contact Us</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Help</a></li>
+    </ul>
+  </footer>
+  <script type="text/javascript" src="../js2/hamburgerDropdown.js"></script>
+  <script type="text/javascript" src="../js2/alertAdminViewRequests.js"></script>
+  <script type="text/javascript" src="../js2/alertEvent.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+#loginPanel {
+align-items: center;
+border-radius: 0.4rem;
+display: flex;
+flex-direction: column;
+height: 400px;
+justify-content: center;
+opacity: 0.9;
+width:300px;
+}
+
+.button, input,textarea, select, #status, .inputLabel{
+  width: 35%;
+}
+
+main{
+  height: 100%;
+}
+
+.formSubmit {
+margin-top: 2rem;
+}
+
+.form-control {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+@media (max-height:568px) {
+
+  #loginPanel{
+    height: 300px;
+    width:250px;
+  }
+
+  html{
+    font-size: 7.5px;
+  }
+
+}
+@media (max-width:1024px) {
+  .button, input, textarea, select, #status {
+      width: 75%;
+  }
+  #loginPanel2{
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
+
+}
+@media (min-width:1025px) {
+
+  html {
+    font-size: 12.5px;
+  }
+
+  #loginPanel {
+    height: auto;
+    padding: 3rem;
+    width: 75%;
+    }
+
+  .inputLabel{
+    font-size: 2rem;
+  }
+
+  form, .form-control{
+    width:100%;
+  }
+
+  .button{
+    font-size: 1.5rem;
+  }
+
+  input, select{
+    font-size: 1.5rem;
+  }
+
+  .formSubmit {
+    margin-right: 0;
+  }
+  .sub-logo{
+    margin: 1rem 0;
+    font-size: 2.25rem;
+  }
+
+}
