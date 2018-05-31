@@ -26,40 +26,40 @@
     </nav>
   </header>
   <main>
-    <div id="approveModal" class="modalBox displayNone">
-      <div class="modalBox__Header">
+    <div id="approveModal" class="modal-Box displayNone">
+      <div class="modal-Box__Header">
         <p id="modalMessage">Approve A Request</p>
       </div>
-      <div class="modalBox__Body">
+      <div class="modal-Box__Body">
         <textarea name="name" rows="5" cols="80" placeholder="Enter Approval Comment.."></textarea>
       </div>
-      <div class="modalBox__Footer">
-        <a class="modalBox__Approve--White" onclick="modalDelApprove()">Approve Request</a>
-        <a class="modalBox__Cancel" onclick="closeModal()">Cancel</a>
+      <div class="modal-Box__Footer">
+        <a class="modal-Box__Approve-button--White" onclick="modalDelApprove()">Approve Request</a>
+        <a class="modal-Box__Cancel-button" onclick="closeModal()">Cancel</a>
       </div>
     </div>
-    <div id="disapproveModal" class="modalBox displayNone">
-      <div class="modalBox__Header delModalHeader">
+    <div id="disapproveModal" class="modal-Box displayNone">
+      <div class="modal-Box__Header delModalHeader">
         <p id="modalMessage">Disapprove A Request</p>
       </div>
-      <div class="modalBox__Body">
+      <div class="modal-Box__Body">
         <textarea name="name" rows="5" cols="80" placeholder="Enter Disapproval Comment.."></textarea>
       </div>
-      <div class="modalBox__Footer">
-        <a class="modalBox__disapprove" onclick="modalDeldisapprove()">Disapprove Request</a>
-        <a class="modalBox__Cancel" onclick="disapproveCancel()">Cancel</a>
+      <div class="modal-Box__Footer">
+        <a class="modal-Box__disapprove-button" onclick="modalDeldisapprove()">Disapprove Request</a>
+        <a class="modal-Box__Cancel-button" onclick="disapproveCancel()">Cancel</a>
       </div>
     </div>
-    <div id="resolveModal" class="modalBox displayNone">
-      <div class="modalBox__Header">
+    <div id="resolveModal" class="modal-Box displayNone">
+      <div class="modal-Box__Header">
         <p id="modalMessage">Resolve A Request</p>
       </div>
-      <div class="modalBox__Body">
+      <div class="modal-Box__Body">
         <textarea name="name" rows="5" cols="80" placeholder="Enter Resolve Comment.."></textarea>
       </div>
-      <div class="modalBox__Footer">
-        <a class="modalBox__Resolve" onclick="modalDelResolve()">Resolve Request</a>
-        <a class="modalBox__Cancel" onclick="resolveCancel()">Cancel</a>
+      <div class="modal-Box__Footer">
+        <a class="modal-Box__Resolve-button" onclick="modalDelResolve()">Resolve Request</a>
+        <a class="modal-Box__Cancel-button" onclick="resolveCancel()">Cancel</a>
       </div>
     </div>
     <section class="modal displayNone">
@@ -84,8 +84,8 @@
       </p>
       </div>
       <div class="requestsTable">
-        <div class="requestRow">
-          <div class="requestImageContainer">
+        <div class="request-Row">
+          <div class="request-Image-Container">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
           </div>
           <div class="infoColumn1">
@@ -94,13 +94,13 @@
             <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
             <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a onclick="approveDetailBtn()" class="but detail-Board__approve-Button">Approve</a>
             <a href="#" onclick="del()"  class="but del">Disapprove</a>
-            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+            <a href="#" class="but detail-board__resolve-button--Non100 disabled">Resolve</a>
           </div>
         </div>
-        <div class="requestRow">
-          <div class="requestImageContainer">
+        <div class="request-Row">
+          <div class="request-Image-Container">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
           </div>
           <div class="infoColumn1">
@@ -109,13 +109,13 @@
             <p><b>Status:- </b><span>Approved</span></p>
             <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a class="but detailBoard__approveBtn disabled">Approve</a>
+            <a class="but detail-Board__approve-Button disabled">Approve</a>
             <a class="but disabled del">Disapprove</a>
-            <a onclick="resolveBtnNon100()" class="but resolveBtnNon100">Resolve</a>
+            <a onclick="resolveBtnNon100()" class="but detail-board__resolve-button--Non100">Resolve</a>
           </div>
         </div>
-        <div class="requestRow">
-          <div class="requestImageContainer">
+        <div class="request-Row">
+          <div class="request-Image-Container">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
           </div>
           <div class="infoColumn1">
@@ -124,13 +124,13 @@
             <p><b>Status:- </b><span>Rejected</span></p>
             <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a  class="but disabled detailBoard__approveBtn">Approve</a>
+            <a  class="but disabled detail-Board__approve-Button">Approve</a>
             <a class="but disabled del">Disapprove</a>
-            <a class="but disabled resolveBtnNon100 disabled">Resolve</a>
+            <a class="but disabled detail-board__resolve-button--Non100 disabled">Resolve</a>
           </div>
         </div>
-        <div class="requestRow">
-          <div class="requestImageContainer">
+        <div class="request-Row">
+          <div class="request-Image-Container">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
           </div>
           <div class="infoColumn1">
@@ -139,12 +139,12 @@
             <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
             <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a onclick="approveDetailBtn()" class="but detail-Board__approve-Button">Approve</a>
             <a href="#" onclick="del()"  class="but del">Disapprove</a>
-            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+            <a href="#" class="but detail-board__resolve-button--Non100 disabled">Resolve</a>
           </div>
-        </div><div class="requestRow">
-          <div class="requestImageContainer">
+        </div><div class="request-Row">
+          <div class="request-Image-Container">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
           </div>
           <div class="infoColumn1">
@@ -153,12 +153,12 @@
             <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
             <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a onclick="approveDetailBtn()" class="but detail-Board__approve-Button">Approve</a>
             <a href="#" onclick="del()"  class="but del">Disapprove</a>
-            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+            <a href="#" class="but detail-board__resolve-button--Non100 disabled">Resolve</a>
           </div>
-        </div><div class="requestRow">
-          <div class="requestImageContainer">
+        </div><div class="request-Row">
+          <div class="request-Image-Container">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
           </div>
           <div class="infoColumn1">
@@ -167,12 +167,12 @@
             <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
             <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a onclick="approveDetailBtn()" class="but detail-Board__approve-Button">Approve</a>
             <a href="#" onclick="del()"  class="but del">Disapprove</a>
-            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+            <a href="#" class="but detail-board__resolve-button--Non100 disabled">Resolve</a>
           </div>
-        </div><div class="requestRow">
-          <div class="requestImageContainer">
+        </div><div class="request-Row">
+          <div class="request-Image-Container">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
           </div>
           <div class="infoColumn1">
@@ -181,12 +181,12 @@
             <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
             <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a onclick="approveDetailBtn()" class="but detail-Board__approve-Button">Approve</a>
             <a href="#" onclick="del()"  class="but del">Disapprove</a>
-            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+            <a href="#" class="but detail-board__resolve-button--Non100 disabled">Resolve</a>
           </div>
-        </div><div class="requestRow">
-          <div class="requestImageContainer">
+        </div><div class="request-Row">
+          <div class="request-Image-Container">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
           </div>
           <div class="infoColumn1">
@@ -195,12 +195,12 @@
             <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
             <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a onclick="approveDetailBtn()" class="but detail-Board__approve-Button">Approve</a>
             <a href="#" onclick="del()"  class="but del">Disapprove</a>
-            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+            <a href="#" class="but detail-board__resolve-button--Non100 disabled">Resolve</a>
           </div>
-        </div><div class="requestRow">
-          <div class="requestImageContainer">
+        </div><div class="request-Row">
+          <div class="request-Image-Container">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
           </div>
           <div class="infoColumn1">
@@ -209,12 +209,12 @@
             <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
             <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a onclick="approveDetailBtn()" class="but detail-Board__approve-Button">Approve</a>
             <a href="#" onclick="del()"  class="but del">Disapprove</a>
-            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+            <a href="#" class="but detail-board__resolve-button--Non100 disabled">Resolve</a>
           </div>
-        </div><div class="requestRow">
-          <div class="requestImageContainer">
+        </div><div class="request-Row">
+          <div class="request-Image-Container">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
           </div>
           <div class="infoColumn1">
@@ -223,12 +223,12 @@
             <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
             <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a onclick="approveDetailBtn()" class="but detail-Board__approve-Button">Approve</a>
             <a href="#" onclick="del()"  class="but del">Disapprove</a>
-            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+            <a href="#" class="but detail-board__resolve-button--Non100 disabled">Resolve</a>
           </div>
-        </div><div class="requestRow">
-          <div class="requestImageContainer">
+        </div><div class="request-Row">
+          <div class="request-Image-Container">
             <img src="../media/images/brokenPrinter.jpeg" alt="">
           </div>
           <div class="infoColumn1">
@@ -237,12 +237,12 @@
             <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
             <p><b>Requester:- </b><a href="#">Oyindamola Aderinwale</a></p>
             <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a onclick="approveDetailBtn()" class="but detailBoard__approveBtn">Approve</a>
+            <a onclick="approveDetailBtn()" class="but detail-Board__approve-Button">Approve</a>
             <a href="#" onclick="del()"  class="but del">Disapprove</a>
-            <a href="#" class="but resolveBtnNon100 disabled">Resolve</a>
+            <a href="#" class="but detail-board__resolve-button--Non100 disabled">Resolve</a>
           </div>
         </div>
-      <div class="requestRow requestRowFooter pagRow">
+      <div class="request-Row request-Row-Footer pagRow">
         <div class="pagination">
           <a href="#">Previous</a>
           <a class="active" href="#">1</a>

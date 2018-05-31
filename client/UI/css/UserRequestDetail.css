@@ -6,11 +6,11 @@ main{
   height: 100%;
 }
 
-.requestImageContainer2{
+.request-Image-Container2{
   height: 100%;
 }
 
-.detailBoard__editBtn, .detailBoard__approveBtn{
+.detail-Board__edit-Button, .detail-Board__approve-Button{
   margin-right: 2.5%;
 }
 
@@ -59,16 +59,16 @@ main{
   width: 100%;
 }
 
-.detailBoardPicColumn{
+.detail-Board__Pic-Column{
   margin-right: 2rem;
   padding: 1rem;
 }
 
-.detailBoardPicColumn{
+.detail-Board__Pic-Column{
   flex:1;
 }
 
-.detailBoardInfoColumn{
+.detail-Board__Info-Column{
   flex:2;
 }
 
@@ -79,7 +79,7 @@ main{
   margin-bottom: 5%;
 }
 
-.actionRow{
+.action-Row{
   display: flex;
   justify-content: start;
 }
@@ -101,11 +101,11 @@ main{
 
  }
 
- .detailBoard__editBtn, .deleteBtn{
+ .detail-Board__edit-Button, .detail-Board__delete-button{
    font-size: inherit;
  }
 
- .actionRow{
+ .action-Row{
    justify-content: space-between;
  }
 

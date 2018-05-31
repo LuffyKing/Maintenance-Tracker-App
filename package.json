@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run clean-dist && npm run clean-ui && npm run build-babel && npm run build-babel-ui-js",
-    "start": "npm run build && node build/server.js",
+    "start": "npm run build && node build/server/server.js",
     "startDev": "npm run build && nodemon build/server/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build-babel": "./node_modules/.bin/babel client -d build",

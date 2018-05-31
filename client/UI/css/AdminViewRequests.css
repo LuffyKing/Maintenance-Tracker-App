@@ -1,6 +1,6 @@
-.modalBox__Resolve,.approvebtn, .modalBox__Delete,.modalBox__disapprove,.modalBox__Cancel,
-.modalBox__Approve,.disapprovebtn, .resolvebtn,.placeholder,
-.detailBoard__editBtn, .deleteBtn,.detailBoard__approveBtn,.modalBox__Approve--White {
+.modal-Box__Resolve-button, .modal-Box__Delete-button, .modal-Box__disapprove-button,.modal-Box__Cancel-button,
+.modal-Box__Approve-button, .detail-board__resolve-button,.placeholder,
+.detail-Board__edit-Button, .detail-Board__delete-button,.detail-Board__approve-Button,.modal-Box__Approve-button--White {
     border-radius: 4px;
     color: #FFFFFF;
     cursor: pointer;
@@ -10,48 +10,34 @@
     text-decoration: none;
 }
 
-.modalBox__Approve--White{
+.modal-Box__Approve-button--White{
   background-color: #ffffff;
   color:#004f79;
 }
 
-.modalBox__Approve--White:hover{
+.modal-Box__Approve-button--White:hover{
   background-color: #cccccc;
   color: #004f79;
 }
 
-.approvebtn{
-  background-color: #32CD32;
-  width: 100%;
-}
-
-.approvebtn:hover{
-  background-color: #98FB98;
-}
-
-.modalBox__Delete{
+.modal-Box__Delete-button{
   background-color: #e60000;
 }
 
-.disapprovebtn {
-    background-color: #e60000;
-    width: 100%;
-}
-
-.disapprovebtn:hover, .modalBox__Delete:hover{
+.modal-Box__Delete-button:hover{
   background-color: #ff3333;
 }
 
-.resolvebtn {
+.detail-board__resolve-button {
   background-color: #DAA520;
 }
 
-.resolvebtn:hover, .resolveBtnNon100:hover, .modalBox__Resolve:hover{
+.detail-board__resolve-button:hover, .detail-board__resolve-button--Non100:hover, .modal-Box__Resolve-button:hover{
   background-color:  #EEE8AA !important;
   cursor: pointer;
 }
 
-.resolveBtnNon100,.modalBox__Resolve{
+.detail-board__resolve-button--Non100, .modal-Box__Resolve-button{
   background-color: #DAA520 !important;
 }
 
@@ -60,23 +46,23 @@
 }
 
 
-.detailBoard__editBtn, .detailBoard__approveBtn,.modalBox__Cancel{
+.detail-Board__edit-Button, .detail-Board__approve-Button,.modal-Box__Cancel-button{
   background-color: #0288D1;
 }
 
-.detailBoard__editBtn:hover, .detailBoard__approveBtn:hover,.modalBox__Cancel:hover{
+.detail-Board__edit-Button:hover, .detail-Board__approve-Button:hover,.modal-Box__Cancel-button:hover{
   background-color: #236B8E;
 }
 
 
-.requestRow{
+.request-Row{
   height: 300px;
 }
 
-.requestImageContainer{
+.request-Image-Container{
   height: 285px;
 }
 
-.requestRowFooter{
+.request-Row-Footer{
   height: 10vh !important;
 }

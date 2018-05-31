@@ -1,6 +1,5 @@
 import 'babel-polyfill';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import express from 'express';
 import morgan from 'morgan';
@@ -15,7 +14,6 @@ const env = process.env.NODE_ENV || 'development';
 const config = configJs[env];
 
 const app = express();
-app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, '../../client/UI')));
 app.use(express.static(path.resolve(__dirname, './UI')));
 const port = process.env.PORT || config.PORT;

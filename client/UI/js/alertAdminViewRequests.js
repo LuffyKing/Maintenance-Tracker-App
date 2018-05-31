@@ -20,16 +20,16 @@ const add = (modalName, index1 = 0, index2 = 0) => {
   getModal(modalName, index1, index2, 'add');
 };
 
-const  approveDetailBtn = (modalName = 'modalBox') => {
+const  approveDetailBtn = (modalName = 'modal-Box') => {
   remove(modalName)
 };
 
 const del = () => {
-  remove('modalBox', 1);
+  remove('modal-Box', 1);
 };
 
 const resolveBtnNon100 = () => {
-  remove('modalBox', 2);
+  remove('modal-Box', 2);
 };
 
 const removeCancel = (modalName) => {
@@ -46,7 +46,7 @@ const resolveCancel = () => {
 };
 
 const closeModal = () => {
-  add('modalBox');
+  add('modal-Box');
 };
 
 const modalAction = (modalName, requestAction1, requestAction2, message) => {

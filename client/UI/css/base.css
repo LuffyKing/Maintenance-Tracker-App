@@ -6,6 +6,9 @@
   font-family: 'Ubuntu', sans-serif;
 }
 
+i{
+margin-left: 5px;
+}
 .lobster {
   font-family: 'Lobster', cursive;
 }
@@ -32,7 +35,7 @@
   z-index: 1;
 }
 
-.modalBox{
+.modal-Box{
   background-color: #FFFFFF;
   height: 50%;
   position:fixed;
@@ -41,7 +44,7 @@
   z-index: 4;
 }
 
-.modalBox__Header{
+.modal-Box__Header{
   align-items: center;
   background: #03A9F4;
   border-radius: 10px 10px 0 0;
@@ -53,7 +56,7 @@
   padding: 3.5%;
 }
 
-.modalBox__Body{
+.modal-Box__Body{
   align-items: center;
   display: flex;
   height: 50%;
@@ -62,11 +65,11 @@
   font-size: 3rem;
 }
 
-.modalBox__Body textarea{
+.modal-Box__Body textarea{
   border: 2px solid black;
 }
 
-.modalBox__Footer{
+.modal-Box__Footer{
   align-items: flex-end;
   background: #03A9F4;
   border-radius: 0 0 10px 10px;
@@ -76,7 +79,7 @@
   padding: 3.5%;
 }
 
-.modalBox__Approve, .modalBox__disapprove, .modalBox__Delete,.modalBox__Approve--White,.modalBox__Resolve{
+.modal-Box__Approve-button, .modal-Box__disapprove-button, .modal-Box__Delete-button,.modal-Box__Approve-button--White,.modal-Box__Resolve-button{
   margin-right: 5%;
 }
 
@@ -121,14 +124,14 @@ input, select,textarea {
   padding:0.75rem;
 }
 
-.formInfo{
+.form__info{
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
   padding: 0.25rem;
   text-align: center;
 }
 
-.inputLabel, .formInfo{
+.form__input-Label, .form__info{
   font-size: 1.75rem;
 }
 
@@ -143,7 +146,7 @@ input, select,textarea {
   padding-left: 1rem;
 }
 
-a:link.Logo, #navbar li a, #footer li a, .formInfo a {
+a:link.Logo, #navbar li a, #footer li a, .form__info a {
   text-decoration: none;
 }
 
@@ -151,7 +154,7 @@ a {
 color:inherit;
 }
 
-.button{
+.form__button{
   border: none;
   border-radius: 0.4rem;
   cursor: pointer;
@@ -249,11 +252,11 @@ b {
   cursor: pointer;
 }
 
-.deleteBtn,.modalBox__Approve, .requestDisapproved, .modalBox__disapprove{
+.detail-Board__delete-button,.modal-Box__Approve-button, .requestDisapproved, .modal-Box__disapprove-button{
   background-color: #e60000;
 }
 
-.deleteBtn:hover, .modalBox__Approve:hover, .requestDisapproved:hover, .modalBox__disapprove:hover{
+.detail-Board__delete-button:hover, .modal-Box__Approve-button:hover, .requestDisapproved:hover, .modal-Box__disapprove-button:hover{
   background-color: #ff3333;
 }
 
@@ -335,6 +338,6 @@ body {
   }
 
 }
-.modalBox{
+.modal-Box{
   border-radius: 10px;
 }

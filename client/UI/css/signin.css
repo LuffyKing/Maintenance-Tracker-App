@@ -9,7 +9,7 @@ opacity: 0.9;
 width:300px;
 }
 
-.button, input,textarea, select, #status, .inputLabel{
+.form__button, input,textarea, select, #status, .form__input-Label{
   width: 35%;
 }
 
@@ -17,11 +17,11 @@ main{
   height: 100%;
 }
 
-.formSubmit {
+.form__submit-button{
 margin-top: 2rem;
 }
 
-.form-control {
+.form__control {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@ margin-top: 2rem;
 
 }
 @media (max-width:1024px) {
-  .button, input, textarea, select, #status {
+  .form__button, input, textarea, select, #status {
       width: 75%;
   }
   #loginPanel2{
@@ -63,15 +63,15 @@ margin-top: 2rem;
     width: 75%;
     }
 
-  .inputLabel{
+  .form__input-Label{
     font-size: 2rem;
   }
 
-  form, .form-control{
+  form, .form__control{
     width:100%;
   }
 
-  .button{
+  .form__button{
     font-size: 1.5rem;
   }
 
@@ -79,7 +79,7 @@ margin-top: 2rem;
     font-size: 1.5rem;
   }
 
-  .formSubmit {
+  .form__submit-button{
     margin-right: 0;
   }
   .sub-logo{

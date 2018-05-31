@@ -37,11 +37,11 @@ paths:
           $ref: "#/definitions/UserSignup"
       responses:
         201:
-          description: "successfully created a new user"
+          description: "Signup successful"
           schema:
             $ref: "#/definitions/UserSignupRes"
         400:
-          description: "Error Required Fields can not be empty. / Error Non-Unique Email Or Mobile."
+          description: "Your sign up attempt was unsuccessful because the fields PASSWORD ,JOB TITLE ,DEPARTMENT were not provided"
 
 
   /auth/login:

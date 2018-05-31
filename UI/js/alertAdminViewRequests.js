@@ -16,7 +16,7 @@ const add = (modalName, index1 = 0, index2 = 0) => {
   getModal(modalName, index1, index2, 'add');
 };
 
-const  approveDetailBtn = (modalName = 'modalBox') => {
+const approveDetailBtn = (modalName = 'modalBox') => {
   remove(modalName)
 };
 

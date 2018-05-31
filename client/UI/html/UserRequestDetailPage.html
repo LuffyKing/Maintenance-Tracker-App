@@ -27,17 +27,17 @@
     </nav>
   </header>
   <main>
-    <div id="deleteRequest" class="modalBox displayNone">
-      <div class="modalBox__Header">
+    <div id="deleteRequest" class="modal-Box displayNone">
+      <div class="modal-Box__Header">
         <p id="modalMessage">Delete A Request</p>
       </div>
-      <div class="modalBox__Body">
+      <div class="modal-Box__Body">
         <p>This action can not be undone!</p>
         <p>Are sure you want to delete this request?</p>
       </div>
-      <div class="modalBox__Footer">
-        <a class="modalBox__Delete" onclick="modalDelDelete()">Delete Request</a>
-        <a class="modalBox__Cancel" onclick="closeModal()">Cancel</a>
+      <div class="modal-Box__Footer">
+        <a class="modal-Box__Delete-button" onclick="modalDelDelete()">Delete Request</a>
+        <a class="modal-Box__Cancel-button" onclick="closeModal()">Cancel</a>
       </div>
     </div>
     <section class="modal displayNone">
@@ -47,12 +47,12 @@
       <span><i id="alertClose" class="fas fa-times"></i></span>
     </section>
     <section id="detailBoard">
-      <div class="detailBoardPicColumn">
-        <div class="requestImageContainer2">
+      <div class="detail-Board__Pic-Column">
+        <div class="request-Image-Container2">
           <img src="../media/images/lightBulb.jpeg" alt="">
         </div>
       </div>
-      <div class="detailBoardInfoColumn">
+      <div class="detail-Board__Info-Column">
         <div class="titleAndDescription">
           <h1>Broken Lightbulb</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga labore eum natus amet voluptatem velit vel quaerat magni deserunt culpa aliquam quibusdam suscipit, architecto rem libero numquam iusto distinctio. Veniam quisquam similique iusto soluta nostrum quam ducimus provident temporibus molestias, pariatur excepturi, quibusdam. Mollitia quidem nobis nesciunt, est molestiae assumenda?</p>
@@ -79,9 +79,9 @@
             </address>
           </div>
         </div>
-        <div class="actionRow">
-          <a href="EditRequest.html" class="detailBoard__editBtn">Edit Request</a>
-          <a class="deleteBtn" onclick="approveDetailBtn()" >Delete Request</a>
+        <div class="action-Row">
+          <a href="EditRequest.html" class="detail-Board__edit-Button">Edit Request</a>
+          <a class="detail-Board__delete-button" onclick="approveDetailBtn()" >Delete Request</a>
         </div>
       </div>
     </section>

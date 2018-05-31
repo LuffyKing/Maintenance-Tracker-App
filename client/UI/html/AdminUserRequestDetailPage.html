@@ -26,28 +26,28 @@
     </nav>
   </header>
   <main>
-    <div id="approveModal" class="modalBox displayNone">
-      <div class="modalBox__Header">
+    <div id="approveModal" class="modal-Box displayNone">
+      <div class="modal-Box__Header">
         <p id="modalMessage">Approve A Request</p>
       </div>
-      <div class="modalBox__Body">
+      <div class="modal-Box__Body">
         <textarea name="name" rows="5" cols="80" placeholder="Enter Approval Comment.."></textarea>
       </div>
-      <div class="modalBox__Footer">
-        <a class="modalBox__Approve--White" onclick="modalDelApprove()">Approve Request</a>
-        <a class="modalBox__Cancel" onclick="closeModal()">Cancel</a>
+      <div class="modal-Box__Footer">
+        <a class="modal-Box__Approve-button--White" onclick="modalDelApprove()">Approve Request</a>
+        <a class="modal-Box__Cancel-button" onclick="closeModal()">Cancel</a>
       </div>
     </div>
-    <div id="disapproveModal" class="modalBox displayNone">
-      <div class="modalBox__Header">
+    <div id="disapproveModal" class="modal-Box displayNone">
+      <div class="modal-Box__Header">
         <p id="modalMessage">Disapprove A Request</p>
       </div>
-      <div class="modalBox__Body">
+      <div class="modal-Box__Body">
         <textarea name="name" rows="5" cols="80" placeholder="Enter Disapproval Comment.."></textarea>
       </div>
-      <div class="modalBox__Footer">
-        <a class="modalBox__disapprove" onclick="modalDeldisapprove()">Disapprove Request</a>
-        <a class="modalBox__Cancel" onclick="disapproveCancel()">Cancel</a>
+      <div class="modal-Box__Footer">
+        <a class="modal-Box__disapprove-button" onclick="modalDeldisapprove()">Disapprove Request</a>
+        <a class="modal-Box__Cancel-button" onclick="disapproveCancel()">Cancel</a>
       </div>
     </div>
     <section class="modal displayNone">
@@ -57,12 +57,12 @@
       <span><i id="alertClose" class="fas fa-times"></i></span>
     </section>
     <section id="detailBoard">
-      <div class="detailBoardPicColumn">
-        <div class="requestImageContainer2">
+      <div class="detail-Board__Pic-Column">
+        <div class="request-Image-Container2">
           <img src="../media/images/lightBulb.jpeg" alt="">
         </div>
       </div>
-      <div class="detailBoardInfoColumn">
+      <div class="detail-Board__Info-Column">
         <div class="titleAndDescription">
           <h1>Broken Lightbulb</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga labore eum natus amet voluptatem velit vel quaerat magni deserunt culpa aliquam quibusdam suscipit, architecto rem libero numquam iusto distinctio. Veniam quisquam similique iusto soluta nostrum quam ducimus provident temporibus molestias, pariatur excepturi, quibusdam. Mollitia quidem nobis nesciunt, est molestiae assumenda?</p>
@@ -89,9 +89,9 @@
             </address>
           </div>
         </div>
-        <div class="actionRow">
-          <a class="detailBoard__approveBtn" onclick="approveDetailBtn()">Approve Request</a>
-          <a class="deleteBtn" onclick="del()">Disapprove Request</a>
+        <div class="action-Row">
+          <a class="detail-Board__approve-Button" onclick="approveDetailBtn()">Approve Request</a>
+          <a class="detail-Board__delete-button" onclick="del()">Disapprove Request</a>
         </div>
       </div>
     </section>
