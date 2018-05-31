@@ -1,5 +1,9 @@
 const profileCheck = (request, response, profileAllowed) => {
   const { decodedUser } = request;
+  if (typeof decodedUser.user === "undefined") {
+    decodedUser.user = decodedUser.newUser;
+    request.decodedUser.user = decodedUser.newUser;
+  }
   if (decodedUser.user.profile !== profileAllowed) {
     return response.status(401).send({ message: `You are not allowed to use this API because your profile is not ${profileAllowed}` });
   }
