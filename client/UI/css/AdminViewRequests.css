@@ -1,0 +1,68 @@
+.modal-Box__Resolve-button, .modal-Box__Delete-button, .modal-Box__disapprove-button,.modal-Box__Cancel-button,
+.modal-Box__Approve-button, .detail-board__resolve-button,.placeholder,
+.detail-Board__edit-Button, .detail-Board__delete-button,.detail-Board__approve-Button,.modal-Box__Approve-button--White {
+    border-radius: 4px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+.modal-Box__Approve-button--White{
+  background-color: #ffffff;
+  color:#004f79;
+}
+
+.modal-Box__Approve-button--White:hover{
+  background-color: #cccccc;
+  color: #004f79;
+}
+
+.modal-Box__Delete-button{
+  background-color: #e60000;
+}
+
+.modal-Box__Delete-button:hover{
+  background-color: #ff3333;
+}
+
+.detail-board__resolve-button {
+  background-color: #DAA520;
+}
+
+.detail-board__resolve-button:hover, .detail-board__resolve-button--Non100:hover, .modal-Box__Resolve-button:hover{
+  background-color:  #EEE8AA !important;
+  cursor: pointer;
+}
+
+.detail-board__resolve-button--Non100, .modal-Box__Resolve-button{
+  background-color: #DAA520 !important;
+}
+
+.placeholder{
+  cursor: default;
+}
+
+
+.detail-Board__edit-Button, .detail-Board__approve-Button,.modal-Box__Cancel-button{
+  background-color: #0288D1;
+}
+
+.detail-Board__edit-Button:hover, .detail-Board__approve-Button:hover,.modal-Box__Cancel-button:hover{
+  background-color: #236B8E;
+}
+
+
+.request-Row{
+  height: 300px;
+}
+
+.request-Image-Container{
+  height: 285px;
+}
+
+.request-Row-Footer{
+  height: 10vh !important;
+}

@@ -4,12 +4,14 @@
   "description": "An app for managing repair and maintenance requests",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clean-dist && npm run build-babel",
-    "start": "npm run build && node build/server.js",
-    "startDev": "npm run build && nodemon build/server.js",
+    "build": "npm run clean-dist && npm run clean-ui && npm run build-babel && npm run build-babel-ui-js",
+    "start": "npm run build && node build/server/server.js",
+    "startDev": "npm run build && nodemon build/server/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "build-babel": "./node_modules/.bin/babel server -d build",
+    "build-babel": "./node_modules/.bin/babel client -d build",
+    "build-babel-ui-js": "./node_modules/.bin/babel client/UI/js -d client/UI/js2",
     "clean-dist": "rm -rf build && mkdir build",
+    "clean-ui": "rm -rf client/UI/js2 && mkdir client/UI/js2",
     "test": "NODE_ENV=test nyc mocha test/index.js --exit",
     "setupDb": "npm run build && node build/db",
     "travisSetupDb": "node server/db",
@@ -38,11 +40,14 @@
   "dependencies": {
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.2.1",
     "pg": "^7.4.3",
+    "swagger-ui-express": "^3.0.9",
     "uuid": "^3.2.1",
-    "validator": "^10.2.0"
+    "validator": "^10.2.0",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

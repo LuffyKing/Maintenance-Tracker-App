@@ -1,0 +1,66 @@
+#status{
+  background: #FFFFFF;
+  border-radius: 0.4rem;
+  font-size: 3rem;
+  padding:0.75rem;
+}
+
+@media (max-width:601px) {
+  #loginPanel2{
+      padding: 2rem;
+  }
+
+  #status{
+    font-size: 1.5rem;
+  }
+
+  h2{
+    text-align: center;
+  }
+
+  .form__control{
+    margin-bottom: 1%;
+    margin-top: 1%;
+  }
+
+  input, select,textarea,.form__input-Label,#status{
+    font-size: 1.65rem;
+  }
+
+}
+
+@media (max-width:960px) {
+
+  #status{
+    font-size: 1.5rem;
+  }
+
+  #loginPanel2{
+      font-size: 1.5rem;
+      padding: 1rem;
+  }
+
+  .form__input-Label{
+    font-size: 2.25rem;
+  }
+
+}
+
+@media (min-width:1024px) {
+
+  .form__input-Label{
+    font-size: 2.85rem;
+  }
+
+  input, select, textarea, #status{
+    font-size: 2.25rem;
+    padding: 2rem;
+  }
+
+  .formSubmit{
+    font-size: 3rem;
+    padding: 1rem;
+    width:25%;
+  }
+
+}

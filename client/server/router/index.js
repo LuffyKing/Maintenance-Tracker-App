@@ -29,4 +29,5 @@ router.put('/requests/:requestid/approve', verifyToken, isAdmin, getARequestChec
 router.put('/requests/:requestid/disapprove', verifyToken, isAdmin, getARequestChecker, rejected, reasonChecker, maxLengthChecker, RequestsController.updateARequestAdmin);
 router.put('/requests/:requestid/resolve', verifyToken, isAdmin, getARequestChecker, resolved, reasonChecker, maxLengthChecker, RequestsController.updateARequestAdmin);
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 export default router;
