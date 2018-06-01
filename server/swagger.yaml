@@ -304,7 +304,34 @@ paths:
         401:
           description: "Login Token invalid"
         404:
-          description: "You do not have any request on TrackerHero with that id"
+          description: "You do not have any editable request on TrackerHero with that id"
+    delete:
+      tags:
+      - "requests"
+      summary: "Deletes a request."
+      description: "This API deletes a request based on the request id provided. This request will depend on the validity of the information provided, the validity of the JWT, and the request must have a status of 'Not Approved or Rejected'. This API route is available to non-admins. "
+      operationId: "deleteARequest"
+      produces:
+      - "application/json"
+      security:
+        - JWT: []
+
+      parameters:
+      - name: "requestId"
+        in: "path"
+        description: "Request Id of the request to be updated."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "The following request has been deleted"
+          schema:
+            $ref: "#/definitions/RequestRegisterRes"
+        401:
+          description: "Login Token invalid"
+        404:
+          description: "You do not have any deleteable request on TrackerHero with that id"
+
 definitions:
 
   UserSignup:
