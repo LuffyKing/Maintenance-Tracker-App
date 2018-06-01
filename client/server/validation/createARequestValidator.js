@@ -1,5 +1,5 @@
 import validator from 'validator';
-import { pool } from '../db';
+
 
 const getReqBody = (request, listOfProps) => {
   const reqBody = listOfProps.reduce((accumulator, property) => {
@@ -102,7 +102,7 @@ const nonStringFieldHandler = (reqBody, response, failReason) => {
 };
 const invalidFieldMessage = (invalidFieldsArr, response, failReason) => {
   if (invalidFieldsArr.length > 0) {
-    return response.status(400).json({
+    return response.status(422).json({
       message: `${failReason} ${invalidFieldsArr.join(' ,')}`
     });
   }
@@ -140,24 +140,7 @@ const createARequestChecker = (request, response, next) => {
     return reply;
   }
   trimmer(reqBody, request);
-  pool.connect((error, client, done) => {
-    if (error) {
-      response.status(500).send({ message: error.stack });
-    }
-    client.query(`SELECT * FROM REQUESTS where LOCATION = '${reqBody.location}' and DESCRIPTION = '${reqBody.description}' and TYPE = '${reqBody.type}' and TITLE = '${reqBody.title}';`, (error1, requestRow) => {
-      done();
-      if (error1) {
-        return response.status(500).send({ message: error1.stack });
-      } else if (requestRow.rows.length === 0) {
-        request.failReason = 'The request could not be created because';
-        next();
-      } else {
-        return response.status(400).send({
-          message: 'The request could not be created because a request with the same LOCATION, DESCRIPTION,TYPE AND TITLE already exists',
-        });
-      }
-    });
-  });
+  next();
 };
 export {
   createARequestChecker,

@@ -9,7 +9,6 @@ const verifyToken = (request, response, next) => {
       if (error) {
         return response.status(401).send({ message: 'Login Token invalid', error });
       } else {
-        console.log(user);
       request.decodedUser = user;
       next();
     }
@@ -26,7 +25,7 @@ const verifyTokenUI = (request, response) => {
   const hasBearerHeader = typeof bearerHeader === 'string';
   if (hasBearerHeader && bearerHeader) {
     const bearerToken = bearerHeader;
-    jwt.verify(bearerToken, process.env.SECRET_KEY, (error, user) => {
+    jwt.verify(bearerToken, process.env.SECRET_KEY, (error) => {
       if (error) {
         return response.status(401).send();
       } else {

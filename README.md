@@ -95,7 +95,7 @@ Deplying to [heroku](https://devcenter.heroku.com/articles/getting-started-with-
 
 ## Authors
 
-**Oyindamola Aderinwale** - https://github.com/LuffyKing
+[Oyindamola Aderinwale](https://github.com/LuffyKing)
 
 ## License
 

@@ -16,7 +16,7 @@ const signUpAUserChecker = (request, response, next) => {
     return reply;
   }
   pool.connect()
-    .then(client => client.query('SELECT * FROM USERS WHERE EMAIL = $1 LIMIT 1;', [reqBody.email])
+    .then(client => client.query('SELECT * FROM USERS WHERE EMAIL ilike $1;', [reqBody.email])
       .then((result) => {
         client.release();
         if (result.rows.length > 0) {
@@ -25,7 +25,7 @@ const signUpAUserChecker = (request, response, next) => {
         trimmer(reqBody, request);
         request.failReason = 'Your sign up attempt was unsuccessful because';
         next();
-      }).catch(error => response.status(400).send({ message: error.message }))
+      }).catch(error => response.status(422).send({ message: error.message }))
       .catch(error => response.status(500).send({ error })));
 };
 export default signUpAUserChecker;

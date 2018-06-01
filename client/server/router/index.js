@@ -1,6 +1,7 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import approved from '../validation/ApproveStatusValidator';
+import { duplicateRequest } from '../validation/duplicateRequestValidator';
 import { createARequestChecker } from '../validation/createARequestValidator';
 import { getARequestChecker } from '../validation/getARequestValidator';
 import { isAdmin, isUser } from '../validation/profileValidator';
@@ -19,10 +20,10 @@ import verifyToken from '../authMiddleware/jwt';
 const router = express.Router();
 
 router.post('/auth/signup', signUpAUserChecker, maxLengthChecker, UsersController.signUp);
-router.post('/auth/login', loginAUserChecker, UsersController.login);
+router.post('/auth/login', loginAUserChecker, maxLengthChecker, UsersController.login);
 router.get('/users/requests', verifyToken, isUser, RequestsController.getAllRequests);
 router.get('/users/requests/:requestid', verifyToken, isUser, getARequestChecker, RequestsController.getARequest);
-router.post('/users/requests/', verifyToken, isUser, createARequestChecker, maxLengthChecker, RequestsController.createARequest);
+router.post('/users/requests/', verifyToken, isUser, createARequestChecker, maxLengthChecker, duplicateRequest, RequestsController.createARequest);
 router.put('/users/requests/:requestid', verifyToken, isUser, getARequestChecker, modifyARequestChecker, maxLengthChecker, RequestsController.updateARequest);
 router.get('/requests/', verifyToken, isAdmin, RequestsController.getAllRequestsAdmin);
 router.put('/requests/:requestid/approve', verifyToken, isAdmin, getARequestChecker, approved, reasonChecker, maxLengthChecker, RequestsController.updateARequestAdmin);

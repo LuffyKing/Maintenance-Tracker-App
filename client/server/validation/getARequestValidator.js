@@ -20,7 +20,7 @@ const getARequestChecker = (request, response, next) => {
     request.params.requestid = request.params.requestid.trim();
     next();
   } else {
-    return response.status(400).send({ message: 'The id provided is invalid because it is not of the type UUID 4' });
+    return response.status(404).send({ message: 'The id provided is invalid which means the request does not exist' });
   }
 };
 export { checkId, getARequestChecker };
