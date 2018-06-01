@@ -61,7 +61,7 @@ const Requests = {
   deleteARequest: (request, response) => {
     const { decodedUser, params } = request;
     RequestsDatabaseHelper(
-      request, response, `DELETE FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}' RETURNING *;`,
+      request, response, `DELETE FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}' and status='Not Approved/Rejected' RETURNING *;`,
       'You do not have any request on TrackerHero with that id',
       'delete single request'
     );
