@@ -115,7 +115,7 @@ const Requests = {
     const updateStatement = Object.keys(request.reqBody).map(key => `${key} = '${reqBody[key]}'`).join(',');
     RequestsDatabaseHelper(
       request, response, `UPDATE REQUESTS SET last_edited = $1,${updateStatement} where userid = '${decodedUser.user.id}' and status = 'Not Approved/Rejected' and id = '${requestid}' RETURNING *;`,
-      'You do not have any request on TrackerHero with that id',
+      'You do not have any editable request on TrackerHero with that id',
       'update a request', [new Date()], 'Your request has been updated.'
     );
   },
