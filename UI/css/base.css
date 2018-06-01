@@ -17,7 +17,9 @@
 .sedgwick {
   font-family: 'Sedgwick Ave Display', cursive;
 }
-
+i{
+margin-left: 5px;
+}
 .modal{
   align-items: center;
   background-color: rgb(0,0,0,0.4);
