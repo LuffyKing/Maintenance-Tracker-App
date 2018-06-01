@@ -73,7 +73,8 @@ paths:
       responses:
         200:
           description: "Login successful"
-        401:
+
+        401: 
           description: "Invalid Username/Password"
 
   /users/requests:
@@ -105,7 +106,6 @@ paths:
           description: "The request could not be created because the fields TYPE ,LOCATION were supposed to be strings"
         422:
           description: "The request could not be created because a request with the same LOCATION, DESCRIPTION,TYPE AND TITLE already exists"
-
     get:
       tags:
       - "requests"
@@ -454,8 +454,6 @@ definitions:
         reason:
           type: "string"
           default: "null"
-
-
 
 externalDocs:
   description: "API Docs written by Swagger"
