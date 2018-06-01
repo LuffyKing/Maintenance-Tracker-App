@@ -43,11 +43,13 @@ paths:
           $ref: "#/definitions/UserSignup"
       responses:
         201:
-          description: "successfully created a new user"
+          description: "Signup successful"
           schema:
             $ref: "#/definitions/UserSignupRes"
         400:
-          description: "Error Required Fields can not be empty. / Error Non-Unique Email Or Mobile."
+          description: "Your sign up attempt was unsuccessful because the field EMAIL was not provided"
+        422:
+          description: "Your sign up attempt was unsuccessful because the EMAIL you provided already exists!"
 
 
   /auth/login:
@@ -70,7 +72,9 @@ paths:
           $ref: "#/definitions/UserSignin"
       responses:
         200:
-          description: "Login success"
+          description: "Login successful"
+        401: 
+          description: "Invalid Username/Password"
 
   /users/requests:
     post:
@@ -92,13 +96,16 @@ paths:
         schema:
           $ref: "#/definitions/RequestRegister"
       responses:
-        200:
+        201:
           description: "Your request was successfully created."
           schema:
             $ref: "#/definitions/RequestRegisterRes"
 
         400:
           description: "The request could not be created because the fields TYPE ,LOCATION were supposed to be strings"
+        422:
+          description: "The request could not be created because a request with the same LOCATION, DESCRIPTION,TYPE AND TITLE already exists"
+          
     get:
       tags:
       - "requests"
@@ -116,6 +123,8 @@ paths:
             $ref: "#/definitions/ArrayOfRequests"
         401:
           description: "Login Token invalid"
+        404:
+          description: 'You do not have any requests on TrackerHero, but it is not too late to start making them!'
   /requests/:
     get:
       tags:
@@ -130,9 +139,11 @@ paths:
       
       responses:
         200:
-          description: "Your requests has been found."
+          description: "Your x requests has been found."
           schema:
             $ref: "#/definitions/ArrayOfRequests"
+        401:
+          description: "Login Token invalid"
         404:
           description: "There are no requests on TrackerHero, check back later!"
   
@@ -165,6 +176,8 @@ paths:
           description: "Your request has been updated."
           schema:
             $ref: "#/definitions/RequestRegisterRes"
+        401:
+          description: "Login Token invalid"
         404:
           description: "You do not have an approvable request on TrackerHero with that id"
       
@@ -196,6 +209,8 @@ paths:
           description: "Your request has been updated."
           schema:
             $ref: "#/definitions/RequestRegisterRes"
+        401:
+          description: "Login Token invalid"
         404:
           description: "You do not have an disapprovable request on TrackerHero with that id"
   /requests/{requestId}/resolve/:
@@ -226,6 +241,8 @@ paths:
           description: "Your request has been updated."
           schema:
             $ref: "#/definitions/RequestRegisterRes"
+        401:
+          description: "Login Token invalid"
         404:
           description: "You do not have a resolvable request on TrackerHero with that id"
   
@@ -252,6 +269,8 @@ paths:
           description: "Your request has been found."
           schema:
             $ref: "#/definitions/RequestRegisterRes"
+        401:
+          description: "Login Token invalid"
         404:
           description: "You do not have any request on TrackerHero with that id"
     put:
@@ -282,6 +301,8 @@ paths:
           description: "Your request has been updated."
           schema:
             $ref: "#/definitions/RequestRegisterRes"
+        401:
+          description: "Login Token invalid"
         404:
           description: "You do not have any request on TrackerHero with that id"
 definitions:
@@ -380,12 +401,19 @@ definitions:
       userid:
         type: "string"
         format: "uuid"
-      dateCreated:
+      date_submitted:
         type: "string"
         format: "date"
-      lastEdited:
+      date_resolved:
         type: "string"
         format: "date"
+        default: "null"
+      last_edited:
+        type: "string"
+        format: "date"
+      reason:
+        type: "string"
+        default: "null"
     xml:
       name: "RequestRegisterRes"
   Reason:
@@ -408,19 +436,25 @@ definitions:
           type: "string"
         status:
           type: "string"
-        type:
-          type: "string"
         location:
           type: "string"
         userid:
           type: "string"
           format: "uuid"
-        dateSubmitted:
+        date_submitted:
           type: "string"
           format: "date"
-        lastEdited:
+        date_resolved:
           type: "string"
           format: "date"
+          default: "null"
+        last_edited:
+          type: "string"
+          format: "date"
+        reason:
+          type: "string"
+          default: "null"
+            
 
 
 externalDocs:
