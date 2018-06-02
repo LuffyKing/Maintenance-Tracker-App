@@ -63,6 +63,11 @@ const RequestsDatabaseHelper = (request, response, query, messageErrCode, operat
             message: messageSuccCode,
             request: requestRow.rows[0]
           });
+        } else if (operation === 'delete single request') {
+          return response.status(successCode).send({
+            message: 'The following request has been deleted',
+            request: requestRow.rows[0]
+          });
         }
       }
       return response.status(errorCode).send({

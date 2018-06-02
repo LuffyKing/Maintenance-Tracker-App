@@ -51,6 +51,22 @@ const Requests = {
     );
   },
   /**
+* It deletes a request that a user owns on the application
+* @param {object} request - request object containing params and body
+* @param {object} response - response object that conveys the result of the request
+* @returns {object} - response object that has a status code of either 200 and
+* a repair or maintenance request or 404 if the id provided in the request params id
+* does not match an existing request
+*/
+  deleteARequest: (request, response) => {
+    const { decodedUser, params } = request;
+    RequestsDatabaseHelper(
+      request, response, `DELETE FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}' and status='Not Approved/Rejected' RETURNING *;`,
+      'You do not have any deleteable request on TrackerHero with that id',
+      'delete single request'
+    );
+  },
+  /**
 * It gets a requests on the application
 * @param {object} request - request object containing params and body
 * @param {object} response - response object that conveys the result of the request
@@ -99,7 +115,7 @@ const Requests = {
     const updateStatement = Object.keys(request.reqBody).map(key => `${key} = '${reqBody[key]}'`).join(',');
     RequestsDatabaseHelper(
       request, response, `UPDATE REQUESTS SET last_edited = $1,${updateStatement} where userid = '${decodedUser.user.id}' and status = 'Not Approved/Rejected' and id = '${requestid}' RETURNING *;`,
-      'You do not have any request on TrackerHero with that id',
+      'You do not have any editable request on TrackerHero with that id',
       'update a request', [new Date()], 'Your request has been updated.'
     );
   },
