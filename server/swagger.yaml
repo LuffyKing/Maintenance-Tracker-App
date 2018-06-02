@@ -73,6 +73,7 @@ paths:
       responses:
         200:
           description: "Login successful"
+
         401: 
           description: "Invalid Username/Password"
 
@@ -105,7 +106,6 @@ paths:
           description: "The request could not be created because the fields TYPE ,LOCATION were supposed to be strings"
         422:
           description: "The request could not be created because a request with the same LOCATION, DESCRIPTION,TYPE AND TITLE already exists"
-          
     get:
       tags:
       - "requests"
@@ -136,7 +136,7 @@ paths:
       - "application/json"
       security:
         - JWT: []
-      
+
       responses:
         200:
           description: "Your x requests has been found."
@@ -146,7 +146,7 @@ paths:
           description: "Login Token invalid"
         404:
           description: "There are no requests on TrackerHero, check back later!"
-  
+
   /requests/{requestId}/approve/:
     put:
       tags:
@@ -170,7 +170,7 @@ paths:
           $ref: '#/definitions/Reason'
       security:
         - JWT: []
-      
+
       responses:
         200:
           description: "Your request has been updated."
@@ -180,7 +180,7 @@ paths:
           description: "Login Token invalid"
         404:
           description: "You do not have an approvable request on TrackerHero with that id"
-      
+
   /requests/{requestId}/disapprove/:
     put:
       tags:
@@ -245,7 +245,7 @@ paths:
           description: "Login Token invalid"
         404:
           description: "You do not have a resolvable request on TrackerHero with that id"
-  
+
   /users/requests/{requestId}:
     get:
       tags:
@@ -283,7 +283,7 @@ paths:
       - "application/json"
       security:
         - JWT: []
-      
+
       parameters:
       - name: "requestId"
         in: "path"
@@ -325,7 +325,7 @@ definitions:
         type: "string"
       location:
         type: "string"
-        
+
     xml:
       name: "UserSignup"
   UserSignupRes:
@@ -454,8 +454,6 @@ definitions:
         reason:
           type: "string"
           default: "null"
-            
-
 
 externalDocs:
   description: "API Docs written by Swagger"

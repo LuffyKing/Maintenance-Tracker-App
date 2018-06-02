@@ -37,7 +37,7 @@ request is made
         JOB_TITLE,
         DEPARTMENT,
         PROFILE,
-        LOCATION from USERS where EMAIL=$1`, [email], (err, result) => {
+        LOCATION from USERS where EMAIL = $1`, [email], (err, result) => {
         done();
         if (err) {
           return response.status(500).send({ message: err.stack });
@@ -51,17 +51,14 @@ request is made
               message: 'Login successful',
               token,
               user: newUser,
-              status: 200
             });
           }
           return response.status(401).send({
             message: 'Invalid Username/Password',
-            status: 401
           });
         }
         return response.status(401).send({
           message: 'Invalid Username/Password',
-          status: 401
         });
       });
     });

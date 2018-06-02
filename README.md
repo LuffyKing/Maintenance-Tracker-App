@@ -94,6 +94,7 @@ Deplying to [heroku](https://devcenter.heroku.com/articles/getting-started-with-
 * [npm](http://npmjs.com/) - Dependency management tool used
 
 ## Authors
+
 [Oyindamola Aderinwale](https://github.com/LuffyKing)
 
 ## License

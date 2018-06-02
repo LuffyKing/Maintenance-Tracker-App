@@ -28,7 +28,9 @@ app.use(morgan('dev'));
 
 app.use('/api/v1', router);
 
-app.use('/', UIRouter);
+app.get('/', (req, res) => {
+  res.redirect('/api/v1/api-docs');
+});
 
 app.use(badApiRequest);
 
