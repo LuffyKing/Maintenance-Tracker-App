@@ -16,6 +16,9 @@ UIRouter.get('/UserViewRequests.html', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../../client/UI/html/UserViewRequests.html'));
 });
 
+UIRouter.get('/SignupPage.html', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../../client/UI/html/SignupPage.html'));
+});
 
 UIRouter.post('/verify', verifyTokenUI);
 

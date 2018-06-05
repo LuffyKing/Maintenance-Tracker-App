@@ -7,6 +7,7 @@ import path from 'path';
 import badApiRequest from './router/badRequests/badApiRequest';
 import configJs from './config/config';
 import router from './router';
+import UIRouter from './UIRouter';
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -30,9 +31,7 @@ app.use(morgan('dev'));
 
 app.use('/api/v1', router);
 
-app.get('/', (request, response) => {
-  response.redirect('/api/v1/api-docs');
-});
+app.use('/', UIRouter);
 
 app.use(badApiRequest);
 
