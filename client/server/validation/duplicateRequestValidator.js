@@ -1,4 +1,5 @@
 import { pool } from '../db';
+import { reqtype } from '../maps/mapObject';
 
 const duplicateRequest = (request, response, next) => {
   const { reqBody } = request;
@@ -6,7 +7,7 @@ const duplicateRequest = (request, response, next) => {
     if (error) {
       response.status(500).send({ message: error.stack });
     }
-    client.query('SELECT * FROM REQUESTS where LOCATION ilike $1 and DESCRIPTION ilike $2 and TYPE = $3 and TITLE ilike $4;', [reqBody.location, reqBody.description, reqBody.type, reqBody.title], (error1, requestRow) => {
+    client.query('SELECT * FROM REQUESTS where LOCATION ilike $1 and DESCRIPTION ilike $2 and TYPE = $3 and TITLE ilike $4;', [reqBody.location, reqBody.description, reqtype[reqBody.type], reqBody.title], (error1, requestRow) => {
       done();
       if (error1) {
         return response.status(500).send({ message: error1.stack });

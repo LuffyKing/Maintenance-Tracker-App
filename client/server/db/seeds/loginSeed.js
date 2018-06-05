@@ -1,8 +1,6 @@
 import bcrypt from 'bcrypt';
-import uuidv4 from 'uuid/v4';
 
 const loginColumns = `
-  ID,
   FIRST_NAME,
   LAST_NAME,
   EMAIL,
@@ -10,11 +8,9 @@ const loginColumns = `
   JOB_TITLE,
   DEPARTMENT,
   PROFILE,
-  LOCATION,
-  UPGRADE_ID
+  LOCATION
 `;
 const loginValues = [
-  uuidv4(),
   'Oyindamola',
   'Aderinwale',
   'aderinwale17@gmail.com',
@@ -22,12 +18,10 @@ const loginValues = [
   'King slayer',
   'Guardians',
   'User',
-  '4 Tawdry Lane',
-  uuidv4()
+  '4 Tawdry Lane'
 ];
 
 const loginValuesAdmin = [
-  uuidv4(),
   'King',
   'Arthur',
   'arthur@gmail.com',
@@ -35,7 +29,6 @@ const loginValuesAdmin = [
   'King slayer',
   'Guardians',
   'Admin',
-  '4 Tawdry Lane',
-  uuidv4()
+  '4 Tawdry Lane'
 ];
 export { loginValues, loginColumns, loginValuesAdmin };

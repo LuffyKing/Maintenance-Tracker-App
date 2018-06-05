@@ -1,29 +1,67 @@
 DROP TABLE IF EXISTS USERS,REQUESTS;
-DROP TYPE status,reqtype,profile;
-CREATE TYPE status AS ENUM('Not Approved/Rejected', 'Approved', 'Rejected', 'Resolved');
-CREATE TYPE reqtype AS ENUM('Maintenance', 'Repair');
-CREATE TYPE profile AS ENUM('Admin', 'User');
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+CREATE OR REPLACE FUNCTION createCryptoId()
+RETURNS TRIGGER AS $$
+DECLARE
+  crypto TEXT;
+  query TEXT;
+  found TEXT;
+BEGIN
+  query := 'SELECT id FROM ' || quote_ident(TG_TABLE_NAME) || ' WHERE id=';
+  LOOP
+    crypto := encode(gen_random_bytes(4), 'hex');
+    EXECUTE query || quote_literal(crypto) INTO found;
+    IF found IS NULL THEN
+      EXIT;
+    END IF;
+  END LOOP;
+  NEW.id = crypto;
+  RETURN NEW;
+END;
+$$ language 'plpgsql';
+CREATE OR REPLACE FUNCTION createCryptoUpgradeId()
+RETURNS TRIGGER AS $$
+DECLARE
+  crypto TEXT;
+  query TEXT;
+  found TEXT;
+BEGIN
+  query := 'SELECT UPGRADE_ID FROM ' || quote_ident(TG_TABLE_NAME) || ' WHERE UPGRADE_ID=';
+  LOOP
+    crypto := encode(gen_random_bytes(6), 'hex');
+    EXECUTE query || quote_literal(crypto) INTO found;
+    IF found IS NULL THEN
+      EXIT;
+    END IF;
+  END LOOP;
+  NEW.UPGRADE_ID = crypto;
+  RETURN NEW;
+END;
+$$ language 'plpgsql';
 CREATE TABLE IF NOT EXISTS USERS(
-ID UUID PRIMARY KEY NOT NULL,
+ID SERIAL PRIMARY KEY,
 FIRST_NAME VARCHAR(25) NOT NULL,
 LAST_NAME VARCHAR(25) NOT NULL,
 EMAIL VARCHAR(50) NOT NULL UNIQUE,
 PASSWORD VARCHAR(90) NOT NULL,
 JOB_TITLE VARCHAR(30) NOT NULL,
 DEPARTMENT VARCHAR(30) NOT NULL,
-PROFILE profile default 'User'  NOT NULL,
+PROFILE SMALLINT NOT NULL,
 LOCATION VARCHAR(160) NOT NULL,
-UPGRADE_ID UUID NOT NULL UNIQUE);
+UPGRADE_ID TEXT NOT NULL UNIQUE);
 CREATE TABLE IF NOT EXISTS REQUESTS(
-ID UUID PRIMARY KEY NOT NULL,
+ID TEXT PRIMARY KEY NOT NULL,
 TITLE VARCHAR(50) NOT NULL,
 DESCRIPTION VARCHAR(288) NOT NULL,
-status status default 'Not Approved/Rejected' NOT NULL,
-type reqtype NOT NULL,
+status SMALLINT NOT NULL,
+type SMALLINT NOT NULL,
 date_submitted date NOT NULL,
 last_edited date NOT NULL,
 date_resolved date,
 LOCATION VARCHAR(160) NOT NULL,
 REASON VARCHAR(288),
-userid UUID references users(ID));
+userid SERIAL references users(ID));
+CREATE TRIGGER insertRequestId BEFORE INSERT ON REQUESTS FOR EACH ROW EXECUTE PROCEDURE createCryptoId();
+CREATE TRIGGER insertUpgradeId BEFORE INSERT ON USERS FOR EACH ROW EXECUTE PROCEDURE createCryptoUpgradeId();
 GRANT ALL PRIVILEGES ON USERS,REQUESTS TO damola;
+grant all on sequence users_id_seq to damola;

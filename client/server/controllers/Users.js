@@ -1,7 +1,8 @@
+import _ from 'lodash';
 import bcrypt from 'bcrypt';
-import uuidv4 from 'uuid/v4';
 import jsonwebtoken from 'jsonwebtoken';
 import { pool } from '../db';
+import { profile } from '../maps/mapObject';
 
 /**
  * An  object that handles the requests api operation
@@ -45,8 +46,10 @@ request is made
         if (result.rows.length > 0) {
           const user = result.rows[0];
           const newUser = Users.removePassword(user);
+          const newUserToken = { id: newUser.id, profile: (_.invert(profile))[newUser.profile] };
+          newUser.profile = (_.invert(profile))[newUser.profile];
           if (bcrypt.compareSync(password, user.password) === true) {
-            const token = jsonwebtoken.sign({ user }, process.env.SECRET_KEY, { expiresIn: '7d' });
+            const token = jsonwebtoken.sign({ user: newUserToken }, process.env.SECRET_KEY, { expiresIn: '7d' });
             return response.status(200).send({
               message: 'Login successful',
               token,
@@ -66,36 +69,34 @@ request is made
   signUp(request, response) {
     const newUser = {
       ...request.reqBody,
-      id: uuidv4(),
       password: bcrypt.hashSync(request.reqBody.password, 8),
       profile: 'User',
-      upgradeId: uuidv4()
     };
     pool.connect((err, client, done) => {
       if (err) response.status(500).send({ message: err.stack });
-      client.query(`INSERT INTO USERS(ID,FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION,UPGRADE_ID)
-        VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *;`, [
-        newUser.id,
+      client.query(`INSERT INTO USERS(FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION)
+        VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *;`, [
         newUser.firstName,
         newUser.lastName,
         newUser.email,
         newUser.password,
         newUser.jobTitle,
         newUser.department,
-        newUser.profile,
-        newUser.location,
-        newUser.upgradeId
-      ], (err) => {
+        profile[newUser.profile],
+        newUser.location
+      ], (err, result) => {
         done();
         if (err) {
           return response.status(500).send({ message: err.stack });
         }
-        const token = jsonwebtoken.sign({ user: newUser }, process.env.SECRET_KEY, { expiresIn: '7d' });
-        const newUserNoPassword = Users.removePassword(newUser);
-        return response.status(200).send({
+        let resObj = result.rows[0];
+        resObj = Users.removePassword(resObj);
+        resObj.profile = (_.invert(profile))[resObj.profile];
+        const token = jsonwebtoken.sign({ user: { id: resObj.id, profile: resObj.profile } }, process.env.SECRET_KEY, { expiresIn: '7d' });
+        return response.status(201).send({
           message: 'Signup successful',
           token,
-          user: newUserNoPassword
+          user: resObj
         });
       });
     });

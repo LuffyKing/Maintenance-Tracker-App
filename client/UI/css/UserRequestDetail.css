@@ -108,6 +108,12 @@ main{
  .action-Row{
    justify-content: space-between;
  }
+ .detail-Board__delete-button {
+
+       font-size: 2rem;
+
+   }
+
 
 }
 
