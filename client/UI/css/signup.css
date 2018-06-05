@@ -88,6 +88,9 @@ input{
 
 }
 @media (min-width:1025px) {
+  input, select{
+    font-size: 2.5rem;
+  }
 
   #loginPanel2 {
     padding: 2rem;
@@ -97,7 +100,7 @@ input{
 
     .form__input-Label{
       font-size: 2.25rem;
-      width: 35%;
+      width: 50%;
     }
     #signupbtn{
       font-size: 2.25rem;
@@ -106,7 +109,7 @@ input{
 }
 
 .form__input-Signup{
-  width:35%;
+  width:50%;
 }
 
 .infoLabelsSignup{

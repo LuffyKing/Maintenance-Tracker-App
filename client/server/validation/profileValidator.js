@@ -1,11 +1,15 @@
+import _ from 'lodash';
+import { profile } from '../maps/mapObject';
+
 const profileCheck = (request, response, profileAllowed) => {
   const { decodedUser } = request;
-  if (typeof decodedUser.user === "undefined") {
+  if (typeof decodedUser.user === 'undefined') {
     decodedUser.user = decodedUser.newUser;
     request.decodedUser.user = decodedUser.newUser;
   }
-  if (decodedUser.user.profile !== profileAllowed) {
-    return response.status(401).send({ message: `You are not allowed to use this API because your profile is not ${profileAllowed}` });
+  const profInv = (_.invert(profile));
+  if (profile[decodedUser.user.profile] !== profileAllowed) {
+    return response.status(401).send({ message: `You are not allowed to use this API because your profile is not ${profInv[profileAllowed]}` });
   }
 };
 
@@ -18,7 +22,7 @@ const profileCheck = (request, response, profileAllowed) => {
 * profile is in valid
 */
 const isUser = (request, response, next) => {
-  const reply = profileCheck(request, response, 'User');
+  const reply = profileCheck(request, response, 0);
   if (reply) {
     return reply;
   }
@@ -33,7 +37,7 @@ const isUser = (request, response, next) => {
 * profile is in valid
 */
 const isAdmin = (request, response, next) => {
-  const reply = profileCheck(request, response, 'Admin');
+  const reply = profileCheck(request, response, 1);
   if (reply) {
     return reply;
   }

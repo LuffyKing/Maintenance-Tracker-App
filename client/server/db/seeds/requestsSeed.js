@@ -1,8 +1,4 @@
-import uuidv4 from 'uuid/v4';
-import { loginValues } from './loginSeed';
-
 const requestsColumns = `
-id,
 title,
 description,
 status,
@@ -13,7 +9,6 @@ location,
 userid
 `;
 const requestsValues = [
-  uuidv4(),
   'Broken Toilet',
   'The toilet is broken please fix it',
   'Not Approved/Rejected',
@@ -21,8 +16,7 @@ const requestsValues = [
   new Date(),
   new Date(),
   '4 Tawdry Lane',
-  loginValues[0],
-  uuidv4(),
+  1,
   'Broken Lightbulb',
   'The lightbulb is broken please fix it',
   'Not Approved/Rejected',
@@ -30,8 +24,7 @@ const requestsValues = [
   new Date(),
   new Date(),
   '7 brammal lane',
-  loginValues[0],
-  uuidv4(),
+  1,
   'Broken faucet',
   'The tap is broken',
   'Not Approved/Rejected',
@@ -39,8 +32,7 @@ const requestsValues = [
   new Date(),
   new Date(),
   '6 brammal lane',
-  loginValues[0],
-  uuidv4(),
+  1,
   'Broken chair',
   'The chair is broken please fix it',
   'Approved',
@@ -48,6 +40,6 @@ const requestsValues = [
   new Date(),
   new Date(),
   '8 brammal lane',
-  loginValues[0]
+  1
 ];
 export { requestsColumns, requestsValues };

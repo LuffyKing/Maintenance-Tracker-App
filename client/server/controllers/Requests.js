@@ -1,6 +1,7 @@
-import uuidv4 from 'uuid/v4';
 import { requestsColumns } from '../db/seeds/requestsSeed';
 import { RequestsDatabaseHelper } from '../validation/DatabaseHelpers';
+import { reqtype, reqstatus } from '../maps/mapObject';
+
 /**
  * An  object that handles the requests api operation
  */
@@ -17,7 +18,7 @@ const Requests = {
     RequestsDatabaseHelper(
       request, response, `SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}';`,
       'You do not have any requests on TrackerHero, but it is not too late to start making them!',
-      'get multiple requests'
+      'get multiple requests', [], '', 200, 200
     );
   },
   /**
@@ -31,7 +32,7 @@ const Requests = {
     RequestsDatabaseHelper(
       request, response, 'SELECT * FROM REQUESTS;',
       'There are no requests on TrackerHero, check back later!',
-      'get multiple requests'
+      'get multiple requests', [], '', 200, 200
     );
   },
   /**
@@ -61,7 +62,7 @@ const Requests = {
   deleteARequest: (request, response) => {
     const { decodedUser, params } = request;
     RequestsDatabaseHelper(
-      request, response, `DELETE FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}' and status='Not Approved/Rejected' RETURNING *;`,
+      request, response, `DELETE FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}' and status = 0 RETURNING *;`,
       'You do not have any deleteable request on TrackerHero with that id',
       'delete single request'
     );
@@ -82,11 +83,10 @@ const Requests = {
     } = request.reqBody;
     const { decodedUser } = request;
     const newUserValue = [
-      uuidv4(),
       title,
       description,
-      'Not Approved/Rejected',
-      type,
+      reqstatus['Not Approved/Rejected'],
+      reqtype[type],
       new Date(),
       new Date(),
       location,
@@ -94,7 +94,7 @@ const Requests = {
     ];
     RequestsDatabaseHelper(
       request, response,
-      `INSERT INTO REQUESTS(${requestsColumns}) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *;`,
+      `INSERT INTO REQUESTS(${requestsColumns}) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *;`,
       'Request creation failure', 'create a request', newUserValue, 'Your request was successfully created.',
       201, 400
     );
@@ -112,9 +112,14 @@ const Requests = {
       requestid
     } = request.params;
     const { reqBody, decodedUser } = request;
-    const updateStatement = Object.keys(request.reqBody).map(key => `${key} = '${reqBody[key]}'`).join(',');
+    const updateStatement = Object.keys(request.reqBody).map((key) => {
+      if (key === 'type') {
+        return `${key} = ${reqtype[reqBody[key]]}`;
+      }
+      return `${key} = '${reqBody[key]}'`;
+    }).join(',');
     RequestsDatabaseHelper(
-      request, response, `UPDATE REQUESTS SET last_edited = $1,${updateStatement} where userid = '${decodedUser.user.id}' and status = 'Not Approved/Rejected' and id = '${requestid}' RETURNING *;`,
+      request, response, `UPDATE REQUESTS SET last_edited = $1,${updateStatement} where userid = '${decodedUser.user.id}' and status = 0 and id = '${requestid}' RETURNING *;`,
       'You do not have any editable request on TrackerHero with that id',
       'update a request', [new Date()], 'Your request has been updated.'
     );
@@ -135,10 +140,10 @@ const Requests = {
     let query, values;
     if (status === 'Resolved') {
       query = `UPDATE REQUESTS SET date_resolved = $1,last_edited = $2,status = $3,reason = $4  where id = '${requestid}' RETURNING *;`;
-      values = [new Date(), new Date(), status, reqBody.reason];
+      values = [new Date(), new Date(), reqstatus[status], reqBody.reason];
     } else {
       query = `UPDATE REQUESTS SET last_edited = $1,status = $2,reason = $3  where id = '${requestid}' RETURNING *;`;
-      values = [new Date(), status, reqBody.reason];
+      values = [new Date(), reqstatus[status], reqBody.reason];
     }
     RequestsDatabaseHelper(request, response, query, 'Request not found', 'update a request', values, 'The request has been updated.');
   }

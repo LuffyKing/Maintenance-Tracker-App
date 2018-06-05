@@ -66,3 +66,13 @@
 .request-Row-Footer{
   height: 10vh !important;
 }
+@media (max-width:600px) {
+  .modal-Box {
+      width: 75%;
+  }
+  .detail-Board__delete-button {
+
+      font-size: 2rem;
+
+  }
+}
