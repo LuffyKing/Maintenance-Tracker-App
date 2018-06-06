@@ -18,16 +18,19 @@
         <li><a href="MakeRequest.html">Make Request<i class="fas fa-bullhorn"></i></a></li>
         <li><a href="#">Profile<i class="fas fa-user"></i></a></li>
         <li><a href="UserViewRequests.html">My Requests<i class="far fa-eye"></i></a></li>
-        <li><a href="SigninPage.html">Logout<i class="fas fa-door-open"></i></a></li>
       </ul>
       <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
     </nav>
   </header>
   <main>
+    <section id="alerts" class="displayNone">
+      <p id="alertMessage"></p>
+      <span><i id="alertClose" class="fas fa-times"></i></span>
+    </section>
     <section class="center-container">
       <div  id="loginPanel2" class="box-shadow-darker">
         <h3 class="text-primary-color sub-logo ubuntu">Sign up to start making requests!</h3>
-        <form>
+        <form action="javascript: signupSubmit();" id="signupForm">
           <div class="form__control">
             <p class="form__input-Label text-primary-color">First name</p>
             <input id="firstname" class="form__input-Signup" type="text" name="firstname" placeholder="Enter your first name e.g. Damola" required>
@@ -57,6 +60,10 @@
             <p class="form__input-Label text-primary-color">Department</p>
             <input id="Department" type="text" name="Department" class="form__input-Signup" placeholder="Enter your Department" required>
           </div>
+          <div class="form__control">
+            <p class="form__input-Label text-primary-color">Location</p>
+            <input id="location" type="text" name="location" class="form__input-Signup" placeholder="Enter your Department" required>
+          </div>
           <div class="form__control btnOveride" id="submitRow">
             <button type="submit" name="button" id="signupbtn" class="form__button btn-white form__input-Signup form__submit-button">Sign Up</button>
           </div>
@@ -80,5 +87,6 @@
   </footer>
   <script type="text/javascript" src="../js2/hamburgerDropdown.js"></script>
   <script type="text/javascript" src="../js2/alertEvent.js"></script>
+  <script type="text/javascript" src="../js2/alertAdminViewRequests.js"></script>
 </body>
 </html>
