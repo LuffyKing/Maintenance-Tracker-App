@@ -17,3 +17,7 @@ top: 0;
 width: 100%;
 z-index: -9999;
 }
+.image404 {
+  background: url('../media/images/android.jpg') no-repeat center center fixed;
+  background-size: 100% 100%;
+}

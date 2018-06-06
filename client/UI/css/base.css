@@ -341,3 +341,6 @@ body {
 .modal-Box{
   border-radius: 10px;
 }
+a{
+  cursor: pointer;
+}
