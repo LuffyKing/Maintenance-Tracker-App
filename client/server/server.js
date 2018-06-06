@@ -33,7 +33,7 @@ app.use('/api/v1', router);
 
 app.use('/', UIRouter);
 
-app.use(badApiRequest);
+app.use('/api/v1/*', badApiRequest);
 
 app.use((error, req, res, next) => {
   if (error instanceof URIError) {

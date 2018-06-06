@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="../css/UserViewRequests.css">
   <link rel="stylesheet" href="../css/AdminViewRequests.css">
 </head>
-<body class="displayNone">
+<body class="displayNone" onload="insertRequestRow()">
   <header>
     <nav id="navbar">
       <a class="default-primary-color text-primary-color Logo pacifico" href="SigninPage.html">TrackerHero</a>
@@ -51,7 +51,7 @@
         <h2>TrackerHero Maintenance and Repair Requests</h2>
       </div>
       <div class="filterRow">
-        <p>Showing 10 out of 100 Requests</p>
+        <p>Showing <span id='noOfRequestOnPage'>1 - 10</span> out of <span id='noOfRequestTotal'>100</span> Requests</p>
         <p class="filterSpan">Filter By: <select name="filter" id="filter">
           <option value="Approved">Approved</option>
           <option value="Rejected">Rejected</option>
@@ -61,81 +61,14 @@
         </select>
       </p>
       </div>
-      <div class="requestsTable">
-        <div class="request-Row">
-          <div class="request-Image-Container">
-            <img src="../media/images/brokenPrinter.jpeg" alt="">
-          </div>
-          <div class="infoColumn1">
-            <p><b>Title:- </b> <span>Broken Printer</span></p>
-            <p><b>Type:- </b><span>Repair</span></p>
-            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
-            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a href="EditRequest.html" class="but">Edit</a>
-            <a onclick="approveDetailBtn()" class="but del">Delete</a>
-          </div>
-        </div>
-        <div class="request-Row">
-          <div class="request-Image-Container">
-            <img src="../media/images/brokenPrinter.jpeg" alt="">
-          </div>
-          <div class="infoColumn1">
-            <p><b>Title:- </b> <span>Broken Printer</span></p>
-            <p><b>Type:- </b><span>Repair</span></p>
-            <p><b>Status:- </b><span>Approved</span></p>
-            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a class="but disabled">Edit</a>
-            <a class="but del disabled">Delete</a>
-          </div>
-        </div>
-        <div class="request-Row">
-          <div class="request-Image-Container">
-            <img src="../media/images/brokenPrinter.jpeg" alt="">
-          </div>
-          <div class="infoColumn1">
-            <p><b>Title:- </b> <span>Broken Printer</span></p>
-            <p><b>Type:- </b><span>Repair</span></p>
-            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
-            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a href="EditRequest.html" class="but">Edit</a>
-            <a href="#" class="but del">Delete</a>
-          </div>
-        </div>
-        <div class="request-Row">
-          <div class="request-Image-Container">
-            <img src="../media/images/brokenPrinter.jpeg" alt="">
-          </div>
-          <div class="infoColumn1">
-            <p><b>Title:- </b> <span>Broken Printer</span></p>
-            <p><b>Type:- </b><span>Repair</span></p>
-            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
-            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a href="EditRequest.html" class="but">Edit</a>
-            <a href="#" class="but del">Delete</a>
-          </div>
-        </div>
-        <div class="request-Row">
-          <div class="request-Image-Container">
-            <img src="../media/images/brokenPrinter.jpeg" alt="">
-          </div>
-          <div class="infoColumn1">
-            <p><b>Title:- </b> <span>Broken Printer</span></p>
-            <p><b>Type:- </b><span>Repair</span></p>
-            <p><b>Status:- </b><span>Not Approved/Rejected</span></p>
-            <a href="UserRequestDetailPage.html" class="but">Find out more</a>
-            <a href="EditRequest.html" class="but">Edit</a>
-            <a href="#" class="but del">Delete</a>
-          </div>
-        </div>
-        </div>
+      <div id="requestsTableComponent" class="requestsTable">
+
       </div>
       <div class="pagRow">
-        <div class="pagination">
-          <a href="#">Previous</a>
-          <a class="active" href="#">1</a>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <a href="#">Next</a>
+        <div class="pagination" id="pagRowComp">
+          <a onclick="insertRequestRow('previous')">Previous</a>
+          <a class="active" id='1' onclick="insertRequestRow()">1</a>
+          <a id="next" onclick="insertRequestRow('next')">Next</a>
         </div>
       </div>
     </div>
