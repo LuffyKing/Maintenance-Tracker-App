@@ -57,6 +57,7 @@ main{
   justify-content: space-between;
   padding:2em;
   width: 100%;
+  padding-bottom: 12.5%;
 }
 
 .detail-Board__Pic-Column{
@@ -100,11 +101,6 @@ main{
    word-wrap: break-word;
 
  }
-
- .detail-Board__edit-Button, .detail-Board__delete-button{
-   font-size: inherit;
- }
-
  .action-Row{
    justify-content: space-between;
  }
