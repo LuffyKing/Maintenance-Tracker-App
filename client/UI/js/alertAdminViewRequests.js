@@ -224,7 +224,7 @@ function insertRequestRow(page=1){
             }
           });
           if(document.getElementsByClassName('active')){
-            document.getElementsByClassName('active')[0].classList.remove('active')
+            document.getElementsByClassName('active')[0].classList.remove('active');
           }
           document.getElementById(`${page}`).classList.add('active');
           document.getElementById('noOfRequestOnPage').innerHTML = `${ans[0] + 1} - ${ans[ans.length - 1] + 1}`;
@@ -283,3 +283,33 @@ function getRequestDetails(){
    }
  })
 }
+function createRequestSubmit(){
+  const form =  document.getElementById('createRequestForm');
+  fetch('/api/v1/users/requests', {
+    method: 'POST',
+    headers: new Headers({
+     'Content-Type': 'application/json',
+     'authorization': localStorage.token
+   }),
+    body: JSON.stringify({
+      title: form.elements.title.value,
+      type: form.elements.type.value,
+      location: form.elements.requestLocation.value,
+      description: form.elements.description.value
+    })
+  })
+    .then(response => ({jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+      if (status !== 201) {
+        jsonObj.then(
+          result => {
+            alertAction('requestApproved', 'requestDisapproved', result.message);
+          }
+        );
+      } else {
+        jsonObj.then( result => {
+          window.location.replace(`${window.location.origin}/requests/${result.request.id}`);
+        });
+      }
+    })
+    .catch(err => err);
+};
