@@ -100,7 +100,15 @@ footer{
   width: 100%;
 }
 
+#alerts{
+  font-size: 2.85rem;
+  height: 15rem;
+}
+
 @media (max-width:600px) {
+  .form__input-Label {
+    width: 100%;
+  }
 
   #loginPanel2{
       padding: 2rem;
@@ -128,10 +136,23 @@ footer{
     text-align: center;
     font-size: 2.5rem;
   }
+  #alerts {
+    font-size: 2rem;
+}
 
 }
 
+
 @media (max-width:960px) {
+  .form__input-Label {
+    width: 100%;
+  }
+  .sub-logo{
+    text-align: center;
+  }
+  #alerts {
+    font-size: 2rem;
+}
   button, input, textarea, select, #status {
     width: 100%;
 }

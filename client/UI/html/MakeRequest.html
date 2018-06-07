@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Make A Request</title>
+  <script type="text/javascript" src="../js2/tokenPost.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/LandingPage.css">
@@ -17,7 +18,7 @@
     <nav id="navbar">
       <a class="default-primary-color text-primary-color Logo pacifico" href="/SigninPage.html">TrackerHero</a>
       <ul class="default-primary-color text-primary-color">
-        <li><a href="/MakeRequest.html">Make Request<i class="fas fa-bullhorn"></i></a></li>
+        <li><a href="/create/requests">Make Request<i class="fas fa-bullhorn"></i></a></li>
         <li><a href="#">Profile<i class="fas fa-user"></i></a></li>
         <li><a href="/UserViewRequests.html">My Requests<i class="far fa-eye"></i></a></li>
         <li><a href="/SigninPage.html">Logout<i class="fas fa-door-open"></i></a></li>
@@ -26,19 +27,23 @@
     </nav>
   </header>
   <main>
+    <section id="alerts" class="displayNone">
+      <p id="alertMessage"></p>
+      <span><i id="alertClose" class="fas fa-times"></i></span>
+    </section>
     <section class="center-container">
       <div  id="loginPanel2" class="box-shadow-darker">
         <div class="form__control">
           <h3 class="text-primary-color sub-logo ubuntu">Submit the form to create a maintenance or repair request!</h3>
         </div>
-        <form>
+        <form action="javascript: createRequestSubmit();" id="createRequestForm" name="createRequestForm">
           <div class="form__control">
             <p class="form__input-Label text-primary-color">Title: </p>
-            <input id="firstname" type="text" name="title" placeholder="Enter the title of your request" required>
+            <input id="title" type="text" name="title" placeholder="Enter the title of your request" required>
           </div>
           <div class="form__control">
             <p class="form__input-Label text-primary-color">Request Type: </p>
-            <select>
+            <select id="type" name="type">
              <option value="Maintenance">Maintenance</option>
              <option value="Repair">Repair</option>
             </select>
@@ -53,7 +58,7 @@
           </div>
           <div class="form__control">
             <p class="form__input-Label text-primary-color">Descripton: </p>
-            <textarea id="password" type="text" name="description" rows="5" cols="25" placeholder="Enter a description of the request" required></textarea>
+            <textarea id="description" type="text" name="description" rows="5" cols="25" placeholder="Enter a description of the request" required></textarea>
           </div>
           <div class="form__control btnOveride" id="submitRow">
             <button type="submit" name="button" class="form__button btn-white form__submit-button">Submit</button>
@@ -72,5 +77,7 @@
     </ul>
   </footer>
   <script type="text/javascript" src="../js/hamburgerDropdown.js"></script>
+  <script type="text/javascript" src="../js2/alertAdminViewRequests.js"></script>
+  <script type="text/javascript" src="../js2/alertEvent.js"></script>
 </body>
 </html>
