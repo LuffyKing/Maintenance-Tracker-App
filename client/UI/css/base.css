@@ -6,6 +6,10 @@
   font-family: 'Ubuntu', sans-serif;
 }
 
+#statusCodeMessage{
+  font-size: 30rem;
+}
+
 i{
 margin-left: 5px;
 }

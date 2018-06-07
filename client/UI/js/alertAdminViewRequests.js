@@ -214,8 +214,8 @@ function insertRequestRow(page=1){
                   <p><b>Type:- </b><span id="type">${request.type}</span></p>
                   <p><b>Status:- </b><span id="status">${request.status}</span></p>
                   <p><b>RequestId:- </b><span id="requestid">${request.id}</span></p>
-                  <a href="/request/user/${request.id}" class="but">Find out more</a>
-                  <a href="/request/user/edit/${request.id}" class="but">Edit</a>
+                  <a href="/requests/${request.id}" class="but">Find out more</a>
+                  <a href="/requests_edit/${request.id}" class="but">Edit</a>
                   <a onclick="approveDetailBtn()" class="but del">Delete</a>
                 </div>
               </div>`;
@@ -232,4 +232,54 @@ function insertRequestRow(page=1){
       }
     })
     .catch(err => err);
+}
+function getRequestDetails(){
+  fetch(`/api/v1/users/requests/${window.location.pathname.split('/')[2]}`, {
+    method: 'GET',
+    headers: new Headers({
+     'Content-Type': 'application/json',
+     'authorization': localStorage.token
+   })
+ }).then(response => ({jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+   if(status !== 200){
+     jsonObj.then( result => {
+       const main = document.getElementsByTagName("main")[0];
+       let center = document.createElement('center')
+       let el = document.createElement('h1');
+       let errorHeader = document.createElement('h1');
+       errorHeader.id = 'statusCodeMessage';
+       errorHeader.innerHTML = `${status}`;
+       main.innerHTML ='';
+       el.innerHTML = `${result.message}`;
+       center.appendChild(errorHeader);
+       center.appendChild(el);
+       main.appendChild(center);
+       main.classList.remove('displayNone')
+     })
+   } else{
+
+      jsonObj.then( result => {
+        document.getElementById('title').innerHTML = `${result.request.title}`;
+        document.getElementById('description').innerHTML = `${result.request.description}`;
+        document.getElementById('requestId').innerHTML = `${result.request.id}`;
+        document.getElementById('type').innerHTML = `${result.request.type}`;
+        document.getElementById('status').innerHTML = `${result.request.status}`;
+        document.getElementById('lastEdited').innerHTML = `${result.request.last_edited.split('T')[0].split('-').reverse().join('/')}`;
+        document.getElementById('dateSubmitted').innerHTML = `${result.request.date_submitted.split('T')[0].split('-').reverse().join('/')}`;
+        document.getElementById('requestLocation').innerHTML = `${result.request.location}`;
+        const editButton = document.getElementsByClassName('detail-Board__edit-Button')[0];
+        const deleteButton = document.getElementsByClassName('detail-Board__delete-button')[0];
+        if(result.request.status !== 'Not Approved/Rejected'){
+            editButton.removeAttribute('href');
+            editButton.classList.add('disabled');
+            deleteButton.removeAttribute('onclick');
+            deleteButton.classList.add('disabled');
+            document.getElementsByTagName("main")[0].classList.remove('displayNone')
+        } else{
+        editButton.href = `/requests_edit/${result.request.id}`;
+        document.getElementsByTagName("main")[0].classList.remove('displayNone')
+      }
+      })
+   }
+ })
 }
