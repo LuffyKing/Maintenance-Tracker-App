@@ -36,8 +36,10 @@ const del = (modalName = 'modal-Box', requestId, requestTitle) => {
   localStorage.setItem('requestTitle', requestTitle);
 };
 
-const resolveBtnNon100 = () => {
-  remove('modal-Box', 2);
+const resolveBtnNon100 = (modalName = 'modal-Box', requestId, requestTitle) => {
+  remove(modalName, 2);
+  localStorage.setItem('requestId', requestId);
+  localStorage.setItem('requestTitle', requestTitle);
 };
 
 const removeCancel = (modalName) => {
@@ -72,8 +74,7 @@ const alertAction = (requestAction1, requestAction2, message) => {
 
 const modalDelApprove = (
   modalName = 'approveModal', requestAction1 = 'requestDisapproved',
-  requestAction2 = 'requestApproved',
-  message = '<strong>Success!</strong> The request has been approved!'
+  requestAction2 = 'requestApproved'
 ) => {
   const approvalReason = document.getElementById('approvalReason');
   fetch(`/api/v1/requests/${localStorage.requestId}/approve`, {
@@ -111,8 +112,7 @@ const modalDelApprove = (
 
 const modalDeldisapprove = (
   modalName = 'disapproveModal', requestAction1 = 'requestDisapproved',
-  requestAction2 = 'requestApproved',
-  message = '<strong>Success!</strong> The request has been approved!'
+  requestAction2 = 'requestApproved'
 ) => {
   const disapprovalReason = document.getElementById('disapprovalReason');
   fetch(`/api/v1/requests/${localStorage.requestId}/disapprove`, {
@@ -158,12 +158,41 @@ const modalDelDelete = (
 };
 
 const modalDelResolve = (
-  modalName = 'resolveModal',
-  requestAction1 = 'requestDisapproved',
-  requestAction2 = 'requestApproved',
-  message = 'The request has been resolved!'
+  modalName = 'resolveModal', requestAction1 = 'requestDisapproved',
+  requestAction2 = 'requestApproved'
 ) => {
-  modalAction(modalName, requestAction1, requestAction2, message);
+  const resolveReason = document.getElementById('resolveReason');
+  fetch(`/api/v1/requests/${localStorage.requestId}/resolve`, {
+      method: 'PUT',
+      headers: new Headers({
+       'Content-Type': 'application/json',
+       'authorization': localStorage.token
+
+     }),
+      body: JSON.stringify({
+        reason: resolveReason.value,
+      })
+    }).then(response => ({jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+        if (status !== 200) {
+          jsonObj.then(
+            result => {
+              modalAction(modalName, requestAction2, requestAction1, result.message);
+            }
+          );
+        } else {
+          jsonObj.then( result => {
+            if(document.getElementsByClassName('active').length > 0) {
+              document.getElementsByClassName('active')[0].click();
+              modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request ${localStorage.requestTitle} - ${localStorage.requestId} has been resolved!`);
+            } else{
+              window.location.reload(true);
+              modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request  ${localStorage.requestTitle} - ${localStorage.requestId} has been resolved!`);
+            }
+
+
+          });
+        }
+      }).catch(err => err);
 };
 
 function loginSubmit (){
@@ -297,14 +326,14 @@ function insertRequestRow(page=1, route='/api/v1/users/requests/', func="insertR
                   let resolveButton;
                   let approveButton;
                   let disapproveButton;
-                  resolveButton = '<a onclick="resolveBtnNon100()" class="but detail-board__resolve-button--Non100">Resolve</a>';
+                  resolveButton = `<a onclick="resolveBtnNon100('modal-Box', '${request.id}', '${request.title}')" class="but detail-board__resolve-button--Non100">Resolve</a>`;
                   approveButton = '<a class="but disabled detail-Board__approve-Button">Approve</a>';
                   disapproveButton = '<a class="but del disabled">Disapprove</a>';
                   if (request.status === 'Not Approved/Rejected') {
                     resolveButton = '<a class="but disabled detail-board__resolve-button--Non100">Resolve</a>';
                     approveButton = `<a onclick="approveDetailBtn('modal-Box', '${request.id}', '${request.title}')" class="but detail-Board__approve-Button">Approve</a>`;
                     disapproveButton = `<a onclick="del('modal-Box', '${request.id}', '${request.title}')" class="but del">Disapprove</a>`;
-                  } else if(request.status ==='Rejected') {
+                  } else if(request.status !=='Approved') {
                       resolveButton = '<a class="but disabled detail-board__resolve-button--Non100">Resolve</a>';
                   }
                   el.innerHTML = `<div class="request-Row">
