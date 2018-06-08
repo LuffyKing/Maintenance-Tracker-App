@@ -29,7 +29,9 @@ const verifyTokenUI = (request, response) => {
       if (error) {
         return response.status(401).send();
       } else {
-      return response.status(200).send();
+      return response.status(200).send({
+        profile: jwt.decode(bearerHeader).user.profile
+      });
     }
     });
   } else {
