@@ -18,11 +18,12 @@
   color: #FFFFFF;
   display: flex;
   font-size: 2.25rem;
-  height: 5rem;
+  height: 3rem;
   justify-content: space-between;
   text-align: center;
   padding: 2rem;
   width:100%;
+  position: fixed;
 }
 
 #alertClose, #modalClose{

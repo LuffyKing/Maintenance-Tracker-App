@@ -7,7 +7,7 @@ import { statusChanger } from './DatabaseHelpers';
 * @returns {string} - It sets the status to Approved then calls next middleware
 */
 const approved = (request, response, next) => statusChanger(
-  request, response, next, `SELECT * From REQUESTS where id = '${request.params.requestid}' and status = 'Not Approved/Rejected';`,
+  request, response, next, `SELECT * From REQUESTS where id = '${request.params.requestid}' and status = 0;`,
   'Approved', 'Approval', 'There is no approvable request on TrackerHero with that id'
 );
 
