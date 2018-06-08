@@ -30,8 +30,10 @@ const  deleteDetailBtn = (modalName = 'modal-Box') => {
   remove(modalName);
 };
 
-const del = () => {
-  remove('modal-Box', 1);
+const del = (modalName = 'modal-Box', requestId, requestTitle) => {
+  remove(modalName, 1);
+  localStorage.setItem('requestId', requestId);
+  localStorage.setItem('requestTitle', requestTitle);
 };
 
 const resolveBtnNon100 = () => {
@@ -108,12 +110,42 @@ const modalDelApprove = (
 };
 
 const modalDeldisapprove = (
-  modalName = 'disapproveModal',
-  requestAction1 = 'requestApproved',
-  requestAction2 = 'requestDisapproved',
-  message = 'The request has been disapproved!'
+  modalName = 'disapproveModal', requestAction1 = 'requestDisapproved',
+  requestAction2 = 'requestApproved',
+  message = '<strong>Success!</strong> The request has been approved!'
 ) => {
-  modalAction(modalName, requestAction1, requestAction2, message);
+  const disapprovalReason = document.getElementById('disapprovalReason');
+  fetch(`/api/v1/requests/${localStorage.requestId}/disapprove`, {
+      method: 'PUT',
+      headers: new Headers({
+       'Content-Type': 'application/json',
+       'authorization': localStorage.token
+
+     }),
+      body: JSON.stringify({
+        reason: disapprovalReason.value,
+      })
+    }).then(response => ({jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+        if (status !== 200) {
+          jsonObj.then(
+            result => {
+              modalAction(modalName, requestAction2, requestAction1, result.message);
+            }
+          );
+        } else {
+          jsonObj.then( result => {
+            if(document.getElementsByClassName('active').length > 0) {
+              document.getElementsByClassName('active')[0].click();
+              modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request ${localStorage.requestTitle} - ${localStorage.requestId} has been disapproved!`);
+            } else{
+              window.location.reload(true);
+              modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request  ${localStorage.requestTitle} - ${localStorage.requestId} has been disapproved!`);
+            }
+
+
+          });
+        }
+      }).catch(err => err);
 };
 
 const modalDelDelete = (
@@ -271,7 +303,9 @@ function insertRequestRow(page=1, route='/api/v1/users/requests/', func="insertR
                   if (request.status === 'Not Approved/Rejected') {
                     resolveButton = '<a class="but disabled detail-board__resolve-button--Non100">Resolve</a>';
                     approveButton = `<a onclick="approveDetailBtn('modal-Box', '${request.id}', '${request.title}')" class="but detail-Board__approve-Button">Approve</a>`;
-                    disapproveButton = '<a onclick="del()" class="but del">Disapprove</a>';
+                    disapproveButton = `<a onclick="del('modal-Box', '${request.id}', '${request.title}')" class="but del">Disapprove</a>`;
+                  } else if(request.status ==='Rejected') {
+                      resolveButton = '<a class="but disabled detail-board__resolve-button--Non100">Resolve</a>';
                   }
                   el.innerHTML = `<div class="request-Row">
                 <div class="request-Image-Container">
