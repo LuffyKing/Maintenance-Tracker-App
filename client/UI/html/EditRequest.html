@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit A Request</title>
+  <script type="text/javascript" src="/js2/tokenPost.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/LandingPage.css">
-  <link rel="stylesheet" href="../css/signin.css">
-  <link rel="stylesheet" href="../css/signup.css">
-  <link rel="stylesheet" href="../css/MakeRequest.css">
-  <link rel="stylesheet" href="../css/EditRequest.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/LandingPage.css">
+  <link rel="stylesheet" href="/css/signin.css">
+  <link rel="stylesheet" href="/css/signup.css">
+  <link rel="stylesheet" href="/css/MakeRequest.css">
+  <link rel="stylesheet" href="/css/EditRequest.css">
 </head>
-<body class="request">
+<body class="request" onload="getEditDetails()">
   <header>
     <nav id="navbar">
       <a class="default-primary-color text-primary-color Logo pacifico" href="/SigninPage.html">TrackerHero</a>
@@ -25,20 +26,24 @@
       <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
     </nav>
   </header>
-  <main>
+  <main class="displayNone">
+    <section id="alerts" class="displayNone">
+      <p id="alertMessage"></p>
+      <span><i id="alertClose" class="fas fa-times"></i></span>
+    </section>
     <section class="center-container">
       <div  id="loginPanel2" class="box-shadow-darker">
         <div class="form__control">
           <h3 class="text-primary-color sub-logo ubuntu">Submit the form to create a maintenance or repair request!</h3>
         </div>
-        <form>
+        <form id="editRequestForm" name="editRequestForm" action="javascript: editRequestSubmit();">
           <div class="form__control">
             <p class="form__input-Label text-primary-color">Title: </p>
             <input id="title" type="text" name="title" value="Faulty Printer" required>
           </div>
           <div class="form__control">
             <p class="form__input-Label text-primary-color">Request Type: </p>
-            <select>
+            <select id="type" name="type">
               <option value="Repair">Repair</option>
              <option value="Maintenance">Maintenance</option>
             </select>
@@ -76,7 +81,8 @@
       <li><a href="#">Help</a></li>
     </ul>
   </footer>
-  <script type="text/javascript" src="../js2/hamburgerDropdown.js"></script>
-  <script type="text/javascript" src="../js2/alertEvent.js"></script>
+  <script type="text/javascript" src="/js2/hamburgerDropdown.js"></script>
+  <script type="text/javascript" src="/js2/alertAdminViewRequests.js"></script>
+  <script type="text/javascript" src="/js2/alertEvent.js"></script>
 </body>
 </html>
