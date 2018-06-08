@@ -215,7 +215,7 @@ function insertRequestRow(page=1){
                   <p><b>Status:- </b><span id="status">${request.status}</span></p>
                   <p><b>RequestId:- </b><span id="requestid">${request.id}</span></p>
                   <a href="/requests/${request.id}" class="but">Find out more</a>
-                  <a href="/requests_edit/${request.id}" class="but">Edit</a>
+                  <a href="/requests/edit/${request.id}" class="but">Edit</a>
                   <a onclick="approveDetailBtn()" class="but del">Delete</a>
                 </div>
               </div>`;
@@ -276,7 +276,7 @@ function getRequestDetails(){
             deleteButton.classList.add('disabled');
             document.getElementsByTagName("main")[0].classList.remove('displayNone')
         } else{
-        editButton.href = `/requests_edit/${result.request.id}`;
+        editButton.href = `/requests/edit/${result.request.id}`;
         document.getElementsByTagName("main")[0].classList.remove('displayNone')
       }
       })
@@ -308,6 +308,86 @@ function createRequestSubmit(){
       } else {
         jsonObj.then( result => {
           window.location.replace(`${window.location.origin}/requests/${result.request.id}`);
+        });
+      }
+    })
+    .catch(err => err);
+};
+function getEditDetails(){
+    const form =  document.getElementById('editRequestForm');
+    fetch(`/api/v1/users/requests/${window.location.pathname.split('/')[3]}`, {
+      method: 'GET',
+      headers: new Headers({
+       'Content-Type': 'application/json',
+       'authorization': localStorage.token
+     })
+   }).then(response => ({jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+     const main = document.getElementsByTagName("main")[0];
+     if(status !== 200){
+       jsonObj.then( result => {
+         let center = document.createElement('center')
+         let el = document.createElement('h1');
+         let errorHeader = document.createElement('h1');
+         errorHeader.id = 'statusCodeMessage';
+         errorHeader.innerHTML = `${status}`;
+         main.innerHTML ='';
+         el.innerHTML = `${result.message}`;
+         center.appendChild(errorHeader);
+         center.appendChild(el);
+         main.appendChild(center);
+         main.classList.remove('displayNone')
+       })
+     } else {
+        jsonObj.then( result => {
+            if(result.request.status !== 'Not Approved/Rejected'){
+                let center = document.createElement('center')
+                let el = document.createElement('h1');
+                let errorHeader = document.createElement('h1');
+                errorHeader.id = 'statusCodeMessage';
+                errorHeader.innerHTML = 'You do not have an editable request with that id ';
+                main.innerHTML ='';
+                el.innerHTML = `${result.message}`;
+                center.appendChild(errorHeader);
+                center.appendChild(el);
+                main.appendChild(center);
+                main.classList.remove('displayNone');
+            } else{
+              form.elements.title.value = result.request.title;
+              form.elements.type.value = result.request.type;
+              form.elements.requestLocation.value = result.request.location;
+              form.elements.description.value = result.request.description;
+              main.classList.remove('displayNone');
+            }
+          })
+     }
+   })
+  }
+function editRequestSubmit(){
+  const form =  document.getElementById('editRequestForm');
+  fetch(`/api/v1/users/requests/${window.location.pathname.split('/')[3]}`, {
+    method: 'PUT',
+    headers: new Headers({
+     'Content-Type': 'application/json',
+     'authorization': localStorage.token
+   }),
+    body: JSON.stringify({
+      title: form.elements.title.value,
+      type: form.elements.type.value,
+      location: form.elements.requestLocation.value,
+      description: form.elements.description.value
+    })
+  })
+    .then(response => ({jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+      if (status !== 200) {
+        jsonObj.then(
+          result => {
+            alertAction('requestApproved', 'requestDisapproved', result.message);
+          }
+        );
+      } else {
+        jsonObj.then( result => {
+          console.log(result);
+          window.location.replace(`${window.location.origin}/requests/${result.updatedRequest.id}`);
         });
       }
     })

@@ -20,6 +20,14 @@ UIRouter.get('/SignupPage.html', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../../client/UI/html/SignupPage.html'));
 });
 
+UIRouter.get('/create/requests', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../../client/UI/html/MakeRequest.html'));
+});
+
+UIRouter.get('/requests/edit/:requestid', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../../client/UI/html/EditRequest.html'));
+});
+
 UIRouter.get('/requests/:requestid', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../../client/UI/html/UserRequestDetailPage.html'));
 });
