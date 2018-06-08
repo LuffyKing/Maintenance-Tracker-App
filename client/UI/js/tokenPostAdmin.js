@@ -12,7 +12,7 @@ addEventListener('DOMContentLoaded', ()=>{
       } else{
         jsonObj.then( result => {
           console.log(result);
-          if(result.profile === 'User'){
+          if(result.profile === 'Admin'){
 
             const body = document.getElementsByTagName("BODY")[0];
             body.classList.remove('displayNone');
