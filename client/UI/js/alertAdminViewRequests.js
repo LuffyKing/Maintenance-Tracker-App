@@ -183,6 +183,9 @@ const modalDelDelete = (
       }).catch(err => err);
 };
 
+const logout = () => {
+  localStorage.setItem('token', '');
+}
 
 const modalDelResolve = (
   modalName = 'resolveModal', requestAction1 = 'requestDisapproved',

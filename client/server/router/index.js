@@ -18,7 +18,7 @@ import UsersController from '../controllers/Users';
 import verifyToken from '../authMiddleware/jwt';
 
 const router = express.Router();
-router.post('/', (request, response) => {
+router.get('/', (request, response) => {
   response.status(200).send({
     message: 'Welcome to TrackerHero! Read the docs at /api-docs/ to get started'
   });

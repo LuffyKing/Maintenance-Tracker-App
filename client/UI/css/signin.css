@@ -42,15 +42,20 @@ margin-top: 2rem;
 
 }
 @media (max-width:1024px) {
-  .form__button, input, textarea, select, #status {
+  .form__button, input, textarea, select, #status, .form__input-Label {
       width: 75%;
   }
+
   #loginPanel2{
     margin-top: 10%;
     margin-bottom: 10%;
   }
 
+  h2{
+    margin-bottom: 5%;
+  }
 }
+
 @media (min-width:1025px) {
 
   html {
