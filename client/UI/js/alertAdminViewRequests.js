@@ -26,8 +26,10 @@ const  approveDetailBtn = (modalName = 'modal-Box', requestId, requestTitle) => 
   localStorage.setItem('requestTitle', requestTitle);
 };
 
-const  deleteDetailBtn = (modalName = 'modal-Box') => {
+const  deleteDetailBtn = (modalName = 'modal-Box', requestId, requestTitle) => {
   remove(modalName);
+  localStorage.setItem('requestId', requestId);
+  localStorage.setItem('requestTitle', requestTitle);
 };
 
 const del = (modalName = 'modal-Box', requestId, requestTitle) => {
@@ -101,10 +103,10 @@ const modalDelApprove = (
               modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request ${localStorage.requestTitle} - ${localStorage.requestId} has been approved!`);
             } else{
               window.location.reload(true);
-              modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request  ${localStorage.requestTitle} - ${localStorage.requestId} has been approved!`);
+              document.addEventListener("load", () => {
+                modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request  ${localStorage.requestTitle} - ${localStorage.requestId} has been approved!`);
+              });
             }
-
-
           });
         }
       }).catch(err => err);
@@ -139,23 +141,48 @@ const modalDeldisapprove = (
               modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request ${localStorage.requestTitle} - ${localStorage.requestId} has been disapproved!`);
             } else{
               window.location.reload(true);
-              modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request  ${localStorage.requestTitle} - ${localStorage.requestId} has been disapproved!`);
+              document.addEventListener("load", () => {
+                modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request  ${localStorage.requestTitle} - ${localStorage.requestId} has been disapproved!`);
+              });
             }
-
-
           });
         }
       }).catch(err => err);
 };
 
 const modalDelDelete = (
-  modalName = 'deleteRequest',
-  requestAction1 = 'requestApproved',
-  requestAction2 = 'requestDisapproved',
-  message = 'The request has been deleted!'
+  modalName = 'deleteRequest', requestAction1 = 'requestDisapproved',
+  requestAction2 = 'requestApproved'
 ) => {
-  modalAction(modalName, requestAction1, requestAction2, message);
+  fetch(`/api/v1/users/requests/${localStorage.requestId}`, {
+      method: 'DELETE',
+      headers: new Headers({
+       'Content-Type': 'application/json',
+       'authorization': localStorage.token
+     })
+    }).then(response => ({jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+        if (status !== 200) {
+          jsonObj.then(
+            result => {
+              modalAction(modalName, requestAction2, requestAction1, result.message);
+            }
+          );
+        } else {
+          jsonObj.then( result => {
+            if(document.getElementsByClassName('active').length > 0) {
+              document.getElementsByClassName('active')[0].click();
+              modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request ${localStorage.requestTitle} - ${localStorage.requestId} has been deleted!`);
+            } else{
+              window.location.replace(`${window.location.origin}/UserViewRequests.html`);
+              document.addEventListener("load", () => {
+                modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request  ${localStorage.requestTitle} - ${localStorage.requestId} has been deleted!`);
+              });
+            }
+          });
+        }
+      }).catch(err => err);
 };
+
 
 const modalDelResolve = (
   modalName = 'resolveModal', requestAction1 = 'requestDisapproved',
@@ -186,10 +213,10 @@ const modalDelResolve = (
               modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request ${localStorage.requestTitle} - ${localStorage.requestId} has been resolved!`);
             } else{
               window.location.reload(true);
-              modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request  ${localStorage.requestTitle} - ${localStorage.requestId} has been resolved!`);
+              document.addEventListener("load", () => {
+                modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request  ${localStorage.requestTitle} - ${localStorage.requestId} has been resolved!`);
+              });
             }
-
-
           });
         }
       }).catch(err => err);
@@ -264,12 +291,12 @@ function signupSubmit(){
     })
     .catch(err => err);
 };
-function pagFunction(limit, func="insertRequestRow"){
+function pagFunction(limit, func="insertRequestRow", profile='User'){
   let pagRow = document.getElementById('pagRowComp');
   for (let i = 2; i <= limit; i++) {
     if(!document.getElementById(`${i}`)){
       let el = document.createElement('div');
-      el.innerHTML = `<a id=${i} onclick="${func}(${i}, route='/api/v1/requests/', func='insertRequestRow', profile='Admin')">${i}</a>`;
+      el.innerHTML = `<a id=${i} onclick="${func}(${i}, route='/api/v1/requests/', func='insertRequestRow', profile='${profile}'')">${i}</a>`;
       pagRow.insertBefore(el.firstChild, pagRow.childNodes[ pagRow.childNodes.length-2]);
     }
   }
@@ -297,13 +324,24 @@ function insertRequestRow(page=1, route='/api/v1/users/requests/', func="insertR
         );
       } else {
         jsonObj.then( result => {
+          result.requests = result.requests ? result.requests:[];
           document.getElementById('noOfRequestTotal').innerHTML = result.requests.length;
           if (page === 'next') {
             page = Number(document.getElementsByClassName('active')[0].text) + 1;
             page = page <= Math.ceil(result.requests.length/10) ? page : Math.ceil(result.requests.length/10);
           }
-          pagFunction(Math.ceil(result.requests.length/10), func);
+          pagFunction(Math.ceil(result.requests.length/10), func, profile);
           let ans = [];
+          if(result.requests.length === 0){
+            let el = document.createElement('div');
+            el.innerHTML = `<div class="request-Row">
+              <div class="infoColumn1">
+                <center><p id="requestMessage">NO REQUESTS FOUND!</p> </center>
+              </div>
+            </div>`;
+            table.appendChild(el.firstChild);
+            document.getElementById('pagRowComp').classList.add('displayNone');
+          } else{
           result.requests.map( (request, index) => {
             if (index <= page*10-1 && index >= page*10-10 ) {
               let el = document.createElement('div');
@@ -319,7 +357,7 @@ function insertRequestRow(page=1, route='/api/v1/users/requests/', func="insertR
                   <p><b>RequestId:- </b><span id="requestid">${request.id}</span></p>
                   <a href="/requests/${request.id}" class="but">Find out more</a>
                   <a href="/requests/edit/${request.id}" class="but">Edit</a>
-                  <a onclick="deleteDetailBtn()" class="but del">Delete</a>
+                  <a onclick="deleteDetailBtn('modal-Box', '${request.id}', '${request.title}')" class="but del">Delete</a>
                 </div>
               </div>`;
               } else if (profile === 'Admin') {
@@ -356,18 +394,21 @@ function insertRequestRow(page=1, route='/api/v1/users/requests/', func="insertR
               ans.push(index);
             }
           });
+        }
           if(document.getElementsByClassName('active')){
             document.getElementsByClassName('active')[0].classList.remove('active');
           }
           document.getElementById(`${page}`).classList.add('active');
-          document.getElementById('noOfRequestOnPage').innerHTML = `${ans[0] + 1} - ${ans[ans.length - 1] + 1}`;
+          console.log(ans);
+          document.getElementById('noOfRequestOnPage').innerHTML = ans.length === 0 ? '0 - 0' :`${ans[0] + 1} - ${ans[ans.length - 1] + 1}`;
         });
       }
     })
     .catch(err => err);
 }
-function getRequestDetails(){
-  fetch(`/api/v1/users/requests/${window.location.pathname.split('/')[2]}`, {
+function getRequestDetails(profile='User'){
+  const route  = profile === 'User'? `/api/v1/users/requests/${window.location.pathname.split('/')[2]}` : `/api/v1/users/requests/${window.location.pathname.split('/')[3]}`;
+  fetch(route, {
     method: 'GET',
     headers: new Headers({
      'Content-Type': 'application/json',
@@ -399,17 +440,49 @@ function getRequestDetails(){
         document.getElementById('lastEdited').innerHTML = `${result.request.last_edited.split('T')[0].split('-').reverse().join('/')}`;
         document.getElementById('dateSubmitted').innerHTML = `${result.request.date_submitted.split('T')[0].split('-').reverse().join('/')}`;
         document.getElementById('requestLocation').innerHTML = `${result.request.location}`;
-        const editButton = document.getElementsByClassName('detail-Board__edit-Button')[0];
-        const deleteButton = document.getElementsByClassName('detail-Board__delete-button')[0];
-        if(result.request.status !== 'Not Approved/Rejected'){
-            editButton.removeAttribute('href');
-            editButton.classList.add('disabled');
-            deleteButton.removeAttribute('onclick');
-            deleteButton.classList.add('disabled');
+        if(profile==='User'){
+          const editButton = document.getElementsByClassName('detail-Board__edit-Button')[0];
+          const deleteButton = document.getElementsByClassName('detail-Board__delete-button')[0];
+          if(result.request.status !== 'Not Approved/Rejected'){
+              editButton.removeAttribute('href');
+              editButton.classList.add('disabled');
+              deleteButton.removeAttribute('onclick');
+              deleteButton.classList.add('disabled');
+              document.getElementsByTagName("main")[0].classList.remove('displayNone')
+          } else{
+          editButton.href = `/requests/edit/${result.request.id}`;
+          deleteButton.setAttribute('onclick',`deleteDetailBtn('modal-Box', '${result.request.id}', '${result.request.title}')`);
+          document.getElementsByTagName("main")[0].classList.remove('displayNone')
+        }
+
+      } else {
+        const approveButton = document.getElementsByClassName('detail-Board__approve-Button')[0];
+        const disapproveButton = document.getElementsByClassName('detail-Board__delete-button')[0];
+        const resolveButton = document.getElementsByClassName('detail-board__resolve-button')[0];
+        //document.getElementById('requesterName').innerHTML = `${result.request.location}`;
+        if(result.request.status === 'Approved'){
+            approveButton.removeAttribute('onclick');
+            approveButton.classList.add('disabled');
+            disapproveButton.removeAttribute('onclick');
+            disapproveButton.classList.add('disabled');
+            resolveButton.setAttribute('onclick',`resolveBtnNon100('modal-Box', '${result.request.id}', '${result.request.title}')`)
             document.getElementsByTagName("main")[0].classList.remove('displayNone')
-        } else{
-        editButton.href = `/requests/edit/${result.request.id}`;
+        } else if(result.request.status === 'Not Approved/Rejected') {
+        approveButton.setAttribute('onclick',`approveDetailBtn('modal-Box', '${result.request.id}', '${result.request.title}')`);
+        disapproveButton.setAttribute('onclick',`del('modal-Box', '${result.request.id}', '${result.request.title}')`);
+        resolveButton.removeAttribute('onclick');
+        resolveButton.classList.add('disabled');
         document.getElementsByTagName("main")[0].classList.remove('displayNone')
+      } else if(result.request.status === 'Rejected' || result.request.status === 'Resolved' ) {
+      approveButton.removeAttribute('onclick');
+      approveButton.classList.add('disabled');
+      resolveButton.removeAttribute('onclick');
+      resolveButton.classList.add('disabled');
+      disapproveButton.removeAttribute('onclick');
+      disapproveButton.classList.add('disabled');
+      document.getElementsByTagName("main")[0].classList.remove('displayNone')
+    }
+
       }
       })
    }

@@ -18,11 +18,15 @@ import UsersController from '../controllers/Users';
 import verifyToken from '../authMiddleware/jwt';
 
 const router = express.Router();
-
+router.post('/', (request, response) => {
+  response.status(200).send({
+    message: 'Welcome to TrackerHero! Read the docs at /api-docs/ to get started'
+  });
+});
 router.post('/auth/signup', signUpAUserChecker, maxLengthChecker, UsersController.signUp);
 router.post('/auth/login', loginAUserChecker, maxLengthChecker, UsersController.login);
 router.get('/users/requests', verifyToken, isUser, RequestsController.getAllRequests);
-router.get('/users/requests/:requestid', verifyToken, isUser, getARequestChecker, RequestsController.getARequest);
+router.get('/users/requests/:requestid', verifyToken, getARequestChecker, RequestsController.getARequest);
 router.delete('/users/requests/:requestid', verifyToken, isUser, getARequestChecker, RequestsController.deleteARequest);
 router.post('/users/requests/', verifyToken, isUser, createARequestChecker, maxLengthChecker, duplicateRequest, RequestsController.createARequest);
 router.put('/users/requests/:requestid', verifyToken, isUser, getARequestChecker, modifyARequestChecker, maxLengthChecker, RequestsController.updateARequest);

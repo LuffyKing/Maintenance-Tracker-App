@@ -18,9 +18,8 @@
     <nav id="navbar">
       <a class="default-primary-color text-primary-color Logo pacifico" href="/SigninPage.html">TrackerHero</a>
       <ul class="default-primary-color text-primary-color">
-        <li><a href="/create/requests">Make Request<i class="fas fa-bullhorn"></i></a></li>
         <li><a href="#">Profile<i class="fas fa-user"></i></a></li>
-        <li><a href="/UserViewRequests.html">My Requests<i class="far fa-eye"></i></a></li>
+        <li><a href="/requests">My Requests<i class="far fa-eye"></i></a></li>
         <li><a href="/SigninPage.html">Logout<i class="fas fa-door-open"></i></a></li>
       </ul>
       <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
@@ -95,14 +94,6 @@
           <a id="next" onclick="insertRequestRow('next', route='/api/v1/requests', func='insertRequestRow', profile='Admin')">Next</a>
         </div>
       </div>
-      <!--<div class="request-Row request-Row-Footer pagRow">
-        <div class="pagination" id="pagRowComp">
-          <a onclick="insertRequestRow('previous', route='/api/v1/requests', func='insertRequestRow', profile='Admin')">Previous</a>
-          <a class="active" id='1' onclick="insertRequestRow(1, route='/api/v1/requests', func='insertRequestRow', profile='Admin')">1</a>
-          <a id="next" onclick="insertRequestRow('next', route='/api/v1/requests', func='insertRequestRow', profile='Admin')">Next</a>
-        </div>
-      </div>-->
-      <!--insertRequestRow(page=1, route='/api/v1/users/requests/', func="insertRequestRow", profile="User") -->
     </section>
   </main>
   <footer id="footer">

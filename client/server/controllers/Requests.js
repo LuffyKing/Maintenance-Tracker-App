@@ -45,11 +45,19 @@ const Requests = {
 */
   getARequest: (request, response) => {
     const { decodedUser, params } = request;
-    RequestsDatabaseHelper(
-      request, response, `SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}';`,
-      'You do not have any request on TrackerHero with that id',
-      'get single request'
-    );
+    if (decodedUser.user.profile === 'User') {
+      RequestsDatabaseHelper(
+        request, response, `SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}';`,
+        'You do not have any request on TrackerHero with that id',
+        'get single request'
+      );
+    } else if (decodedUser.user.profile === 'Admin') {
+      RequestsDatabaseHelper(
+        request, response, `SELECT * FROM REQUESTS where id = '${params.requestid}';`,
+        'There is not a request on TrackerHero with that id',
+        'get single request'
+      );
+    }
   },
   /**
 * It deletes a request that a user owns on the application
