@@ -63,5 +63,5 @@ REASON VARCHAR(288),
 userid SERIAL references users(ID));
 CREATE TRIGGER insertRequestId BEFORE INSERT ON REQUESTS FOR EACH ROW EXECUTE PROCEDURE createCryptoId();
 CREATE TRIGGER insertUpgradeId BEFORE INSERT ON USERS FOR EACH ROW EXECUTE PROCEDURE createCryptoUpgradeId();
-GRANT ALL PRIVILEGES ON USERS,REQUESTS TO damola;
-grant all on sequence users_id_seq to damola;
+-- GRANT ALL PRIVILEGES ON USERS,REQUESTS TO damola;
+-- grant all on sequence users_id_seq to damola;
