@@ -10,7 +10,7 @@ main{
   height: 100%;
 }
 
-.detail-Board__edit-Button, .detail-Board__approve-Button{
+.detail-Board__edit-Button, .detail-Board__approve-Button, .detail-Board__delete-button{
   margin-right: 2.5%;
 }
 

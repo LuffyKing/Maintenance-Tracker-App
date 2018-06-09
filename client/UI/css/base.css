@@ -9,7 +9,9 @@
 #statusCodeMessage{
   font-size: 30rem;
 }
-
+#requestMessage{
+  font-size: 5rem;
+}
 i{
 margin-left: 5px;
 }
@@ -23,6 +25,11 @@ margin-left: 5px;
 
 .sedgwick {
   font-family: 'Sedgwick Ave Display', cursive;
+}
+
+.disabled{
+  cursor: not-allowed !important;
+  opacity: 0.2;
 }
 
 .modal{

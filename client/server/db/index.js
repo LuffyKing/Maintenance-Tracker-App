@@ -13,7 +13,7 @@ pool.connect((err, client, done) => {
   if (err) { throw err; }
   if (process.env.NODE_ENV) {
     client.query(
-      'INSERT INTO USERS(ID,FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION,UPGRADE_ID) VALUES($1,$2,$3,$4,$5,$6,$7,$8);',
+      'INSERT INTO USERS(FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION) VALUES($1,$2,$3,$4,$5,$6,$7,$8);',
       loginValues, (error) => {
         done();
         if (error) {

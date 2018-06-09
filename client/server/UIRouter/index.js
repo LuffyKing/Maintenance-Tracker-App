@@ -32,6 +32,10 @@ UIRouter.get('/requests/:requestid', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../../client/UI/html/UserRequestDetailPage.html'));
 });
 
+UIRouter.get('/requests/admin/:requestid', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../../client/UI/html/AdminUserRequestDetailPage.html'));
+});
+
 UIRouter.get('/requests', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../../client/UI/html/AdminViewRequests.html'));
 });

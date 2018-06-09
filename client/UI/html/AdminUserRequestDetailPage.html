@@ -4,22 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AdminUserViewRequests</title>
+  <script type="text/javascript" src="/js2/tokenPostAdmin.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/LandingPage.css">
-  <link rel="stylesheet" href="../css/signin.css">
-  <link rel="stylesheet" href="../css/signup.css">
-  <link rel="stylesheet" href="../css/AdminViewRequests.css">
-  <link rel="stylesheet" href="../css/UserRequestDetail.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/LandingPage.css">
+  <link rel="stylesheet" href="/css/signin.css">
+  <link rel="stylesheet" href="/css/signup.css">
+  <link rel="stylesheet" href="/css/AdminViewRequests.css">
+  <link rel="stylesheet" href="/css/UserRequestDetail.css">
 </head>
-<body>
+<body onload="getRequestDetails('Admin')" class="displayNone">
   <header>
     <nav id="navbar">
       <a class="default-primary-color text-primary-color Logo pacifico" href="/SigninPage.html">TrackerHero</a>
       <ul class="default-primary-color text-primary-color">
-        <li><a href="/create/requests">Make Request<i class="fas fa-bullhorn"></i></a></li>
         <li><a href="#">Profile<i class="fas fa-user"></i></a></li>
-        <li><a href="/UserViewRequests.html">My Requests<i class="far fa-eye"></i></a></li>
+        <li><a href="/requests">My Requests<i class="far fa-eye"></i></a></li>
         <li><a href="/SigninPage.html">Logout<i class="fas fa-door-open"></i></a></li>
       </ul>
       <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
@@ -71,26 +71,27 @@
     <section id="detailBoard">
       <div class="detail-Board__Pic-Column">
         <div class="request-Image-Container2">
-          <img src="../media/images/lightBulb.jpeg" alt="">
+          <img src="/media/images/lightBulb.jpeg" alt="title">
         </div>
       </div>
       <div class="detail-Board__Info-Column">
         <div class="titleAndDescription">
-          <h1>Broken Lightbulb</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga labore eum natus amet voluptatem velit vel quaerat magni deserunt culpa aliquam quibusdam suscipit, architecto rem libero numquam iusto distinctio. Veniam quisquam similique iusto soluta nostrum quam ducimus provident temporibus molestias, pariatur excepturi, quibusdam. Mollitia quidem nobis nesciunt, est molestiae assumenda?</p>
+          <h1 id="title">Broken Lightbulb</h1>
+          <p id="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga labore eum natus amet voluptatem velit vel quaerat magni deserunt culpa aliquam quibusdam suscipit, architecto rem libero numquam iusto distinctio. Veniam quisquam similique iusto soluta nostrum quam ducimus provident temporibus molestias, pariatur excepturi, quibusdam. Mollitia quidem nobis nesciunt, est molestiae assumenda?</p>
         </div>
         <div class="detailsAndLocation">
           <div class="details">
             <h3>Details</h3>
-            <p><b>RequestId:-</b> 000000</p>
-            <p><b>Type:-</b> Repair</p>
-            <p><b>Status:-</b> Not Approved/Rejected</p>
-            <p><b>Date Submitted:-</b> 19/12/2017</p>
-            <p><b>Requester:-</b> <a href="#">Oyindamola Aderinwale</a></p>
+            <p><b>RequestId:-</b> <span id="requestId">000000</span></p>
+            <p><b>Type:-</b> <span id="type">Repair</span></p>
+            <p><b>Status:-</b> <span id="status">Not Approved/Rejected</span></p>
+            <p><b>Date Submitted:-</b> <span id="dateSubmitted">19/12/2017</span></p>
+            <p><b>Last Edited:-</b> <span id="lastEdited">19/12/2017</span></p>
+            <p class="displayNone"><b>Date Resolved:-</b> <span id="dateResolved">19/12/2017</span></p>
           </div>
           <div class="location">
             <h3>Location</h3>
-            <address>
+            <address id="requestLocation">
               Room 424,<br />
               Kavanaugh Building,<br />
               Wemco Factory,<br>
@@ -104,6 +105,7 @@
         <div class="action-Row">
           <a class="detail-Board__approve-Button" onclick="approveDetailBtn()">Approve Request</a>
           <a class="detail-Board__delete-button" onclick="del()">Disapprove Request</a>
+          <a class="detail-board__resolve-button" onclick="resolveBtnNon100()">Resolve</a>
         </div>
       </div>
     </section>
@@ -116,8 +118,8 @@
       <li><a href="#">Help</a></li>
     </ul>
   </footer>
-  <script type="text/javascript" src="../js2/hamburgerDropdown.js"></script>
-  <script type="text/javascript" src="../js2/alertAdminViewRequests.js"></script>
-  <script type="text/javascript" src="../js2/alertEvent.js"></script>
+  <script type="text/javascript" src="/js2/hamburgerDropdown.js"></script>
+  <script type="text/javascript" src="/js2/alertAdminViewRequests.js"></script>
+  <script type="text/javascript" src="/js2/alertEvent.js"></script>
 </body>
 </html>
