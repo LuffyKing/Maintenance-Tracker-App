@@ -150,7 +150,9 @@ select{
     justify-content: center;
     padding: 1rem;
     display: flex;
+    align-items: start;
     border-top: 0.25rem #0288D1 solid;
+    margin-bottom: 2.5%;
   }
 
   .pagRow a{
@@ -178,7 +180,7 @@ select{
   }
 
   .pagRow{
-    align-items: center;
+    align-items: start;
     font-size: 2rem;
     height: 10vh;
     padding: 1rem;

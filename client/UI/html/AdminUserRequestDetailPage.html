@@ -25,7 +25,7 @@
       <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
     </nav>
   </header>
-  <main>
+  <main class="displayNone">
     <div id="approveModal" class="modal-Box displayNone">
       <div class="modal-Box__Header">
         <p id="modalMessage">Approve A Request</p>
@@ -82,12 +82,13 @@
         <div class="detailsAndLocation">
           <div class="details">
             <h3>Details</h3>
+            <p><b>Requester:-</b> <span id="requesterName">Oyindamola Aderinwale</span></p>
             <p><b>RequestId:-</b> <span id="requestId">000000</span></p>
             <p><b>Type:-</b> <span id="type">Repair</span></p>
             <p><b>Status:-</b> <span id="status">Not Approved/Rejected</span></p>
             <p><b>Date Submitted:-</b> <span id="dateSubmitted">19/12/2017</span></p>
             <p><b>Last Edited:-</b> <span id="lastEdited">19/12/2017</span></p>
-            <p class="displayNone"><b>Date Resolved:-</b> <span id="dateResolved">19/12/2017</span></p>
+            <p id="dateResolvedRow" class="displayNone"><b>Date Resolved:-</b> <span id="dateResolved">19/12/2017</span></p>
           </div>
           <div class="location">
             <h3>Location</h3>
@@ -100,6 +101,10 @@
               Lagos,<br />
               Nigeria
             </address>
+          </div>
+          <div class="details" id="reasonColumn">
+            <h3 id="reasonHeader">Reason</h3>
+            <p id="reason">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime perferendis, fugiat possimus.</p>
           </div>
         </div>
         <div class="action-Row">

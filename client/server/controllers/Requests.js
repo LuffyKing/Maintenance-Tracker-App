@@ -53,7 +53,7 @@ const Requests = {
       );
     } else if (decodedUser.user.profile === 'Admin') {
       RequestsDatabaseHelper(
-        request, response, `SELECT * FROM REQUESTS where id = '${params.requestid}';`,
+        request, response, `select requests.*, users.first_name, users.last_name from requests inner join users on requests.userid = users.id where requests.id = '${params.requestid}';`,
         'There is not a request on TrackerHero with that id',
         'get single request'
       );
