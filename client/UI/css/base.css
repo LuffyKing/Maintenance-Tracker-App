@@ -150,6 +150,7 @@ input, select,textarea {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  word-wrap: break-word;
 }
 
 .Logo {
@@ -298,6 +299,7 @@ b {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  position: fixed;
   width:100%;
 }
 

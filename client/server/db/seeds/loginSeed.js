@@ -17,7 +17,7 @@ const loginValues = [
   bcrypt.hashSync('test_password', 8),
   'King slayer',
   'Guardians',
-  'User',
+  0,
   '4 Tawdry Lane'
 ];
 
@@ -28,7 +28,7 @@ const loginValuesAdmin = [
   bcrypt.hashSync('test_password', 8),
   'King slayer',
   'Guardians',
-  'Admin',
+  1,
   '4 Tawdry Lane'
 ];
 export { loginValues, loginColumns, loginValuesAdmin };

@@ -15,20 +15,17 @@ pool.connect((err, client, done) => {
     client.query(
       'INSERT INTO USERS(FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION) VALUES($1,$2,$3,$4,$5,$6,$7,$8);',
       loginValues, (error) => {
-        done();
         if (error) {
           return error;
         }
+        done();
         client.query(
           `INSERT INTO REQUESTS(${requestsColumns}) VALUES($1,$2,$3,$4,$5,$6,$7,$8),($9,$10,$11,$12,$13,$14,$15,$16),($17,$18,$19,$20,$21,$22,$23,$24),($25,$26,$27,$28,$29,$30,$31,$32);`,
-          requestsValues, (error1) => {
-            if (error1) throw error1;
+          requestsValues, () => {
             done();
-
             client.query(
               'INSERT INTO USERS(FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION) VALUES($1,$2,$3,$4,$5,$6,$7,$8);',
-              loginValuesAdmin, (error2) => {
-                if (error1) throw error2;
+              loginValuesAdmin, () => {
                 done();
               }
             );

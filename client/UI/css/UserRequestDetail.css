@@ -90,7 +90,7 @@ main{
  #detailBoard{
    border-radius: 0;
    flex-direction: column;
-   font-size: 1.5rem;
+   font-size: 2.25rem;
    height: inherit;
    overflow: scroll;
    padding: 2rem;
@@ -101,13 +101,20 @@ main{
    word-wrap: break-word;
 
  }
+ .detailsAndLocation{
+   display: flex;
+   flex-direction: column;
+ }
+ .location, .details:not(:first-of-type){
+   margin-top: 3%;
+ }
  .action-Row{
    justify-content: space-between;
+   padding-bottom: 10%;
+   margin-bottom: 5%;
  }
- .detail-Board__delete-button {
-
-       font-size: 2rem;
-
+ .detail-Board__delete-button, .detail-Board__approve-Button, .detail-board__resolve-button{
+       font-size: 2.5rem;
    }
 
 
