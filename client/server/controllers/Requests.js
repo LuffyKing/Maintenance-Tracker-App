@@ -124,7 +124,7 @@ const Requests = {
       if (key === 'type') {
         return `${key} = ${reqtype[reqBody[key]]}`;
       }
-      return `${key} = '${reqBody[key]}'`;
+      return `${key} = $$${reqBody[key]}$$`;
     }).join(',');
     RequestsDatabaseHelper(
       request, response, `UPDATE REQUESTS SET last_edited = $1,${updateStatement} where userid = '${decodedUser.user.id}' and status = 0 and id = '${requestid}' RETURNING *;`,
