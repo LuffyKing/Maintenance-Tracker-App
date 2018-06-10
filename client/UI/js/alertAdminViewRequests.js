@@ -88,7 +88,7 @@ const modalDelApprove = (
     body: JSON.stringify({
       reason: approvalReason.value,
     })
-  }).then(response => ({ jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+  }).then(response => ({ jsonObj: response.json(), status: response.status })).then(({ jsonObj, status }) => {
     if (status !== 200) {
       jsonObj.then((result) => {
         modalAction(modalName, requestAction2, requestAction1, result.message);
@@ -154,7 +154,7 @@ const modalDelDelete = (
       'Content-Type': 'application/json',
       authorization: localStorage.token
     })
-  }).then(response => ({ jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+  }).then(response => ({ jsonObj: response.json(), status: response.status })).then(({ jsonObj, status }) => {
     if (status !== 200) {
       jsonObj.then((result) => {
         modalAction(modalName, requestAction2, requestAction1, result.message);
@@ -193,7 +193,7 @@ const modalDelResolve = (
     body: JSON.stringify({
       reason: resolveReason.value,
     })
-  }).then(response => ({ jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+  }).then(response => ({ jsonObj: response.json(), status: response.status })).then(({ jsonObj, status }) => {
     if (status !== 200) {
       jsonObj.then((result) => {
         modalAction(modalName, requestAction2, requestAction1, result.message);
@@ -226,7 +226,7 @@ const loginSubmit = () => {
       password: form.elements.password.value
     })
   })
-    .then(response => ({ jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+    .then(response => ({ jsonObj: response.json(), status: response.status })).then(({ jsonObj, status }) => {
       if (status !== 200) {
         jsonObj.then((result) => {
           alertAction('requestApproved', 'requestDisapproved', result.message);
@@ -265,7 +265,7 @@ const signupSubmit = () => {
       location: form.elements.location.value
     })
   })
-    .then(response => ({ jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+    .then(response => ({ jsonObj: response.json(), status: response.status })).then(({ jsonObj, status }) => {
       if (status !== 201) {
         jsonObj.then((result) => {
           alertAction('requestApproved', 'requestDisapproved', result.message);
@@ -279,7 +279,7 @@ const signupSubmit = () => {
     })
     .catch(err => err);
 };
-const pagconst = (limit, func="insertRequestRow", profile='User') => {
+const pagconst = (limit, func = 'insertRequestRow', profile = 'User') => {
   const pagRow = document.getElementById('pagRowComp');
   for (let i = 2; i <= limit; i++) {
     if (!document.getElementById(`${i}`)) {
@@ -303,7 +303,7 @@ const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'i
       authorization: localStorage.token
     })
   })
-    .then( (response) => ({jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+    .then(response => ({ jsonObj: response.json(), status: response.status })).then(({ jsonObj, status }) => {
       if (status !== 200) {
         jsonObj.then((result) => {
           alertAction('requestApproved', 'requestDisapproved', result.message);
@@ -330,7 +330,7 @@ const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'i
           } else {
             result.requests.map((request, index) => {
               const editButton = request.status === 'Not Approved/Rejected' ? `<a href="/requests/edit/${request.id}" class="but">Edit</a>` : '<a class="but disabled">Edit</a>';
-              const deleteButton = request.status === 'Not Approved/Rejected' ? `<a onclick="deleteDetailBtn('modal-Box', '${request.id}', '${request.title}')" class="but del">Delete</a>` :
+              const deleteButton = request.status === 'Not Approved/Rejected' ? `<a onclick="deleteDetailBtn('modal-Box', '${request.id}', '${request.title.replace("'", "\\'").replace('"', "\\'")}')" class="but del">Delete</a>` :
                 '<a class="but disabled del">Delete</a>';
               if (index <= (page * 10) - 1 && index >= (page * 10) - 10) {
                 const divElement = document.createElement('div');
@@ -442,7 +442,7 @@ const getRequestDetails = (profile = 'User') => {
             document.getElementsByTagName('main')[0].classList.remove('displayNone');
           } else {
             editButton.href = `/requests/edit/${result.request.id}`;
-            deleteButton.setAttribute('onclick', `deleteDetailBtn('modal-Box', '${result.request.id}', '${result.request.title}')`);
+            deleteButton.setAttribute('onclick', `deleteDetailBtn('modal-Box', '${result.request.id}', '${result.request.title.replace("'", "\\'").replace('"', "\\'")}')`);
             document.getElementById('reasonColumn').classList.add('displayNone');
             if (result.request.status === 'Resolved') {
               document.getElementById('dateResolvedRow').classList.remove('displayNone');
@@ -459,11 +459,11 @@ const getRequestDetails = (profile = 'User') => {
             approveButton.classList.add('disabled');
             disapproveButton.removeAttribute('onclick');
             disapproveButton.classList.add('disabled');
-            resolveButton.setAttribute('onclick', `resolveBtnNon100('modal-Box', '${result.request.id}', '${result.request.title}')`);
+            resolveButton.setAttribute('onclick', `resolveBtnNon100('modal-Box', '${result.request.id}', '${result.request.title.replace("'", "\\'").replace('"', "\\'")}')`);
             document.getElementsByTagName('main')[0].classList.remove('displayNone');
           } else if (result.request.status === 'Not Approved/Rejected') {
-            approveButton.setAttribute('onclick', `approveDetailBtn('modal-Box', '${result.request.id}', '${result.request.title}')`);
-            disapproveButton.setAttribute('onclick', `del('modal-Box', '${result.request.id}', '${result.request.title}')`);
+            approveButton.setAttribute('onclick', `approveDetailBtn('modal-Box', '${result.request.id}', '${result.request.title.replace("'", "\\'").replace('"', "\\'")}')`);
+            disapproveButton.setAttribute('onclick', `del('modal-Box', '${result.request.id}', '${result.request.title.replace("'", "\\'").replace('"', "\\'")}')`);
             resolveButton.removeAttribute('onclick');
             resolveButton.classList.add('disabled');
             document.getElementById('reasonColumn').classList.add('displayNone');
@@ -501,7 +501,7 @@ const createRequestSubmit= () => {
       description: form.elements.description.value
     })
   })
-    .then(response => ({ jsonObj: response.json(), status: response.status })).then(({ jsonObj, status}) => {
+    .then(response => ({ jsonObj: response.json(), status: response.status })).then(({ jsonObj, status }) => {
       if (status !== 201) {
         jsonObj.then((result) => {
           alertAction('requestApproved', 'requestDisapproved', result.message);
@@ -522,7 +522,7 @@ const getEditDetails= () => {
       'Content-Type': 'application/json',
       authorization: localStorage.token
     })
-  }).then(response => ({ jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+  }).then(response => ({ jsonObj: response.json(), status: response.status })).then(({ jsonObj, status }) => {
     const main = document.getElementsByTagName('main')[0];
     if (status !== 200) {
       jsonObj.then((result) => {
@@ -579,7 +579,7 @@ const editRequestSubmit = () => {
       description: form.elements.description.value
     })
   })
-    .then(response => ({ jsonObj: response.json(), status: response.status })).then(({jsonObj, status}) => {
+    .then(response => ({ jsonObj: response.json(), status: response.status })).then(({ jsonObj, status }) => {
       if (status !== 200) {
         jsonObj.then((result) => {
           alertAction('requestApproved', 'requestDisapproved', result.message);
