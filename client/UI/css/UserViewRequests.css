@@ -17,11 +17,11 @@
   align-items: center;
   color: #FFFFFF;
   display: flex;
-  font-size: 2.25rem;
-  height: 3rem;
+  font-size: 2.5rem;
+  height: 5rem;
   justify-content: space-between;
   text-align: center;
-  padding: 2rem;
+  padding: 3.33rem;
   width:100%;
   position: fixed;
 }

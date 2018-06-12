@@ -38,6 +38,12 @@ button, input, textarea, select, #status {
   background-color: #0288D1;
 }
 
+#alerts{
+  padding: 4.55rem;
+  font-size: 3.41rem;
+  height: 6.82rem;
+}
+
 @media (min-width:1024px) {
   main {
     height: 85.5%;
@@ -122,6 +128,7 @@ footer{
 }
 
 @media (max-width:600px) {
+
   .form__input-Label {
     width: 100%;
   }
@@ -129,6 +136,8 @@ footer{
   #loginPanel2{
       padding: 2rem;
       width:300px;
+      height: 85%;
+      margin:0;
   }
 
   h2{
@@ -169,7 +178,7 @@ footer{
   #alerts {
     font-size: 2rem;
 }
-  button, input, textarea, select, #status {
+  button, input, textarea, select, .imageUpload, #status {
     width: 100%;
 }
  main{
