@@ -36,7 +36,7 @@
         <div class="form__control">
           <h3 class="text-primary-color sub-logo ubuntu">Submit the form to create a maintenance or repair request!</h3>
         </div>
-        <form action="javascript: createRequestSubmit();" id="createRequestForm" name="createRequestForm">
+        <form method="post" enctype="multipart/form-data" action="javascript: createRequestSubmit();" id="createRequestForm" name="createRequestForm">
           <div class="form__control">
             <p class="form__input-Label text-primary-color">Title: </p>
             <input id="title" type="text" name="title" placeholder="Enter the title of your request" required>
@@ -54,7 +54,7 @@
           </div>
           <div class="form__control">
             <p class="form__input-Label text-primary-color">Request Photo: </p>
-            <input id="imageOfRequest" type="file" accept="image/*" name="imageOfRequest">
+            <input id="upload_widget_opener" class="imageUpload" type="file" accept="image/*" name="imageOfRequest">
           </div>
           <div class="form__control">
             <p class="form__input-Label text-primary-color">Descripton: </p>
@@ -79,5 +79,7 @@
   <script type="text/javascript" src="../js/hamburgerDropdown.js"></script>
   <script type="text/javascript" src="../js2/alertAdminViewRequests.js"></script>
   <script type="text/javascript" src="../js2/alertEvent.js"></script>
+  <script src="//widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+  </script>
 </body>
 </html>

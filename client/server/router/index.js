@@ -5,6 +5,7 @@ import { createARequestChecker } from '../validation/createARequestValidator';
 import { duplicateRequest } from '../validation/duplicateRequestValidator';
 import { getARequestChecker } from '../validation/getARequestValidator';
 import { isAdmin, isUser } from '../validation/profileValidator';
+import { imageUrlChecker } from '../validation/imageUrlValidator';
 import loginAUserChecker from '../validation/loginAUSerValidator';
 import modifyARequestChecker from '../validation/modifyARequestChecker';
 import maxLengthChecker from '../validation/maxLengthValidator';
@@ -26,6 +27,7 @@ router.get('/', (request, response) => {
 router.post('/auth/signup', signUpAUserChecker, maxLengthChecker, UsersController.signUp);
 router.post('/auth/login', loginAUserChecker, maxLengthChecker, UsersController.login);
 router.get('/users/requests', verifyToken, isUser, RequestsController.getAllRequests);
+router.put('/attachImage/:requestid', verifyToken, isUser, getARequestChecker, imageUrlChecker, RequestsController.insertImage);
 router.get('/users/requests/:requestid', verifyToken, getARequestChecker, RequestsController.getARequest);
 router.delete('/users/requests/:requestid', verifyToken, isUser, getARequestChecker, RequestsController.deleteARequest);
 router.post('/users/requests/', verifyToken, isUser, createARequestChecker, maxLengthChecker, duplicateRequest, RequestsController.createARequest);

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { pool } from '../db';
 import { reqtype, reqstatus } from '../maps/mapObject';
+import signedUpload from '../validation/signatureGenerator';
 
 const statusChanger = (request, response, next, query, status, attempt, message404) => {
   pool.connect((error, client, done) => {
@@ -67,21 +68,51 @@ const RequestsDatabaseHelper = (request, response, query, messageErrCode, operat
           });
         } else if (operation === 'update a request') {
           mapper(requestRow);
+          const publicIdRegex = /\b\/(\w+)\.\w+/;
+          const publicId = requestRow.rows[0].image_url ?
+            requestRow.rows[0].image_url.match(publicIdRegex)[1] :
+            false;
+          const timestamp = Math.round((new Date()).getTime() / 1000);
           return response.status(successCode).send({
             message: messageSuccCode,
-            updatedRequest: requestRow.rows[0]
+            updatedRequest: requestRow.rows[0],
+            cloudinary: {
+              publicId,
+              signature: signedUpload(publicId, timestamp, process.env.APISECRET),
+              timestamp,
+              apiKey: process.env.APIKEY,
+              cloudinaryUrl: process.env.CLOUDINARY_URL
+            }
           });
         } else if (operation === 'create a request') {
           mapper(requestRow);
           return response.status(successCode).send({
             message: messageSuccCode,
-            request: requestRow.rows[0]
+            request: requestRow.rows[0],
+            cloudinary: {
+              cloudinaryUrl: process.env.CLOUDINARY_URL,
+              cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET
+            }
           });
         } else if (operation === 'delete single request') {
+          const publicIdRegex = /\b\/(\w+)\.\w+/;
+          const publicId = requestRow.rows[0].image_url ?
+            requestRow.rows[0].image_url.match(publicIdRegex)[1] :
+            false;
+          const timestamp = Math.round((new Date()).getTime() / 1000);
           mapper(requestRow);
           return response.status(successCode).send({
             message: 'The following request has been deleted',
-            request: requestRow.rows[0]
+            request: requestRow.rows[0],
+            cloudinary: {
+              cloudinaryUrl: process.env.CLOUDINARY_URL,
+              cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
+              publicId,
+              signature: signedUpload(publicId, timestamp, process.env.APISECRET),
+              timestamp,
+              apiKey: process.env.APIKEY
+            }
+
           });
         }
       }
