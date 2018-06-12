@@ -1,6 +1,21 @@
 const getElementsByClassName = (modalName, index) =>
 document.getElementsByClassName(modalName)[index].classList;
 
+const pagconst = (limit, func = 'insertRequestRow', profile = 'User', route = '/api/v1/users/requests/') => {
+  const pagRow = document.getElementById('pagRowComp');
+  for (let i = 2; i <= pagRow.childElementCount; i++) {
+    if (document.getElementById(`${i}`) && i > limit) {
+      document.getElementById(`${i}`).parentNode.removeChild(document.getElementById(`${i}`));
+    }
+  }
+  for (let i = 2; i <= limit; i++) {
+    if (!document.getElementById(`${i}`)) {
+      const divElement = document.createElement('div');
+      divElement.innerHTML = `<a id=${i} onclick="${func}(${i}, route='${route}', func='insertRequestRow', profile='${profile}')">${i}</a>`;
+      pagRow.insertBefore(divElement.firstChild, pagRow.childNodes[pagRow.childNodes.length - 2]);
+    }
+  }
+};
 
 const getModal = (modalName, index1, index2, operation) => {
   if (operation === 'add') {
@@ -162,8 +177,31 @@ const modalDelDelete = (
     } else {
       jsonObj.then((result) => {
         if (document.getElementsByClassName('active').length > 0) {
-          document.getElementsByClassName('active')[0].click();
+          const route = localStorage.profile === 'User' ? '/api/v1/users/requests/' : '/api/v1/requests/';
+          const current = document.getElementsByClassName('active')[0].text;
+          pagconst(Math.ceil((Number(document.getElementById('noOfRequestTotal').innerHTML) - 1) / 10), 'insertRequestRow', localStorage.profile, route)
+          if (document.getElementsByClassName('active')[0]) {
+            document.getElementsByClassName('active')[0].click()
+          } else {
+
+            const toBeActive = document.getElementById(`${Number(current) - 1 >= 1 ? Number(current) - 1 : 1}`);
+            toBeActive.classList.add('active');
+            toBeActive.click();
+          }
           modalAction(modalName, requestAction1, requestAction2, `<strong>Success!</strong> Request ${localStorage.requestTitle} - ${localStorage.requestId} has been deleted!`);
+          if (typeof result.cloudinary.publicId === 'string') {
+            const formData = new FormData();
+            formData.append('public_id', `${result.cloudinary.publicId}`);
+            formData.append('api_key', `${result.cloudinary.apiKey}`);
+            formData.append('timestamp', `${result.cloudinary.timestamp}`);
+            formData.append('signature', `${result.cloudinary.signature}`);
+            fetch(`${result.cloudinary.cloudinaryUrl}/destroy`,
+              {
+                method: 'POST',
+                body: formData
+              }
+            )
+          }
         } else {
           window.location.replace(`${window.location.origin}/UserViewRequests.html`);
           document.addEventListener('onload', () => {
@@ -234,6 +272,7 @@ const loginSubmit = () => {
       } else {
         jsonObj.then((result) => {
           localStorage.setItem('token', result.token);
+          localStorage.setItem('profile', result.user.profile)
           if (result.user.profile === 'User') {
             window.location.replace(`${window.location.origin}/UserViewRequests.html`);
           } else {
@@ -273,23 +312,14 @@ const signupSubmit = () => {
       } else {
         jsonObj.then((result) => {
           localStorage.setItem('token', result.token);
+          localStorage.setItem('profile', result.user.profile)
           window.location.replace('../UserViewRequests.html');
         });
       }
     })
     .catch(err => err);
 };
-const pagconst = (limit, func = 'insertRequestRow', profile = 'User') => {
-  const pagRow = document.getElementById('pagRowComp');
-  for (let i = 2; i <= limit; i++) {
-    if (!document.getElementById(`${i}`)) {
-      const divElement = document.createElement('div');
-      divElement.innerHTML = `<a id=${i} onclick="${func}(${i}, route='/api/v1/requests/', func='insertRequestRow', profile='${profile}')">${i}</a>`;
-      pagRow.insertBefore(divElement.firstChild, pagRow.childNodes[pagRow.childNodes.length - 2]);
-    }
-  }
-};
-const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'insertRequestRow', profile = 'User') => {
+const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'insertRequestRow', profile = localStorage.profile) => {
   if (page === 'previous') {
     page = Number(document.getElementsByClassName('active')[0].text) - 1;
     page = page >= 1 ? page : 1;
@@ -310,13 +340,13 @@ const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'i
         });
       } else {
         jsonObj.then((result) => {
-          result.requests = result.requests ? result.requests:[];
+          result.requests = result.requests ? result.requests : [];
           document.getElementById('noOfRequestTotal').innerHTML = result.requests.length;
           if (page === 'next') {
             page = Number(document.getElementsByClassName('active')[0].text) + 1;
-            page = page <= Math.ceil(result.requests.length/10) ? page : Math.ceil(result.requests.length/10);
+            page = page <= Math.ceil(result.requests.length / 10) ? page : Math.ceil(result.requests.length / 10);
           }
-          pagconst(Math.ceil(result.requests.length/10), func, profile);
+          pagconst(Math.ceil(result.requests.length / 10), func, profile, route);
           let ans = [];
           if (result.requests.length === 0) {
             const divElement = document.createElement('div');
@@ -337,7 +367,7 @@ const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'i
                 if (profile === 'User') {
                   divElement.innerHTML = `<div class="request-Row">
                 <div class="request-Image-Container">
-                  <img src="../media/images/brokenPrinter.jpeg" alt="${request.title}">
+                  <img src="${request.image_url || '../media/images/brokenPrinter.jpeg'}" alt="${request.title}">
                 </div>
                 <div class="infoColumn1">
                   <p><b>Title:- </b> <span id="title">${request.title}</span></p>
@@ -431,6 +461,10 @@ const getRequestDetails = (profile = 'User') => {
         document.getElementById('reason').innerHTML = typeof result.request.reason !== 'undefined' ? result.request.reason : '';
         document.getElementById('dateResolved').innerHTML = typeof result.request.date_resolved === 'string' ? `${result.request.date_resolved.split('T')[0].split('-').reverse().join('/')}` : '';
         document.getElementById('reasonHeader').innerHTML = `${result.request.status} Reason`;
+        document.getElementById('requestDetailPhoto').setAttribute('title', result.request.title);
+        if (typeof result.request.image_url === 'string') {
+          document.getElementById('requestDetailPhoto').setAttribute('src', result.request.image_url);
+        }
         if (profile === 'User') {
           const editButton = document.getElementsByClassName('detail-Board__edit-Button')[0];
           const deleteButton = document.getElementsByClassName('detail-Board__delete-button')[0];
@@ -486,20 +520,22 @@ const getRequestDetails = (profile = 'User') => {
   });
 };
 
-const createRequestSubmit= () => {
+const createRequestSubmit = () => {
   const form =  document.getElementById('createRequestForm');
+  const image = form.elements.imageOfRequest.files.length > 0 ? form.elements.imageOfRequest.files[0] : undefined;
+  const body = JSON.stringify({
+    title: form.elements.title.value,
+    type: form.elements.type.value,
+    location: form.elements.requestLocation.value,
+    description: form.elements.description.value,
+  });
   fetch('/api/v1/users/requests', {
     method: 'POST',
     headers: new Headers({
       'Content-Type': 'application/json',
       authorization: localStorage.token
     }),
-    body: JSON.stringify({
-      title: form.elements.title.value,
-      type: form.elements.type.value,
-      location: form.elements.requestLocation.value,
-      description: form.elements.description.value
-    })
+    body
   })
     .then(response => ({ jsonObj: response.json(), status: response.status })).then(({ jsonObj, status }) => {
       if (status !== 201) {
@@ -507,14 +543,55 @@ const createRequestSubmit= () => {
           alertAction('requestApproved', 'requestDisapproved', result.message);
         });
       } else {
-        jsonObj.then((result) => {
-          window.location.replace(`${window.location.origin}/requests/${result.request.id}`);
-        });
+        if (typeof image === 'undefined') {
+          jsonObj.then((result) => {
+            window.location.replace(`${window.location.origin}/requests/${result.request.id}`);
+          });
+        } else {
+          jsonObj.then((result) => {
+            const formData = new FormData();
+
+            formData.append('file', image);
+            formData.append('upload_preset', result.cloudinary.cloudinaryUploadPreset);
+            fetch(`${result.cloudinary.cloudinaryUrl}/upload`,
+              {
+                method: 'POST',
+                body: formData
+              }
+            ).then(response => ({ cloudinaryObj: response.json(), status: response.status })).then(({ cloudinaryObj, status }) => {
+              if (status === 200) {
+                cloudinaryObj.then((imageResult) => {
+                  fetch(`/api/v1/attachImage/${result.request.id}`, {
+                    method: 'PUT',
+                    headers: new Headers({
+                      'Content-Type': 'application/json',
+                      authorization: localStorage.token
+                    }),
+                    body: JSON.stringify({
+                      imageUrl: imageResult.url
+                    })
+                  }).then(response => ({
+                    status: response.status,
+                    imageInsertResult: response.json()
+                  })).then(({ status }) => {
+                    if (status === 200) {
+                      window.location.replace(`${window.location.origin}/requests/${result.request.id}`);
+                    } else {
+                      imageInsertResult.then((result) => {
+                        alertAction('requestApproved', 'requestDisapproved', result.message);
+                      });
+                    }
+                  });
+                });
+              }
+            });
+          });
+        }
       }
     })
     .catch(err => err);
 };
-const getEditDetails= () => {
+const getEditDetails = () => {
   const form =  document.getElementById('editRequestForm');
   fetch(`/api/v1/users/requests/${window.location.pathname.split('/')[3]}`, {
     method: 'GET',
@@ -566,6 +643,7 @@ const getEditDetails= () => {
 
 const editRequestSubmit = () => {
   const form =  document.getElementById('editRequestForm');
+  const image = form.elements.imageOfRequest.files.length > 0 ? form.elements.imageOfRequest.files[0] : undefined;
   fetch(`/api/v1/users/requests/${window.location.pathname.split('/')[3]}`, {
     method: 'PUT',
     headers: new Headers({
@@ -585,9 +663,54 @@ const editRequestSubmit = () => {
           alertAction('requestApproved', 'requestDisapproved', result.message);
         });
       } else {
-        jsonObj.then((result) => {
-          window.location.replace(`${window.location.origin}/requests/${result.updatedRequest.id}`);
-        });
+        if (typeof image === 'undefined') {
+          jsonObj.then((result) => {
+            window.location.replace(`${window.location.origin}/requests/${result.updatedRequest.id}`);
+          });
+        } else {
+          jsonObj.then((result) => {
+            const formData = new FormData();
+            formData.append('file', image);
+            if (typeof result.updatedRequest.image_url === 'string') {
+              formData.append('public_id', `${result.cloudinary.publicId}`);
+              formData.append('api_key', `${result.cloudinary.apiKey}`);
+              formData.append('timestamp', `${result.cloudinary.timestamp}`);
+              formData.append('signature', `${result.cloudinary.signature}`);
+            }
+            fetch(`${result.cloudinary.cloudinaryUrl}/upload`,
+              {
+                method: 'POST',
+                body: formData
+              }
+            ).then(response => ({ cloudinaryObj: response.json(), status: response.status })).then(({ cloudinaryObj, status }) => {
+              if (status === 200) {
+                cloudinaryObj.then((imageResult) => {
+                  fetch(`/api/v1/attachImage/${result.updatedRequest.id}`, {
+                    method: 'PUT',
+                    headers: new Headers({
+                      'Content-Type': 'application/json',
+                      authorization: localStorage.token
+                    }),
+                    body: JSON.stringify({
+                      imageUrl: imageResult.url
+                    })
+                  }).then(response => ({
+                    status: response.status,
+                    imageInsertResult: response.json()
+                  })).then(({ status }) => {
+                    if (status === 200) {
+                      window.location.replace(`${window.location.origin}/requests/${result.updatedRequest.id}`);
+                    } else {
+                      imageInsertResult.then((result) => {
+                        alertAction('requestApproved', 'requestDisapproved', result.message);
+                      });
+                    }
+                  });
+                });
+              }
+            });
+          });
+        }
       }
     })
     .catch(err => err);

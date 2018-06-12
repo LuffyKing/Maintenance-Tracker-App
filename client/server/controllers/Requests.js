@@ -87,7 +87,8 @@ const Requests = {
       title,
       description,
       location,
-      type
+      type,
+      imageUrl
     } = request.reqBody;
     const { decodedUser } = request;
     const newUserValue = [
@@ -98,11 +99,12 @@ const Requests = {
       new Date(),
       new Date(),
       location,
-      decodedUser.user.id
+      decodedUser.user.id,
+      imageUrl
     ];
     RequestsDatabaseHelper(
       request, response,
-      `INSERT INTO REQUESTS(${requestsColumns}) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *;`,
+      `INSERT INTO REQUESTS(${requestsColumns}, image_url) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *;`,
       'Request creation failure', 'create a request', newUserValue, 'Your request was successfully created.',
       201, 400
     );
@@ -153,6 +155,22 @@ const Requests = {
       query = `UPDATE REQUESTS SET last_edited = $1,status = $2,reason = $3  where id = '${requestid}' RETURNING *;`;
       values = [new Date(), reqstatus[status], reqBody.reason];
     }
+    RequestsDatabaseHelper(request, response, query, 'Request not found', 'update a request', values, 'The request has been updated.');
+  },
+  /**
+* It inserts an image url into the request
+* @param {object} request - request object containing params and body
+* @param {object} response - response object that conveys the result of the request
+* @returns {object} - response object that has a status code of 200 and
+* a repair or maintenance request that has been updated or 404 if
+* the id provided in the request params id does not match an existing request
+*/
+  insertImage: (request, response) => {
+    const {
+      requestid
+    } = request.params;
+    const query = `UPDATE REQUESTS SET image_url = $1 where id = '${requestid}' and status = 0 RETURNING *;`;
+    const values = [request.body.imageUrl];
     RequestsDatabaseHelper(request, response, query, 'Request not found', 'update a request', values, 'The request has been updated.');
   }
 };
