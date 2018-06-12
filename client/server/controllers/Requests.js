@@ -3,15 +3,15 @@ import { RequestsDatabaseHelper } from '../validation/DatabaseHelpers';
 import { reqtype, reqstatus } from '../maps/mapObject';
 
 /**
- * An  object that handles the requests api operation
+ * An  object that handles the requests api operations
  */
 const Requests = {
   /**
-* It gets all the requests on the application
+* @desc It gets all the requests on the application for a particular user
 * @param {object} request - request object containing params and body
 * @param {object} response - response object that conveys the result of the request
-* @returns {object} - response object that has a status code of 200 as long as a
-* with a verified token or 404 if the user does not have any requests
+* @returns {object} - response object that has a status code of 200  and a list
+* of requests owned by the user
 */
   getAllRequests: (request, response) => {
     const { decodedUser } = request;
@@ -22,11 +22,11 @@ const Requests = {
     );
   },
   /**
-* It gets all the requests on the application for an admin user
+* @desc It gets all the requests on the application for an admin user
 * @param {object} request - request object containing params and body
 * @param {object} response - response object that conveys the result of the request
-* @returns {object} - response object that has a status code of 200 as long as a
-* with a verified token or 404 if the user does not have any requests
+* @returns {object} - response object that has a status code of 200  and a list
+* of all the requests
 */
   getAllRequestsAdmin: (request, response) => {
     RequestsDatabaseHelper(
@@ -36,12 +36,12 @@ const Requests = {
     );
   },
   /**
-* It gets a requests on the application
+* @desc It gets a request on the application and returns specific info based
 * @param {object} request - request object containing params and body
 * @param {object} response - response object that conveys the result of the request
 * @returns {object} - response object that has a status code of either 200 and
 * a repair or maintenance request or 404 if the id provided in the request params id
-* does not match an existing request
+* does not match an existing request.
 */
   getARequest: (request, response) => {
     const { decodedUser, params } = request;
@@ -60,7 +60,7 @@ const Requests = {
     }
   },
   /**
-* It deletes a request that a user owns on the application
+* @desc It deletes a request that a user owns on the application
 * @param {object} request - request object containing params and body
 * @param {object} response - response object that conveys the result of the request
 * @returns {object} - response object that has a status code of either 200 and
@@ -76,7 +76,7 @@ const Requests = {
     );
   },
   /**
-* It gets a requests on the application
+* @desc It creates a user request on the application
 * @param {object} request - request object containing params and body
 * @param {object} response - response object that conveys the result of the request
 * @returns {object} - response object that has a status code of 201 and
@@ -110,12 +110,12 @@ const Requests = {
     );
   },
   /**
-* It gets a requests on the application
+* @desc It updates a request on the application
 * @param {object} request - request object containing params and body
 * @param {object} response - response object that conveys the result of the request
 * @returns {object} - response object that has a status code of 200 and
 * a repair or maintenance request that has been updated or 404 if
-*the id provided in the request params id does not match an existing request
+* the id provided in the request params id does not match an existing request
 */
   updateARequest: (request, response) => {
     const {
@@ -135,7 +135,7 @@ const Requests = {
     );
   },
   /**
-* It updates a request by chnging the status for admins
+* @desc It updates a request by changing the status of the request as directed by the admin
 * @param {object} request - request object containing params and body
 * @param {object} response - response object that conveys the result of the request
 * @returns {object} - response object that has a status code of 200 and
@@ -158,7 +158,7 @@ const Requests = {
     RequestsDatabaseHelper(request, response, query, 'Request not found', 'update a request', values, 'The request has been updated.');
   },
   /**
-* It inserts an image url into the request
+* @desc It inserts an image url into the request table
 * @param {object} request - request object containing params and body
 * @param {object} response - response object that conveys the result of the request
 * @returns {object} - response object that has a status code of 200 and

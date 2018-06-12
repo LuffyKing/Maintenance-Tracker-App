@@ -23,7 +23,7 @@
     margin-top: 1%;
   }
 
-  input, select,textarea,.form__input-Label,#status{
+  input, .imageUpload ,select,textarea,.form__input-Label,#status{
     font-size: 1.65rem;
   }
 

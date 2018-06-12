@@ -118,7 +118,7 @@ const emptyFieldsHandler = (reqBody, response, failReason) => {
   }
 };
 /**
-* It validates the fields and renders the appropriate response
+* It validates the create a request fields and renders the appropriate response
 * @param {object} request - request object containing params and body
 * @param {object} response - response object that conveys the result of the request
 * @param {object} next - middleware that calls the next middleware in the stack

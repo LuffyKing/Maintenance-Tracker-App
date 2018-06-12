@@ -113,8 +113,11 @@ main{
    padding-bottom: 10%;
    margin-bottom: 5%;
  }
- .detail-Board__delete-button, .detail-Board__approve-Button, .detail-board__resolve-button{
+ .detail-Board__delete-button, .detail-Board__approve-Button, .detail-board__resolve-button, .detail-Board__edit-Button{
        font-size: 2.5rem;
+   }
+   .detail-Board__Pic-Column{
+     height: 50%;
    }
 
 

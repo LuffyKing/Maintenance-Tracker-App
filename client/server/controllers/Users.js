@@ -8,6 +8,11 @@ import { profile } from '../maps/mapObject';
  * An  object that handles the requests api operation
  */
 const Users = {
+  /**
+* @desc It removes the password from the user object
+* @param {object} user - user object the details of a user
+* @returns {object} - a passowrdless user object
+*/
   removePassword(user) {
     return Object.keys(user).reduce((accumulator, current) => {
       if (current !== 'password') {
@@ -18,17 +23,17 @@ const Users = {
     }, {});
   },
   /**
-* It gets all the requests on the application
+* @desc It logins a user in to the application
 * @param {object} request - request object containing params and body
 * @param {object} response - response object that conveys the result of the request
-* @returns {object} - response object that has a status code of 200 as long as a
-request is made
+* @returns {object} - response object that has a status code of 200, 500 if there is
+* a database error and 401 if the email or password are invalid
 */
   login(request, response) {
     const { email, password } = request.reqBody;
-    pool.connect((err, client, done) => {
-      if (err) {
-        response.status(500).send({ message: err.stack });
+    pool.connect((error, client, done) => {
+      if (error) {
+        response.status(500).send({ message: error.stack });
       }
       client.query(`SELECT ID,
         FIRST_NAME,
@@ -38,10 +43,10 @@ request is made
         JOB_TITLE,
         DEPARTMENT,
         PROFILE,
-        LOCATION from USERS where EMAIL = $1`, [email], (err, result) => {
+        LOCATION from USERS where EMAIL = $1`, [email], (error1, result) => {
         done();
-        if (err) {
-          return response.status(500).send({ message: err.stack });
+        if (error1) {
+          return response.status(500).send({ message: error1.stack });
         }
         if (result.rows.length > 0) {
           const user = result.rows[0];
@@ -66,14 +71,23 @@ request is made
       });
     });
   },
+  /**
+* @desc It signs a user up to the application
+* @param {object} request - request object containing params and body
+* @param {object} response - response object that conveys the result of the request
+* @returns {object} - response object that has a status code of 201 and 500 when
+* when a database error is encountered.
+*/
   signUp(request, response) {
     const newUser = {
       ...request.reqBody,
       password: bcrypt.hashSync(request.reqBody.password, 8),
       profile: 'User',
     };
-    pool.connect((err, client, done) => {
-      if (err) response.status(500).send({ message: err.stack });
+    pool.connect((error, client, done) => {
+      if (error) {
+        return response.status(500).send({ message: error.stack });
+      }
       client.query(`INSERT INTO USERS(FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION)
         VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *;`, [
         newUser.firstName,
@@ -84,10 +98,10 @@ request is made
         newUser.department,
         profile[newUser.profile],
         newUser.location
-      ], (err, result) => {
+      ], (error1, result) => {
         done();
-        if (err) {
-          return response.status(500).send({ message: err.stack });
+        if (error1) {
+          return response.status(500).send({ message: error1.stack });
         }
         let resObj = result.rows[0];
         resObj = Users.removePassword(resObj);

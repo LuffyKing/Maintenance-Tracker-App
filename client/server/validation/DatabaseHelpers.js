@@ -81,7 +81,8 @@ const RequestsDatabaseHelper = (request, response, query, messageErrCode, operat
               signature: signedUpload(publicId, timestamp, process.env.APISECRET),
               timestamp,
               apiKey: process.env.APIKEY,
-              cloudinaryUrl: process.env.CLOUDINARY_URL
+              cloudinaryUrl: process.env.CLOUDINARY_URL,
+              cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
             }
           });
         } else if (operation === 'create a request') {
