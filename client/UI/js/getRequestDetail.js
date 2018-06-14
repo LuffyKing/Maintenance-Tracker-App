@@ -36,7 +36,7 @@ const getRequestDetails = (profile = 'User') => {
         document.getElementById('requestLocation').innerHTML = `${result.request.location}`;
         document.getElementById('reason').innerHTML = typeof result.request.reason !== 'undefined' ? result.request.reason : '';
         document.getElementById('dateResolved').innerHTML = typeof result.request.date_resolved === 'string' ? `${result.request.date_resolved.split('T')[0].split('-').reverse().join('/')}` : '';
-        document.getElementById('reasonHeader').innerHTML = `${result.request.status} Reason`;
+        document.getElementById('reasonHeader').innerHTML = `${result.request.status} Reason:- `;
         document.getElementById('requestDetailPhoto').setAttribute('title', result.request.title);
         if (typeof result.request.image_url === 'string') {
           document.getElementById('requestDetailPhoto').setAttribute('src', result.request.image_url);

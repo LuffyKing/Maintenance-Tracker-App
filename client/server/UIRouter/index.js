@@ -5,7 +5,7 @@ import { verifyTokenUI } from '../authMiddleware/jwt';
 const UIRouter = express.Router();
 
 UIRouter.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../../client/UI/html/SigninPage.html'));
+  res.sendFile(path.resolve(__dirname, '../../../client/UI/html/LandingPage.html'));
 });
 
 UIRouter.get('/SigninPage.html', (req, res) => {

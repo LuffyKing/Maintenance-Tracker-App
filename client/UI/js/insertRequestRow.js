@@ -46,13 +46,15 @@ const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'i
                 if (profile === 'User') {
                   divElement.innerHTML = `<div class="request-Row">
                 <div class="request-Image-Container">
-                  <img src="${request.image_url || '../media/images/brokenPrinter.jpeg'}" alt="${request.title}">
+                  <img src="${request.image_url || '../media/images/noimage.png'}" alt="${request.title}">
                 </div>
                 <div class="infoColumn1">
                   <p><b>Title:- </b> <span id="title">${request.title}</span></p>
                   <p><b>Type:- </b><span id="type">${request.type}</span></p>
                   <p><b>Status:- </b><span id="status">${request.status}</span></p>
                   <p><b>RequestId:- </b><span id="requestid">${request.id}</span></p>
+                </div>
+                <div class="infoColumn1 actionColumn">
                   <a href="/requests/${request.id}" class="but">Find out more</a>
                   ${editButton}
                   ${deleteButton}
@@ -74,13 +76,15 @@ const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'i
                   }
                   divElement.innerHTML = `<div class="request-Row">
                 <div class="request-Image-Container">
-                  <img src="../media/images/brokenPrinter.jpeg" alt="${request.title}">
+                  <img src="${request.image_url || '../media/images/noimage.png'}" alt="${request.title}">
                 </div>
                 <div class="infoColumn1">
                   <p><b>Title:- </b> <span id="title">${request.title}</span></p>
                   <p><b>Type:- </b><span id="type">${request.type}</span></p>
                   <p><b>Status:- </b><span id="status">${request.status}</span></p>
                   <p><b>RequestId:- </b><span id="requestid">${request.id}</span></p>
+                </div>
+                <div class="infoColumn1 actionColumn">
                   <a href="/requests/admin/${request.id}" class="but">Find out more</a>
                   ${approveButton}
                   ${disapproveButton}
