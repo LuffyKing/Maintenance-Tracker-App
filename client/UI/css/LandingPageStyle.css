@@ -1,0 +1,42 @@
+html{
+  font-size: 12.5px;
+}
+.Landing-Page{
+  height: auto;
+  width: auto;
+  background-color: #313131;
+  padding: 1.75rem;
+  font-size: 1.75rem;
+  border-radius: 1rem;
+}
+
+.question, .answer{
+  margin-bottom: 5%;
+}
+
+.steps{
+  margin-left: 5%;
+}
+.steps li{
+  margin-bottom: 5%;
+}
+
+.but {
+    background-color: #0288D1;
+    border-radius: 4px;
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    text-align: center;
+    text-decoration: none;
+    width: 25%;
+}
+.center-container {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+}
+.but:hover{
+  background-color: #03A9F4;
+}
