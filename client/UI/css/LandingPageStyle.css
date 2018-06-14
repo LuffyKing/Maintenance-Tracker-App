@@ -1,5 +1,5 @@
 html{
-  font-size: 12.5px;
+  font-size: 12px;
 }
 .Landing-Page{
   height: auto;
@@ -39,4 +39,22 @@ html{
 }
 .but:hover{
   background-color: #03A9F4;
+}
+
+@media (max-width:960px) {
+  html{
+    font-size: 7.0px;
+  }
+  .Landing-Page{
+    height: 60%;
+  }
+}
+@media (max-width:600px) {
+  html{
+    font-size: 7.0px;
+  }
+  .Landing-Page{
+    height: 60%;
+    width: 60%;
+  }
 }
