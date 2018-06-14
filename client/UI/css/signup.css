@@ -1,5 +1,6 @@
 #loginPanel2{
   align-items: center;
+  background-color: #000000;
   border-radius: 0.4rem;
   display: flex;
   flex-direction: column;
@@ -92,7 +93,7 @@ input{
   }
 
   html{
-    font-size: 5.5px;
+    font-size: 4.5px;
   }
 
 }
@@ -109,7 +110,7 @@ input{
 
     .form__input-Label{
       font-size: 2.75rem;
-      width: 50%;
+      width: 75%;
     }
     #signupbtn{
       font-size: 2.25rem;
@@ -120,7 +121,7 @@ input{
 }
 
 .form__input-Signup{
-  width:50%;
+  width:75%;
 }
 
 .infoLabelsSignup{
@@ -144,4 +145,17 @@ input{
 .signupForm-mod{
   flex-direction: row;
   margin-bottom: 2.5%;
+}
+@media (max-height:705px) {
+  html{
+    font-size: 4.5px;
+  }
+  main{overflow: scroll;}
+}
+@media (max-height:568px) {
+
+  html{
+    font-size: 4.0px;
+  }
+
 }

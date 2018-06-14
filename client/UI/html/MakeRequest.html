@@ -18,7 +18,7 @@
     <nav id="navbar">
       <a class="default-primary-color text-primary-color Logo pacifico" href="/SigninPage.html">TrackerHero</a>
       <ul class="default-primary-color text-primary-color">
-        <li><a href="/create/requests">Make Request<i class="fas fa-bullhorn"></i></a></li>
+        <li class="activeNav"><a href="/create/requests">Make Request<i class="fas fa-bullhorn"></i></a></li>
         <li><a href="#">Profile<i class="fas fa-user"></i></a></li>
         <li><a href="/UserViewRequests.html">My Requests<i class="far fa-eye"></i></a></li>
         <li><a onclick="logout()" href="/SigninPage.html">Logout<i class="fas fa-door-open"></i></a></li>
@@ -32,33 +32,39 @@
       <span><i id="alertClose" class="fas fa-times"></i></span>
     </section>
     <section class="center-container">
-      <div  id="loginPanel2" class="box-shadow-darker">
+      <div  id="loginPanel2">
         <div class="form__control">
           <h3 class="text-primary-color sub-logo ubuntu">Submit the form to create a maintenance or repair request!</h3>
         </div>
         <form method="post" enctype="multipart/form-data" action="javascript: createRequestSubmit();" id="createRequestForm" name="createRequestForm">
           <div class="form__control">
-            <p class="form__input-Label text-primary-color">Title: </p>
-            <input id="title" type="text" name="title" placeholder="Enter the title of your request" required>
+            <div class="form__control requestForm-mod margin-right">
+              <p class="form__input-Label text-primary-color">Title: </p>
+              <input id="title" type="text" name="title" placeholder="Enter the title of your request" required>
+            </div>
+            <div class="form__control requestForm-mod">
+              <p class="form__input-Label text-primary-color">Request Type: </p>
+              <select id="type" name="type">
+               <option value="Maintenance">Maintenance</option>
+               <option value="Repair">Repair</option>
+              </select>
+            </div>
           </div>
           <div class="form__control">
-            <p class="form__input-Label text-primary-color">Request Type: </p>
-            <select id="type" name="type">
-             <option value="Maintenance">Maintenance</option>
-             <option value="Repair">Repair</option>
-            </select>
+            <div class="form__control requestForm-mod margin-right">
+              <p class="form__input-Label text-primary-color">Location: </p>
+              <input id="requestLocation" type="text" name="requestLocation" placeholder="Enter the location of the request" required>
+            </div>
+            <div class="form__control requestForm-mod">
+                <p class="form__input-Label text-primary-color">Request Photo: </p>
+                <input id="upload_widget_opener" class="imageUpload" type="file" accept="image/*" name="imageOfRequest">
+            </div>
           </div>
           <div class="form__control">
-            <p class="form__input-Label text-primary-color">Target Loction of The Request: </p>
-            <input id="requestLocation" type="text" name="requestLocation" placeholder="Enter the location of the request" required>
-          </div>
-          <div class="form__control">
-            <p class="form__input-Label text-primary-color">Request Photo: </p>
-            <input id="upload_widget_opener" class="imageUpload" type="file" accept="image/*" name="imageOfRequest">
-          </div>
-          <div class="form__control">
-            <p class="form__input-Label text-primary-color">Descripton: </p>
-            <textarea id="description" type="text" name="description" rows="5" cols="25" placeholder="Enter a description of the request" required></textarea>
+            <div class="form__control requestForm-mod">
+                <p class="form__input-Label text-primary-color">Descripton: </p>
+                <textarea id="description" type="text" name="description" rows="5" cols="25" placeholder="Enter a description of the request" required></textarea>
+            </div>
           </div>
           <div class="form__control btnOveride" id="submitRow">
             <button type="submit" name="button" class="form__button btn-white form__submit-button">Submit</button>

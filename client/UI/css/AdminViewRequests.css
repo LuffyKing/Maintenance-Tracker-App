@@ -56,11 +56,11 @@
 
 
 .request-Row{
-  height: 300px;
+  height: 25vh;
 }
 
 .request-Image-Container{
-  height: 285px;
+  height: 97.5%;
 }
 
 .request-Row-Footer{

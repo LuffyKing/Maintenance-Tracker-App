@@ -12,6 +12,11 @@
 #requestMessage{
   font-size: 5rem;
 }
+
+footer{
+  display: none;
+}
+
 i{
 margin-left: 5px;
 }
@@ -57,9 +62,9 @@ margin-left: 5px;
 
 .modal-Box__Header{
   align-items: center;
-  background: #03A9F4;
+  background: #FFFFFF;
   border-radius: 10px 10px 0 0;
-  color: #FFFFFF;
+  color: #000000;
   display: flex;
   font-size: 3rem;
   height: 25%;
@@ -82,7 +87,7 @@ margin-left: 5px;
 
 .modal-Box__Footer{
   align-items: flex-end;
-  background: #03A9F4;
+  background: #FFFFFF;
   border-radius: 0 0 10px 10px;
   display: flex;
   height:26%;
@@ -248,11 +253,10 @@ b {
   margin-right: 4rem;
 }
 
-#navbar li:hover {
+#navbar li:hover, .activeNav {
   background-color: #FFFFFF;
   color: #0288D1;
   cursor: pointer;
-  padding: 0.5rem;
 }
 
 .requestApproved{
@@ -263,12 +267,17 @@ b {
   background-color: #98FB98 !important;
   cursor: pointer;
 }
-
-.detail-Board__delete-button,.modal-Box__Approve-button, .requestDisapproved, .modal-Box__disapprove-button{
+.requestDisapproved{
+  background-color: #ff6666;
+}
+.requestDisapproved:hover{
+  background-color: #ff7f7f;
+}
+.detail-Board__delete-button,.modal-Box__Approve-button, .modal-Box__disapprove-button{
   background-color: #e60000;
 }
 
-.detail-Board__delete-button:hover, .modal-Box__Approve-button:hover, .requestDisapproved:hover, .modal-Box__disapprove-button:hover{
+.detail-Board__delete-button:hover, .modal-Box__Approve-button:hover,.modal-Box__disapprove-button:hover{
   background-color: #ff3333;
 }
 
@@ -317,7 +326,6 @@ body {
   flex-direction: column;
   font-family: 'Titillium Web', sans-serif;
   height: 100%;
-  -webkit-logical-height: 87vh!important;
 }
 
 @media (max-width:600px){

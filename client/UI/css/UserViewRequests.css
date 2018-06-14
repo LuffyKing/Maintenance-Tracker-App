@@ -106,9 +106,9 @@ select{
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: space-around;
-  width: 60.06rem;
+  justify-content: space-between;
 }
+
 
 .request-Image-Container{
   flex:1;
@@ -116,6 +116,14 @@ select{
 
 .infoColumn1{
   flex:1;
+}
+.infoColumn1 p{
+  margin-left: 33.33%;
+}
+
+.actionColumn{
+  display: flex;
+  align-items: center;
 }
 
 .introduction{
@@ -179,6 +187,10 @@ select{
     height: 100vh !important;
   }
 
+  .infoColumn1 p {
+    margin-left: 0;
+    }
+
   .pagRow{
     align-items: start;
     font-size: 2rem;
@@ -210,13 +222,16 @@ select{
   .request-Image-Container, .infoColumn1,.infoColumn2{
     margin-bottom: 2rem;
   }
+  .request-Image-Container{
+    height: 45% !important;
+  }
 
   .introduction{
     font-size: 1.5rem;
   }
 
   img{
-    width:100%;
+    width:95%;
   }
 
   .hamburger{
@@ -256,6 +271,6 @@ select{
   text-align: center;
 }
 
-body{
-  -webkit-logical-height: 100%!important;
+html {
+    font-size: 7.5px;
 }
