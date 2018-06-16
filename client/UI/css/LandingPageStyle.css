@@ -6,7 +6,7 @@ html{
   width: auto;
   background-color: #FFFFFF;
   padding: 1.75rem;
-  font-size: 1.75rem;
+  font-size: 2rem;
   border-radius: 1rem;
   color: #000000;
 }
@@ -43,19 +43,18 @@ html{
 }
 
 @media (max-width:960px) {
-  html{
-    font-size: 7.0px;
-  }
   .Landing-Page{
-    height: 60%;
+    height: auto;
+    width: 80%;
   }
 }
 @media (max-width:600px) {
   html{
-    font-size: 7.0px;
+    font-size: 7.5px;
   }
   .Landing-Page{
-    height: 60%;
-    width: 60%;
+    height: auto;
+    width: 75%;
+    font-size: 1.75rem;
   }
 }
