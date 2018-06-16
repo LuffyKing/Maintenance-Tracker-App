@@ -91,7 +91,7 @@ input{
   }
 
   html{
-    font-size: 4.5px;
+    font-size: 6.0px;
   }
 
 }
@@ -152,14 +152,14 @@ input{
 }
 @media (max-height:705px) {
   html{
-    font-size: 4.5px;
+    font-size: 6.0px;
   }
   main{overflow: scroll;}
 }
 @media (max-height:568px) {
 
   html{
-    font-size: 4.0px;
+    font-size: 5.0px;
   }
 
 }
