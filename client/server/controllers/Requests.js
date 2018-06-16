@@ -15,9 +15,13 @@ const Requests = {
 */
   getAllRequests: (request, response) => {
     const { decodedUser } = request;
+    const query = request.hasQuery ? `SELECT * FROM REQUESTS where STATUS='${request.query.mappedStatus}' and userid = '${decodedUser.user.id}'` :
+      `SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}';`;
+    const notFoundMessage = request.hasQuery ? `You do not have any requests with the status = ${request.query.status}` :
+      'You do not have any requests on TrackerHero, but it is not too late to start making them!';
     RequestsDatabaseHelper(
-      request, response, `SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}';`,
-      'You do not have any requests on TrackerHero, but it is not too late to start making them!',
+      request, response, query,
+      notFoundMessage,
       'get multiple requests', [], '', 200, 200
     );
   },
@@ -29,8 +33,9 @@ const Requests = {
 * of all the requests
 */
   getAllRequestsAdmin: (request, response) => {
+    const query = request.hasQuery ? `SELECT * FROM REQUESTS where STATUS=${request.query.mappedStatus}` : 'SELECT * FROM REQUESTS;';
     RequestsDatabaseHelper(
-      request, response, 'SELECT * FROM REQUESTS;',
+      request, response, query,
       'There are no requests on TrackerHero, check back later!',
       'get multiple requests', [], '', 200, 200
     );

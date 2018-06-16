@@ -46,7 +46,7 @@ const RequestsDatabaseHelper = (request, response, query, messageErrCode, operat
       }
       if (requestRow.rows.length) {
         let pluralOrSingularRequest;
-        switch (new Date().getDay()) {
+        switch (requestRow.rows.length) {
           case 1:
             pluralOrSingularRequest = 'request has';
             break;

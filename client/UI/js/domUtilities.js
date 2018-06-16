@@ -73,6 +73,11 @@ const alertAction = (requestAction1, requestAction2, message) => {
   document.getElementById('alertMessage').innerHTML = message;
 }
 
+const routeObj = {
+  Admin: '/api/v1/requests',
+  User: '/api/v1/users/requests'
+}
+
 const routeToMyRequest = () => {
   fetch('/verify', {
     method: 'POST',

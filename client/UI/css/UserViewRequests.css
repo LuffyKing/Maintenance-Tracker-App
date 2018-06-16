@@ -12,7 +12,9 @@
 .del:hover{
   background-color: #ff3333!important;
 }
-
+select{
+  background-size: 2rem;
+}
 #alerts{
   align-items: center;
   color: #FFFFFF;
