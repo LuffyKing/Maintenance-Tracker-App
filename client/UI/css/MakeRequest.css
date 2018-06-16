@@ -108,7 +108,7 @@ button, input, textarea, select, #status {
 
   .form__submit-button{
     font-size: 2.5rem;
-    padding: 1.25rem;
+    padding: 2rem;
     width: 50%;
   }
   .requestForm-mod{
