@@ -1,10 +1,4 @@
-const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'insertRequestRow', profile = localStorage.profile) => {
-  if (page === 'previous') {
-    page = Number(document.getElementsByClassName('active')[0].text) - 1;
-    page = page >= 1 ? page : 1;
-  }
-  const table = document.getElementById('requestsTableComponent');
-  table.innerHTML = '';
+const getRequestsFetch = (profile, route, table, page, func) => {
   fetch(route, {
     method: 'GET',
     headers: new Headers({
@@ -32,13 +26,14 @@ const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'i
           if (result.requests.length === 0) {
             const divElement = document.createElement('div');
             divElement.innerHTML = `<div class="request-Row">
-              <div class="infoColumn1">
-                <center><p id="requestMessage">NO REQUESTS FOUND!</p> </center>
+              <div class="infoColumn1 center-detail">
+                <p id="requestMessage">NO REQUESTS FOUND!</p>
               </div>
             </div>`;
             table.appendChild(divElement.firstChild);
             document.getElementById('pagRowComp').classList.add('displayNone');
           } else {
+            document.getElementById('pagRowComp').classList.remove('displayNone');
             result.requests.map((request, index) => {
               const editButton = request.status === 'Not Approved/Rejected' ? `<a href="/requests/edit/${request.id}" class="but">Edit</a>` : '<a class="but disabled">Edit</a>';
               const deleteButton = request.status === 'Not Approved/Rejected' ? `<a onclick="deleteDetailBtn('modal-Box', '${request.id}', '${request.title.replace("'", "\\'").replace('"', "\\'")}')" class="but del">Delete</a>` :
@@ -108,4 +103,28 @@ const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'i
       }
     })
     .catch(err => err);
+};
+const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'insertRequestRow', profile = localStorage.profile) => {
+  if (page === 'previous') {
+    page = Number(document.getElementsByClassName('active')[0].text) - 1;
+    page = page >= 1 ? page : 1;
+  }
+  const table = document.getElementById('requestsTableComponent');
+  table.innerHTML = '';
+  fetch('/verify', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      authorization: localStorage.token
+    }
+  }).then(response => ({ status: response.status, jsonObj: response.json() }))
+    .then(({ status, jsonObj }) => {
+      if (status !== 200) {
+        window.location.replace(`${window.location.origin}/SigninPage.html`);
+      } else {
+        jsonObj.then((result) => {
+          getRequestsFetch(result.profile, route, table, page, func);
+        });
+      }
+    });
 };
