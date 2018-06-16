@@ -19,8 +19,8 @@
       <a class="default-primary-color text-primary-color Logo pacifico" href="/SigninPage.html">TrackerHero</a>
       <ul class="default-primary-color text-primary-color">
         <li class="activeNav"><a href="/create/requests">Make Request<i class="fas fa-bullhorn"></i></a></li>
-        <li><a href="#">Profile<i class="fas fa-user"></i></a></li>
-        <li><a href="/UserViewRequests.html">My Requests<i class="far fa-eye"></i></a></li>
+        <li><a href="/profile">Profile<i class="fas fa-user"></i></a></li>
+        <li><a onclick="routeToMyRequest()">My Requests<i class="far fa-eye"></i></a></li>
         <li><a onclick="logout()" href="/SigninPage.html">Logout<i class="fas fa-door-open"></i></a></li>
       </ul>
       <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
@@ -34,7 +34,7 @@
     <section class="center-container">
       <div  id="loginPanel2">
         <div class="form__control">
-          <h3 class="text-primary-color sub-logo ubuntu">Submit the form to create a maintenance or repair request!</h3>
+          <h3 class="sub-logo ubuntu">Submit the form to create a maintenance or repair request!</h3>
         </div>
         <form method="post" enctype="multipart/form-data" action="javascript: createRequestSubmit();" id="createRequestForm" name="createRequestForm">
           <div class="form__control">
@@ -61,8 +61,8 @@
             </div>
           </div>
           <div class="form__control">
-            <div class="form__control requestForm-mod">
-                <p class="form__input-Label text-primary-color">Descripton: </p>
+            <div class="form__control requestForm-mod width-100">
+                <p class="form__input-Label text-primary-color width-100">Descripton: </p>
                 <textarea id="description" type="text" name="description" rows="5" cols="25" placeholder="Enter a description of the request" required></textarea>
             </div>
           </div>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UserProfile</title>
+  <script type="text/javascript" src="/js2/tokenPostBoth.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/LandingPage.css">
+  <link rel="stylesheet" href="/css/signin.css">
+  <link rel="stylesheet" href="/css/signup.css">
+  <link rel="stylesheet" href="/css/AdminViewRequests.css">
+  <link rel="stylesheet" href="/css/UserRequestDetail.css">
+</head>
+<body onload="getUserDetails()" class="displayNone">
+  <header>
+    <nav id="navbar">
+      <a class="default-primary-color text-primary-color Logo pacifico" href="/SigninPage.html">TrackerHero</a>
+      <ul class="default-primary-color text-primary-color">
+        <li class="activeNav"><a href="/profile">Profile<i class="fas fa-user"></i></a></li>
+        <li><a onclick="routeToMyRequest()">My Requests<i class="far fa-eye"></i></a></li>
+        <li><a onclick="logout()" href="/SigninPage.html">Logout<i class="fas fa-door-open"></i></a></li>
+      </ul>
+      <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
+    </nav>
+  </header>
+  <main class="displayNone">
+    <div id="approveModal" class="modal-Box displayNone">
+      <div class="modal-Box__Header">
+        <p id="modalMessage">Delete your account</p>
+      </div>
+      <div class="modal-Box__Body">
+        <textarea id="approvalReason" name="approvalReason" rows="5" cols="80" placeholder="Enter Approval Comment.."></textarea>
+      </div>
+      <div class="modal-Box__Footer">
+        <a class="modal-Box__Delete-button" onclick="modalDelAccount()">Delete Account</a>
+        <a class="modal-Box__Cancel-button" onclick="closeModal()">Cancel</a>
+      </div>
+    </div>
+    <section class="modal displayNone">
+    </section>
+    <section id="alerts" class="displayNone">
+      <p id="alertMessage"></p>
+      <span><i id="alertClose" class="fas fa-times"></i></span>
+    </section>
+    <section id="detailBoard">
+      <div class="detail-Board__Pic-Column">
+        <div class="request-Image-Container2">
+          <img src="/media/images/noimage.png" alt="title" id="requestDetailPhoto">
+        </div>
+      </div>
+      <div class="detail-Board__Info-Column">
+        <div class="titleAndDescription">
+          <h1 id="title"><span id="firstName">Oyindamola</span> <span id="lastName">Aderinwale</span></h1>
+        </div>
+        <div class="detailsAndLocation">
+          <div class="details">
+            <h3>Details</h3>
+            <p><b>Email:-</b> <span id="email">ade@gmail.com</span></p>
+            <p><b>Job Title:-</b> <span id="jobTitle">Repair</span></p>
+            <p><b>Department:-</b> <span id="department">Not Approved/Rejected</span></p>
+            <p><b>Profile:-</b> <span id="profile">Admin</span></p>
+            <p><b>Location:-</b> <span id="location">3 Abuja, Wuse</span></p>
+          </div>
+        </div>
+        <div class="action-Row">
+          <a class="detail-Board__approve-Button" href="/profile/edit">Edit Profile</a>
+          <a class="detail-Board__approve-Button" onclick="routeToMyRequest()">View My Requests</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer id="footer">
+    <ul class="default-primary-color text-primary-color">
+      <li><p>&copy; InVective Tech.</p></li>
+      <li><a href="#">Contact Us</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Help</a></li>
+    </ul>
+  </footer>
+  <script type="text/javascript" src="/js2/hamburgerDropdown.js"></script>
+  <script type="text/javascript" src="/js2/getUserDetails.js"></script>
+  <script type="text/javascript" src="/js2/adminApiActions.js"></script>
+  <script type="text/javascript" src="/js2/domUtilities.js"></script>
+  <script type="text/javascript" src="/js2/alertEvent.js"></script>
+</body>
+</html>

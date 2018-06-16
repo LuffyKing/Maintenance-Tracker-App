@@ -23,6 +23,46 @@ const Users = {
     }, {});
   },
   /**
+* @desc It retrieves the details of an authenticated user
+* @param {object} request - request object containing params and body
+* @param {object} response - response object that conveys the result of the request
+* @returns {object} - response object that has a status code of 200, 500 if there is
+* a database error and 404 if the user was not found
+*/
+  getAUser(request, response) {
+    const { decodedUser } = request;
+    pool.connect((error, client, done) => {
+      if (error) {
+        response.status(500).send({ message: error.stack });
+      }
+      client.query(`SELECT ID,
+        FIRST_NAME,
+        LAST_NAME,
+        EMAIL,
+        JOB_TITLE,
+        DEPARTMENT,
+        PROFILE,
+        LOCATION,
+        IMAGE_URL from USERS where id = $1`, [decodedUser.user.id], (error1, result) => {
+        done();
+        if (error1) {
+          return response.status(500).send({ message: error1.stack });
+        }
+        if (result.rows.length > 0) {
+          const user = result.rows[0];
+          user.profile = (_.invert(profile))[user.profile];
+          return response.status(200).send({
+            message: 'User found',
+            user
+          });
+        }
+        return response.status(404).send({
+          message: 'User not found'
+        });
+      });
+    });
+  },
+  /**
 * @desc It logins a user in to the application
 * @param {object} request - request object containing params and body
 * @param {object} response - response object that conveys the result of the request

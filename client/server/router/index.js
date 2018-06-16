@@ -26,6 +26,7 @@ router.get('/', (request, response) => {
 });
 router.post('/auth/signup', signUpAUserChecker, maxLengthChecker, UsersController.signUp);
 router.post('/auth/login', loginAUserChecker, maxLengthChecker, UsersController.login);
+router.get('/auth/users', verifyToken, UsersController.getAUser);
 router.get('/users/requests', verifyToken, isUser, RequestsController.getAllRequests);
 router.put('/attachImage/:requestid', verifyToken, isUser, getARequestChecker, imageUrlChecker, RequestsController.insertImage);
 router.get('/users/requests/:requestid', verifyToken, getARequestChecker, RequestsController.getARequest);

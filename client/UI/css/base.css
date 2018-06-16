@@ -1,7 +1,25 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster|Pacifico|Sedgwick+Ave+Display');
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
 @import url('https://fonts.googleapis.com/css?family=Titillium+Web');
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One');
 
+
+select, input[type=file] {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+
+}
+select{
+  background-image: url('../media/images/arrowdown.png');
+  background-position: 93% 50%;
+  background-repeat: no-repeat;
+  background-size: 2.75rem;
+}
+.boldText{
+  font-family: 'Fjalla One', sans-serif;
+  font-weight: 900;
+}
 .ubuntu {
   font-family: 'Ubuntu', sans-serif;
 }
@@ -217,8 +235,8 @@ color:inherit;
 .link-text:hover{ color: #0288D1;}
 
 .btn-white{
-  background: #FFFFFF;
-  color: #03A9F4;
+  background: #03A9F4;
+  color: #FFFFFF;
 }
 
 b {
@@ -226,7 +244,8 @@ b {
 }
 
 .btn-white:hover{
-  background: #F5F5F5;
+  background: #0288D1;
+
 }
 
 #navbar{
@@ -252,8 +271,11 @@ b {
   height: 100%;
   margin-right: 4rem;
 }
+#navbar li:hover{
+  color: #212121;
+}
 
-#navbar li:hover, .activeNav {
+.activeNav {
   background-color: #FFFFFF;
   color: #0288D1;
   cursor: pointer;

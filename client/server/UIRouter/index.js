@@ -40,6 +40,10 @@ UIRouter.get('/requests', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../../client/UI/html/AdminViewRequests.html'));
 });
 
+UIRouter.get('/profile', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../../client/UI/html/UserProfilePage.html'));
+});
+
 UIRouter.post('/verify', verifyTokenUI);
 
 UIRouter.use((req, res) => {
