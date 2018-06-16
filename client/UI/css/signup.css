@@ -1,6 +1,6 @@
 #loginPanel2{
   align-items: center;
-  background-color: #000000;
+  background-color: #FFFFFF;
   border-radius: 0.4rem;
   display: flex;
   flex-direction: column;
@@ -37,9 +37,6 @@ html{
   font-size: 7.5px;
 }
 
-.form__submit-button{
-  margin-right: 0;
-}
 
 input{
   margin :0 0;
@@ -47,6 +44,7 @@ input{
 
 .form__input-Label{
   font-size: 1.25rem;
+  color: #000000;
 }
 
 @media (max-width:600px) {
@@ -114,6 +112,7 @@ input{
     }
     #signupbtn{
       font-size: 2.25rem;
+      padding: 1.5rem 0rem;
     }
     .sub-logo {
     font-size: 2.75rem;
@@ -122,6 +121,11 @@ input{
 
 .form__input-Signup{
   width:75%;
+}
+
+.form__submit-button{
+  margin-right: 0;
+  width: 87%;
 }
 
 .infoLabelsSignup{

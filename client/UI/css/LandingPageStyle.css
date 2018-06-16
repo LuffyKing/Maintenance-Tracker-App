@@ -4,10 +4,11 @@ html{
 .Landing-Page{
   height: auto;
   width: auto;
-  background-color: #313131;
+  background-color: #FFFFFF;
   padding: 1.75rem;
   font-size: 1.75rem;
   border-radius: 1rem;
+  color: #000000;
 }
 
 .question, .answer{

@@ -11,12 +11,8 @@ addEventListener('DOMContentLoaded', () => {
         window.location.replace(`${window.location.origin}/SigninPage.html`);
       } else {
         jsonObj.then((result) => {
-          if (result.profile === 'User') {
-            const body = document.getElementsByTagName('BODY')[0];
-            body.classList.remove('displayNone');
-          } else {
-            window.location.replace(`${window.location.origin}/SigninPage.html`);
-          }
+          const body = document.getElementsByTagName('BODY')[0];
+          body.classList.remove('displayNone');
         });
       }
     });

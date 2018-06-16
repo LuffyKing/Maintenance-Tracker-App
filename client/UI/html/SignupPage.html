@@ -16,8 +16,8 @@
       <a class="default-primary-color text-primary-color Logo pacifico" href="/SigninPage.html">TrackerHero</a>
       <ul class="default-primary-color text-primary-color">
         <li><a href="/create/requests">Make Request<i class="fas fa-bullhorn"></i></a></li>
-        <li><a href="#">Profile<i class="fas fa-user"></i></a></li>
-        <li><a href="/UserViewRequests.html">My Requests<i class="far fa-eye"></i></a></li>
+        <li><a href="/profile">Profile<i class="fas fa-user"></i></a></li>
+        <li><a onclick="routeToMyRequest()">My Requests<i class="far fa-eye"></i></a></li>
       </ul>
       <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
     </nav>
@@ -29,45 +29,45 @@
     </section>
     <section class="center-container">
       <div  id="loginPanel2" class="signupPanel-mod">
-        <h3 class="text-primary-color sub-logo ubuntu">Sign up to start making requests!</h3>
+        <h3 class="sub-logo ubuntu">Sign up to start making requests!</h3>
         <form action="javascript: signupSubmit();" id="signupForm">
           <div class="form__control signupForm-mod">
             <div class="form__control">
-              <p class="form__input-Label text-primary-color">First name</p>
+              <p class="form__input-Label">First name</p>
               <input id="firstname" class="form__input-Signup" type="text" name="firstname" placeholder="Enter your first name e.g. Damola" required>
             </div>
             <div class="form__control">
-              <p class="form__input-Label text-primary-color">Last name</p>
+              <p class="form__input-Label">Last name</p>
               <input id="lastname" type="text" class="form__input-Signup" name="lastname" placeholder="Enter your last name e.g. Damola" required>
             </div>
           </div>
           <div class="form__control signupForm-mod">
             <div class="form__control">
-              <p class="form__input-Label text-primary-color">Password</p>
+              <p class="form__input-Label">Password</p>
               <input id="password" type="password" name="password" class="form__input-Signup" placeholder="Enter your password" required>
             </div>
             <div class="form__control">
-              <p class="form__input-Label text-primary-color">Confirm Password</p>
+              <p class="form__input-Label">Confirm Password</p>
               <input id="password2" type="password" class="form__input-Signup" name="password2" placeholder="Enter your password" required>
             </div>
           </div>
           <div class="form__control signupForm-mod">
             <div class="form__control">
-              <p class="form__input-Label text-primary-color">Email</p>
+              <p class="form__input-Label">Email</p>
               <input id="username" type="email" name="email" class="form__input-Signup" placeholder="Enter your email" required>
             </div>
             <div class="form__control">
-              <p class="form__input-Label text-primary-color">Location</p>
+              <p class="form__input-Label">Location</p>
               <input id="location" type="text" name="location" class="form__input-Signup" placeholder="Enter your Department" required>
             </div>
           </div>
           <div class="form__control signupForm-mod">
             <div class="form__control">
-              <p class="form__input-Label text-primary-color">Job Title</p>
+              <p class="form__input-Label">Job Title</p>
               <input id="jobTitle" type="text" name="jobTitle" class="form__input-Signup" placeholder="Enter your Job Title" required>
             </div>
             <div class="form__control">
-              <p class="form__input-Label text-primary-color">Department</p>
+              <p class="form__input-Label">Department</p>
               <input id="Department" type="text" name="Department" class="form__input-Signup" placeholder="Enter your Department" required>
             </div>
           </div>
@@ -78,7 +78,7 @@
             <a class="link-text infoLabelsSignup" href="#">Forgot Your Password?</a>
           </div>
           <div class="form__control signupForm-mod form__info">
-            <p class="text-primary-color infoLabelsSignup">If you have an account <a class="link-text" href="/SigninPage.html">Sign in!</a></p>
+            <p class="infoLabelsSignup">If you have an account <a class="link-text" href="/SigninPage.html">Sign in!</a></p>
           </div>
         </form>
       </div>

@@ -61,7 +61,7 @@ flex-direction: column;
 
 img {
     height: 100%;
-    width: 428px;
+    width: 25vw;
   }
 
 
@@ -223,9 +223,9 @@ select{
     margin-bottom: 2rem;
   }
   .request-Image-Container{
-    height: 45% !important;
+    height: 35% !important;
+    flex: none;
   }
-
   .introduction{
     font-size: 1.5rem;
   }
@@ -262,6 +262,10 @@ select{
 
   .infoColumn1{
     width:100%;
+  }
+  .centerInfo{
+    margin-left: 33.33%;
+    width: 66.66%;
   }
 
 }

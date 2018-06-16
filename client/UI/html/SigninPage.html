@@ -16,8 +16,8 @@
       <a class="default-primary-color text-primary-color Logo pacifico" href="/SigninPage.html">TrackerHero</a>
       <ul class="default-primary-color text-primary-color">
         <li><a href="/create/requests">Make Request<i class="fas fa-bullhorn"></i></a></li>
-        <li><a href="#">Profile<i class="fas fa-user"></i></a></li>
-        <li><a href="/UserViewRequests.html">My Requests<i class="far fa-eye"></i></a></li>
+        <li><a href="/profile">Profile<i class="fas fa-user"></i></a></li>
+        <li><a onclick="routeToMyRequest()">My Requests<i class="far fa-eye"></i></a></li>
       </ul>
       <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
     </nav>
@@ -29,15 +29,15 @@
     </section>
     <section class="center-container">
       <div  id="loginPanel">
-        <p class="text-primary-color Logo pacifico">TrackerHero</p>
-        <h2 class="text-primary-color sub-logo ubuntu">Log in to start making requests!</h2>
+        <p class="db-text Logo pacifico">TrackerHero</p>
+        <h2 class=" sub-logo ubuntu">Log in to start making requests!</h2>
         <form action="javascript: loginSubmit();"id="loginForm" name="loginForm">
           <div class="form__control">
-            <p class="form__input-Label text-primary-color">Email</p>
+            <p class="form__input-Label ">Email</p>
             <input id="username" type="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="form__control">
-            <p class="form__input-Label text-primary-color">Password</p>
+            <p class="form__input-Label ">Password</p>
             <input id="password" type="password" name="password" placeholder="Enter your password" required>
           </div>
           <div class="form__control btnOveride" id="submitRow">
@@ -47,7 +47,7 @@
             <a class="link-text" href="#">Forgot Your Password?</a>
           </div>
           <div class="form__control form__info">
-            <p class="text-primary-color">If you do not have an account you can <a class="link-text" href="SignupPage.html">Sign up!</a></p>
+            <p class="">If you do not have an account you can <a class="link-text" href="SignupPage.html">Sign up!</a></p>
           </div>
         </form>
       </div>

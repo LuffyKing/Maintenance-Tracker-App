@@ -18,8 +18,8 @@
     <nav id="navbar">
       <a class="default-primary-color text-primary-color Logo pacifico" href="/SigninPage.html">TrackerHero</a>
       <ul class="default-primary-color text-primary-color">
-        <li><a href="#">Profile<i class="fas fa-user"></i></a></li>
-        <li class="activeNav"><a href="/requests">My Requests<i class="far fa-eye"></i></a></li>
+        <li><a href="/profile">Profile<i class="fas fa-user"></i></a></li>
+        <li class="activeNav"><a onclick="routeToMyRequest()">My Requests<i class="far fa-eye"></i></a></li>
         <li><a onclick="logout()" href="/SigninPage.html">Logout<i class="fas fa-door-open"></i></a></li>
       </ul>
       <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
@@ -68,10 +68,9 @@
       <p id="alertMessage"></p>
       <span><i id="alertClose" class="fas fa-times"></i></span>
     </section>
-    <!--insertRequestRow(page=1, route='/api/v1/users/requests/', func="insertRequestRow", profile="User") -->
     <section id="requests" class="db-text">
       <div class="introduction">
-        <h2>TrackerHero Maintenance and Repair Requests</h2>
+        <h1 class="boldText">TrackerHero Maintenance and Repair Requests</h1>
       </div>
       <div class="filterRow">
         <p>Showing <span id='noOfRequestOnPage'>1 - 10</span> out of <span id='noOfRequestTotal'>100</span> Requests</p>

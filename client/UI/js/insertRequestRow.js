@@ -12,7 +12,8 @@ const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'i
       authorization: localStorage.token
     })
   })
-    .then(response => ({ jsonObj: response.json(), status: response.status })).then(({ jsonObj, status }) => {
+    .then(response => ({ jsonObj: response.json(), status: response.status }))
+    .then(({ jsonObj, status }) => {
       if (status !== 200) {
         jsonObj.then((result) => {
           alertAction('requestApproved', 'requestDisapproved', result.message);
@@ -23,7 +24,8 @@ const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'i
           document.getElementById('noOfRequestTotal').innerHTML = result.requests.length;
           if (page === 'next') {
             page = Number(document.getElementsByClassName('active')[0].text) + 1;
-            page = page <= Math.ceil(result.requests.length / 10) ? page : Math.ceil(result.requests.length / 10);
+            page = page <= Math.ceil(result.requests.length / 10) ? page :
+              Math.ceil(result.requests.length / 10);
           }
           pagination(Math.ceil(result.requests.length / 10), func, profile, route);
           let ans = [];
@@ -48,14 +50,14 @@ const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'i
                 <div class="request-Image-Container">
                   <img src="${request.image_url || '../media/images/noimage.png'}" alt="${request.title}">
                 </div>
-                <div class="infoColumn1">
-                  <p><b>Title:- </b> <span id="title">${request.title}</span></p>
-                  <p><b>Type:- </b><span id="type">${request.type}</span></p>
-                  <p><b>Status:- </b><span id="status">${request.status}</span></p>
-                  <p><b>RequestId:- </b><span id="requestid">${request.id}</span></p>
+                <div class="infoColumn1 centerInfo">
+                  <p><b class="boldText">Title:- </b> <span id="title">${request.title}</span></p>
+                  <p><b class="boldText">Type:- </b><span id="type">${request.type}</span></p>
+                  <p><b class="boldText">Status:- </b><span id="status">${request.status}</span></p>
+                  <p><b class="boldText">RequestId:- </b><span id="requestid">${request.id}</span></p>
                 </div>
                 <div class="infoColumn1 actionColumn">
-                  <a href="/requests/${request.id}" class="but">Find out more</a>
+                  <a href="/requests/${request.id}" class="but">Details...</a>
                   ${editButton}
                   ${deleteButton}
                 </div>
@@ -78,14 +80,14 @@ const insertRequestRow = (page = 1, route = '/api/v1/users/requests/', func = 'i
                 <div class="request-Image-Container">
                   <img src="${request.image_url || '../media/images/noimage.png'}" alt="${request.title}">
                 </div>
-                <div class="infoColumn1">
+                <div class="infoColumn1 centerInfo">
                   <p><b>Title:- </b> <span id="title">${request.title}</span></p>
                   <p><b>Type:- </b><span id="type">${request.type}</span></p>
                   <p><b>Status:- </b><span id="status">${request.status}</span></p>
                   <p><b>RequestId:- </b><span id="requestid">${request.id}</span></p>
                 </div>
                 <div class="infoColumn1 actionColumn">
-                  <a href="/requests/admin/${request.id}" class="but">Find out more</a>
+                  <a href="/requests/admin/${request.id}" class="but">Details...</a>
                   ${approveButton}
                   ${disapproveButton}
                   ${resolveButton}
