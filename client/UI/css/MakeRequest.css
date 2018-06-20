@@ -175,12 +175,12 @@ footer{
   }
   #alerts {
     font-size: 2rem;
-}
+  }
 
 }
 
 
-@media (max-width:960px) {
+@media (max-width:1023px) {
   .form__input-Label {
     width: 100%;
   }
@@ -198,7 +198,7 @@ footer{
  }
  #loginPanel2{
      padding: 2rem;
-      height: 75%;
+      height: auto;
  }
  .form__control{
    width: 100%;
