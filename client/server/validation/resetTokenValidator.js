@@ -22,7 +22,6 @@ const resetTokenChecker = (request, response, next) => {
             return response.status(500).send({ message: error1.stack });
           } else if (requestRow.rows.length === 1) {
             if (requestRow.rows[0].expirydate >= dateNew) {
-              console.log('kcanicsncsiansci')
               next();
             } else {
               return response.status(401).send({
