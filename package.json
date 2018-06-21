@@ -8,7 +8,7 @@
     "start": "npm run build && node build/server/server.js",
     "startDev": "npm run build && nodemon build/server/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "build-babel": "./node_modules/.bin/babel client -d build",
+    "build-babel": "./node_modules/.bin/babel client/server/ -d build/server",
     "build-babel-ui-js": "./node_modules/.bin/babel client/UI/js -d client/UI/js2",
     "clean-dist": "rm -rf build && mkdir build",
     "clean-ui": "rm -rf client/UI/js2 && mkdir client/UI/js2",
