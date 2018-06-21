@@ -208,7 +208,6 @@ const Users = {
     const newUser = {
       ...request.reqBody,
       password: bcrypt.hashSync(request.reqBody.password, 8),
-      profile: 'User',
     };
     pool.connect((error, client, done) => {
       if (error) {

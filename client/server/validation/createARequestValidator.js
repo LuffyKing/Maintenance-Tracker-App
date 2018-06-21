@@ -51,6 +51,10 @@ const specialValidation = {
     const typeValueRegex = /^Maintenance$|^Repair$/i;
     return typeValueRegex.test(typeValue.trim());
   },
+  profile: (profileValue) => {
+    const profileValueRegex = /^User$|^Admin$/;
+    return profileValueRegex.test(profileValue.trim());
+  },
   email: validator.isEmail
 };
 

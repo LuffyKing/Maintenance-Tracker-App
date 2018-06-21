@@ -13,6 +13,11 @@ select, input[type=file] {
    appearance: none;
 
 }
+
+#profile, #profile-label{
+  width: 87%;
+}
+
 select{
   background-image: url('../media/images/arrowdown.png');
   background-position: 93% 50%;

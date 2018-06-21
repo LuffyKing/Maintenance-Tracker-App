@@ -15,7 +15,8 @@ const signupSubmit = () => {
       lastName: form.elements.lastname.value,
       jobTitle: form.elements.jobTitle.value,
       department: form.elements.Department.value,
-      location: form.elements.location.value
+      location: form.elements.location.value,
+      profile: form.elements.profile.value
     })
   })
     .then(response => ({ jsonObj: response.json(), status: response.status }))
@@ -28,7 +29,11 @@ const signupSubmit = () => {
         jsonObj.then((result) => {
           localStorage.setItem('token', result.token);
           localStorage.setItem('profile', result.user.profile);
-          window.location.replace('../UserViewRequests.html');
+          if (result.user.profile === 'User') {
+            window.location.replace('../UserViewRequests.html');
+          } else {
+            window.location.replace('../requests');
+          }
         });
       }
     })
