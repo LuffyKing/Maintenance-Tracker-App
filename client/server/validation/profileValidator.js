@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { profile } from '../maps/mapObject';
+import { messageResponse } from '../helperFunctions/messageResponse';
 
 const profileCheck = (request, response, profileAllowed) => {
   const { decodedUser } = request;
@@ -9,7 +10,11 @@ const profileCheck = (request, response, profileAllowed) => {
   }
   const profInv = (_.invert(profile));
   if (profile[decodedUser.user.profile] !== profileAllowed) {
-    return response.status(401).send({ message: `You are not allowed to use this API because your profile is not ${profInv[profileAllowed]}` });
+    return messageResponse(
+      response,
+      401,
+      { message: `You are not allowed to use this API because your profile is not ${profInv[profileAllowed]}` }
+    );
   }
 };
 
@@ -21,12 +26,12 @@ const profileCheck = (request, response, profileAllowed) => {
 * @returns {object} - response object that has a status code of 401 may returned if the
 * profile is in valid
 */
-const isUser = (request, response, next) => {
+export const isUser = (request, response, next) => {
   const reply = profileCheck(request, response, 0);
   if (reply) {
     return reply;
   }
-  next();
+  return next();
 };
 /**
 * It checks for Admin profile
@@ -36,11 +41,10 @@ const isUser = (request, response, next) => {
 * @returns {object} - response object that has a status code of 401 may returned if the
 * profile is in valid
 */
-const isAdmin = (request, response, next) => {
+export const isAdmin = (request, response, next) => {
   const reply = profileCheck(request, response, 1);
   if (reply) {
     return reply;
   }
-  next();
+  return next();
 };
-export { isUser, isAdmin };

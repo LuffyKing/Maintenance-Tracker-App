@@ -1,3 +1,5 @@
+import { messageResponse } from '../helperFunctions/messageResponse';
+
 /**
 * It gets all the requests on the application
 * @param {object} request - request object containing params and body
@@ -6,12 +8,15 @@
 * @returns {object} - response object that has a status code of 400 may returned if the
 * requestid is in valid
 */
-const getARequestChecker = (request, response, next) => {
+const getARequestValidator = (request, response, next) => {
   if (!/[^a-zA-Z0-9]/.test(request.params.requestid) && /^[a-zA-Z0-9]{8}$/.test(request.params.requestid)) {
     request.params.requestid = request.params.requestid.trim();
-    next();
-  } else {
-    return response.status(404).send({ message: 'The id provided is invalid which means the request does not exist' });
+    return next();
   }
+  return messageResponse(
+    response,
+    404,
+    { message: 'The id provided is invalid which means the request does not exist' }
+  );
 };
-export { getARequestChecker };
+export default getARequestValidator;

@@ -1,6 +1,6 @@
 import { nonStringFieldHandler, emptyFieldsHandler, trimmer, getReqBody, invalidFieldHandler } from './createARequestValidator';
 
-const loginAUserChecker = (request, response, next) => {
+const loginAUSerValidator = (request, response, next) => {
   const reqBody = getReqBody(request, ['email', 'password']);
   // check if the fields are filled
   let reply;
@@ -20,6 +20,6 @@ const loginAUserChecker = (request, response, next) => {
     return reply;
   }
   trimmer(reqBody, request);
-  next();
+  return next();
 };
-export default loginAUserChecker;
+export default loginAUSerValidator;

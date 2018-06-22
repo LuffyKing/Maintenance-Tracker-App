@@ -1,48 +1,167 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import approved from '../validation/ApproveStatusValidator';
-import { createARequestChecker } from '../validation/createARequestValidator';
-import changePasswordChecker from '../validation/changePasswordValidator';
-import { duplicateRequest } from '../validation/duplicateRequestValidator';
-import { getARequestChecker } from '../validation/getARequestValidator';
+
+import Requests from '../controllers/Requests';
+import Users from '../controllers/Users';
+
+import ApproveStatusValidator from '../validation/ApproveStatusValidator';
+import { createARequestValidator } from '../validation/createARequestValidator';
+import changePasswordValidator from '../validation/changePasswordValidator';
+import duplicateRequestValidator from '../validation/duplicateRequestValidator';
+import getARequestValidator from '../validation/getARequestValidator';
 import { isAdmin, isUser } from '../validation/profileValidator';
-import { imageUrlChecker } from '../validation/imageUrlValidator';
-import isValidStatusQuery from '../validation/statusQueryValidator';
-import loginAUserChecker from '../validation/loginAUSerValidator';
+import imageUrlValidator from '../validation/imageUrlValidator';
+import statusQueryValidator from '../validation/statusQueryValidator';
+import loginAUSerValidator from '../validation/loginAUSerValidator';
 import modifyARequestChecker from '../validation/modifyARequestChecker';
-import maxLengthChecker from '../validation/maxLengthValidator';
-import reasonChecker from '../validation/reasonValidator';
-import rejected from '../validation/RejectStatusValidator';
-import resolved from '../validation/ResolveStatusValidator';
-import resetPasswordChecker from '../validation/resetPasswordValidator';
-import resetTokenChecker from '../validation/resetTokenValidator';
-import RequestsController from '../controllers/Requests';
-import signUpAUserChecker from '../validation/signUpAUserValidator';
+import maxLengthValidator from '../validation/maxLengthValidator';
+import { messageResponse } from '../helperFunctions/messageResponse';
+import reasonValidator from '../validation/reasonValidator';
+import RejectStatusValidator from '../validation/RejectStatusValidator';
+import ResolveStatusValidator from '../validation/ResolveStatusValidator';
+import resetPasswordValidator from '../validation/resetPasswordValidator';
+import resetTokenValidator from '../validation/resetTokenValidator';
+import signUpAUserValidator from '../validation/signUpAUserValidator';
 import swaggerDocument from '../swagger/swaggerDocument';
-import UsersController from '../controllers/Users';
-import verifyToken from '../authMiddleware/jwt';
+import { verifyToken } from '../authMiddleware/jwt';
 
 const router = express.Router();
-router.get('/', (request, response) => {
-  response.status(200).send({
-    message: 'Welcome to TrackerHero! Read the docs at /api-docs/ to get started'
-  });
-});
-router.post('/auth/signup', signUpAUserChecker, maxLengthChecker, UsersController.signUp);
-router.post('/auth/login', loginAUserChecker, maxLengthChecker, UsersController.login);
-router.post('/auth/forgotPassword', resetPasswordChecker, UsersController.forgotPassword);
-router.post('/auth/changePassword', changePasswordChecker, maxLengthChecker, resetTokenChecker, UsersController.changePassword);
-router.get('/auth/users', verifyToken, UsersController.getAUser);
-router.get('/users/requests', verifyToken, isUser, isValidStatusQuery, RequestsController.getAllRequests);
-router.put('/attachImage/:requestid', verifyToken, isUser, getARequestChecker, imageUrlChecker, RequestsController.insertImage);
-router.get('/users/requests/:requestid', verifyToken, getARequestChecker, RequestsController.getARequest);
-router.delete('/users/requests/:requestid', verifyToken, isUser, getARequestChecker, RequestsController.deleteARequest);
-router.post('/users/requests/', verifyToken, isUser, createARequestChecker, maxLengthChecker, duplicateRequest, RequestsController.createARequest);
-router.put('/users/requests/:requestid', verifyToken, isUser, getARequestChecker, modifyARequestChecker, maxLengthChecker, RequestsController.updateARequest);
-router.get('/requests', verifyToken, isAdmin, isValidStatusQuery, RequestsController.getAllRequestsAdmin);
-router.put('/requests/:requestid/approve', verifyToken, isAdmin, getARequestChecker, approved, reasonChecker, maxLengthChecker, RequestsController.updateARequestAdmin);
-router.put('/requests/:requestid/disapprove', verifyToken, isAdmin, getARequestChecker, rejected, reasonChecker, maxLengthChecker, RequestsController.updateARequestAdmin);
-router.put('/requests/:requestid/resolve', verifyToken, isAdmin, getARequestChecker, resolved, reasonChecker, maxLengthChecker, RequestsController.updateARequestAdmin);
-router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+router.get('/', (request, response) => messageResponse(response, 200, {
+  message: 'Welcome to TrackerHero! Read the docs at /api-docs/ to get started'
+}));
+
+router.post(
+  '/auth/signup',
+  signUpAUserValidator,
+  maxLengthValidator,
+  Users.signUp
+);
+
+router.post(
+  '/auth/login',
+  loginAUSerValidator,
+  maxLengthValidator,
+  Users.login
+);
+
+router.post(
+  '/auth/forgotPassword',
+  resetPasswordValidator,
+  Users.forgotPassword
+);
+
+router.post(
+  '/auth/changePassword',
+  changePasswordValidator,
+  maxLengthValidator,
+  resetTokenValidator,
+  Users.changePassword
+);
+
+router.get(
+  '/auth/users',
+  verifyToken,
+  Users.getAUser
+);
+
+router.get(
+  '/users/requests',
+  verifyToken,
+  isUser,
+  statusQueryValidator,
+  Requests.getAllRequests
+);
+
+router.put(
+  '/attachImage/:requestid',
+  verifyToken,
+  isUser,
+  getARequestValidator,
+  imageUrlValidator,
+  Requests.insertImage
+);
+
+router.get(
+  '/users/requests/:requestid',
+  verifyToken,
+  getARequestValidator,
+  Requests.getARequest
+);
+
+router.delete(
+  '/users/requests/:requestid',
+  verifyToken,
+  isUser,
+  getARequestValidator,
+  Requests.deleteARequest
+);
+
+router.post(
+  '/users/requests/',
+  verifyToken,
+  isUser,
+  createARequestValidator,
+  maxLengthValidator,
+  duplicateRequestValidator,
+  Requests.createARequest
+);
+
+router.put(
+  '/users/requests/:requestid',
+  verifyToken,
+  isUser,
+  getARequestValidator,
+  modifyARequestChecker,
+  maxLengthValidator,
+  Requests.updateARequest
+);
+
+router.get(
+  '/requests',
+  verifyToken,
+  isAdmin,
+  statusQueryValidator,
+  Requests.getAllRequestsAdmin
+);
+
+router.put(
+  '/requests/:requestid/approve',
+  verifyToken,
+  isAdmin,
+  getARequestValidator,
+  ApproveStatusValidator,
+  reasonValidator,
+  maxLengthValidator,
+  Requests.updateARequestAdmin
+);
+
+router.put(
+  '/requests/:requestid/disapprove',
+  verifyToken,
+  isAdmin,
+  getARequestValidator,
+  RejectStatusValidator,
+  reasonValidator,
+  maxLengthValidator,
+  Requests.updateARequestAdmin
+);
+
+router.put(
+  '/requests/:requestid/resolve',
+  verifyToken,
+  isAdmin,
+  getARequestValidator,
+  ResolveStatusValidator,
+  reasonValidator,
+  maxLengthValidator,
+  Requests.updateARequestAdmin
+);
+
+router.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument)
+);
 
 export default router;

@@ -1,6 +1,6 @@
 import { nonStringFieldHandler, emptyFieldsHandler, trimmer, getReqBody, invalidFieldHandler } from './createARequestValidator';
 
-const reasonChecker = (request, response, next) => {
+const reasonValidator = (request, response, next) => {
   const reqBody = getReqBody(request, ['reason']);
   // check if the fields are filled
   let reply;
@@ -21,6 +21,6 @@ const reasonChecker = (request, response, next) => {
   }
   trimmer(reqBody, request);
   request.failReason = `Your  ${request.attempt} was unsuccessful because`;
-  next();
+  return next();
 };
-export default reasonChecker;
+export default reasonValidator;

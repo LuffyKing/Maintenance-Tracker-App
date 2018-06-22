@@ -1,86 +1,71 @@
 import express from 'express';
 import path from 'path';
+
 import { verifyTokenUI } from '../authMiddleware/jwt';
 import { pool } from '../db';
+import { htmlFilePath } from '../helperFunctions/htmlFilePath';
+import { messageResponse } from '../helperFunctions/messageResponse';
 
 const UIRouter = express.Router();
 
-UIRouter.get('/', (request, response) => {
-  response.sendFile(path.resolve(__dirname, '../../../client/UI/html/LandingPage.html'));
-});
+const routeHandler = (route, file, htmlFilePathVar = htmlFilePath) =>
+  UIRouter.get(route, (request, response) =>
+    response.sendFile(path.resolve(__dirname, `${htmlFilePathVar}/${file}`)));
 
-UIRouter.get('/forgotPassword', (request, response) => {
-  response.sendFile(path.resolve(__dirname, '../../../client/UI/html/ForgotPasswordPage.html'));
-});
+const responseHandler = (response, file) => response.sendFile(path.resolve(__dirname, `${htmlFilePath}/${file}`));
 
-UIRouter.get('/SigninPage.html', (request, response) => {
-  response.sendFile(path.resolve(__dirname, '../../../client/UI/html/SigninPage.html'));
-});
+routeHandler('/', 'LandingPage.html');
 
-UIRouter.get('/UserViewRequests.html', (request, response) => {
-  response.sendFile(path.resolve(__dirname, '../../../client/UI/html/UserViewRequests.html'));
-});
+routeHandler('/forgotPassword', 'LandingPage.html');
 
-UIRouter.get('/SignupPage.html', (request, response) => {
-  response.sendFile(path.resolve(__dirname, '../../../client/UI/html/SignupPage.html'));
-});
+routeHandler('/UserViewRequests.html', 'UserViewRequests.html');
 
-UIRouter.get('/create/requests', (request, response) => {
-  response.sendFile(path.resolve(__dirname, '../../../client/UI/html/MakeRequest.html'));
-});
+routeHandler('/SigninPage.html', 'SigninPage.html');
 
-UIRouter.get('/requests/edit/:requestid', (request, response) => {
-  response.sendFile(path.resolve(__dirname, '../../../client/UI/html/EditRequest.html'));
-});
+routeHandler('/SignupPage.html', 'SignupPage.html');
 
-UIRouter.get('/requests/:requestid', (request, response) => {
-  response.sendFile(path.resolve(__dirname, '../../../client/UI/html/UserRequestDetailPage.html'));
-});
+routeHandler('/UserViewRequests.html', 'UserViewRequests.html');
 
-UIRouter.get('/requests/admin/:requestid', (request, response) => {
-  response.sendFile(path.resolve(__dirname, '../../../client/UI/html/AdminUserRequestDetailPage.html'));
-});
+routeHandler('/create/requests', 'MakeRequest.html');
 
-UIRouter.get('/requests', (request, response) => {
-  response.sendFile(path.resolve(__dirname, '../../../client/UI/html/AdminViewRequests.html'));
-});
+routeHandler('/requests/edit/:requestid', 'EditRequest.html');
 
-UIRouter.get('/profile', (request, response) => {
-  response.sendFile(path.resolve(__dirname, '../../../client/UI/html/UserProfilePage.html'));
-});
+routeHandler('/requests/:requestid', 'UserRequestDetailPage.html');
+
+routeHandler('/requests/admin/:requestid', 'AdminUserRequestDetailPage.html');
+
+routeHandler('/requests', 'AdminViewRequests.html');
+
+routeHandler('/profile', 'UserProfilePage.html');
 
 UIRouter.post('/verify', verifyTokenUI);
 
-UIRouter.get('/resetPassword', (request, response, next) => {
+UIRouter.get('/resetPassword', (request, response) => {
   pool.connect((error, client, done) => {
     if (error) {
-      return response.status(500).send({ message: error.stack });
+      return messageResponse(response, 500, { message: error.stack });
     }
     client.query('SELECT * FROM RESETPASSWORD where resetid=$1;', [
       request.query.token
     ], (error1, result) => {
       done();
       if (error1) {
-        return response.status(500).send({ message: error1.stack });
+        return messageResponse(response, 500, { message: error1.stack });
       }
       if (result.rows.length > 0) {
         const tokenResult = result.rows[0];
         const now = new Date();
         if (tokenResult.expirydate < now) {
-          return response.sendFile(path.resolve(__dirname, '../../../client/UI/html/resetPasswordExpired.html'));
-        } else {
-          return response.sendFile(path.resolve(__dirname, '../../../client/UI/html/resetPassword.html'));
+          return responseHandler(response, 'resetPasswordExpired.html');
         }
-      } else{
-      return response.sendFile(path.resolve(__dirname, '../../../client/UI/html/resetPasswordInvalidToken.html'));
-    }
+        return responseHandler(response, 'resetPassword.html');
+      }
+      return responseHandler(response, 'resetPasswordInvalidToken.html');
     });
   });
 });
 
-UIRouter.use((request, response) => {
-  response.sendFile(path.resolve(__dirname, '../../../client/UI/html/404.html'));
-});
+UIRouter.use((request, response) => responseHandler(response, '404.html'));
 
 
 export default UIRouter;

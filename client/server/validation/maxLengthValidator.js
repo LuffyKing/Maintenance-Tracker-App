@@ -1,14 +1,10 @@
 import { invalidFieldMessage } from './createARequestValidator';
 
 const maxFieldsChecker = (reqBody, maxLengthObj) => Object.keys(reqBody)
-  .filter(elm => {
-    return reqBody[elm].length > maxLengthObj[elm]
-  })
+  .filter(elm => reqBody[elm].length > maxLengthObj[elm])
   .map(key => `the input supplied for ${key.toUpperCase()} field is too large, the maximum allowed input is ${maxLengthObj[key]} characters.`);
 const minFieldsChecker = (reqBody, minLengthObj) => Object.keys(reqBody)
-  .filter(elm => {
-    return reqBody[elm].length < minLengthObj[elm]
-  })
+  .filter(elm => reqBody[elm].length < minLengthObj[elm])
   .map(key => `the input supplied for ${key.toUpperCase()} field is too small, the minimum allowed input is ${minLengthObj[key]} characters.`);
 const maxFieldHandler = (reqBody, response, failReason, maxLengthObj) => {
   const invalidFieldsArr = maxFieldsChecker(reqBody, maxLengthObj);
@@ -18,7 +14,7 @@ const minFieldHandler = (reqBody, response, failReason, maxLengthObj) => {
   const invalidFieldsArr = minFieldsChecker(reqBody, maxLengthObj);
   return invalidFieldMessage(invalidFieldsArr, response, 'The operation failed because');
 };
-const maxLengthChecker = (request, response, next) => {
+const maxLengthValidator = (request, response, next) => {
   const maxLengthObj = {
     firstName: 25,
     lastName: 25,
@@ -54,6 +50,6 @@ const maxLengthChecker = (request, response, next) => {
   if (reply) {
     return reply;
   }
-  next();
+  return next();
 };
-export default maxLengthChecker;
+export default maxLengthValidator;

@@ -6,9 +6,8 @@ import { statusChanger } from './DatabaseHelpers';
 * @param{object} next - middleware that calls the next middleware in the stack
 * @returns {string} - It sets the status to Rejected then calls next middleware
 */
-const resolved = (request, response, next) => statusChanger(
+const ResolveStatusValidator = (request, response, next) => statusChanger(
   request, response, next, `SELECT * From REQUESTS where id = '${request.params.requestid}' and status = 1;`,
   'Resolved', 'Resolution', 'There is no resolvable request on TrackerHero with that id'
 );
-
-export default resolved;
+export default ResolveStatusValidator;

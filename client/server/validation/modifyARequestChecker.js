@@ -1,4 +1,5 @@
 import { nonStringFieldHandler, trimmer, getReqBody, invalidFieldHandler } from './createARequestValidator';
+import { messageResponse } from '../helperFunctions/messageResponse';
 
 /**
 * It finds the fields that are not undefined or null
@@ -33,7 +34,7 @@ const modifyARequestChecker = (request, response, next) => {
   let reply;
   const filledFieldsObj = filledFieldsFinder(reqBody);
   if (Object.keys(filledFieldsObj).length === 0) {
-    return response.status(200).send({
+    return messageResponse(response, 200, {
       message: 'No update was made to the request'
     });
   }
@@ -50,6 +51,6 @@ const modifyARequestChecker = (request, response, next) => {
   }
   request.failReason = 'The request could not be created because';
   trimmer(filledFieldsObj, request);
-  next();
+  return next();
 };
 export default modifyARequestChecker;

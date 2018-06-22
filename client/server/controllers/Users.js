@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import bcrypt from 'bcrypt';
 import jsonwebtoken from 'jsonwebtoken';
+
 import { pool } from '../db';
 import { profile } from '../maps/mapObject';
 import { transporter, mailOptions } from '../nodemailer';
+import { messageResponse } from '../helperFunctions/messageResponse';
 /**
  * An  object that handles the requests api operation
  */
@@ -14,13 +16,16 @@ const Users = {
 * @returns {object} - a passowrdless user object
 */
   removePassword(user) {
-    return Object.keys(user).reduce((accumulator, current) => {
-      if (current !== 'password') {
-        accumulator[current] = user[current];
-        return accumulator;
-      }
-      return accumulator;
-    }, {});
+    return {
+      id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      job_title: user.job_title,
+      department: user.department,
+      profile: user.profile,
+      location: user.location
+    };
   },
   /**
 * @desc It retrieves the details of an authenticated user
@@ -33,7 +38,7 @@ const Users = {
     const { decodedUser } = request;
     pool.connect((error, client, done) => {
       if (error) {
-        response.status(500).send({ message: error.stack });
+        return messageResponse(response, 500, { message: error.stack });
       }
       client.query(`SELECT ID,
         FIRST_NAME,
@@ -46,17 +51,17 @@ const Users = {
         IMAGE_URL from USERS where id = $1`, [decodedUser.user.id], (error1, result) => {
         done();
         if (error1) {
-          return response.status(500).send({ message: error1.stack });
+          return messageResponse(response, 500, { message: error1.stack });
         }
         if (result.rows.length > 0) {
           const user = result.rows[0];
           user.profile = (_.invert(profile))[user.profile];
-          return response.status(200).send({
+          return messageResponse(response, 200, {
             message: 'User found',
             user
           });
         }
-        return response.status(404).send({
+        return messageResponse(response, 404, {
           message: 'User not found'
         });
       });
@@ -86,27 +91,34 @@ const Users = {
         LOCATION from USERS where EMAIL = $1`, [email], (error1, result) => {
         done();
         if (error1) {
-          return response.status(500).send({ message: error1.stack });
+          return messageResponse(response, 500, { message: error1.stack });
         }
         if (result.rows.length > 0) {
           const user = result.rows[0];
           const newUser = Users.removePassword(user);
-          const newUserToken = { id: newUser.id, profile: (_.invert(profile))[newUser.profile] };
+          const newUserToken = {
+            id: newUser.id,
+            profile: (_.invert(profile))[newUser.profile]
+          };
           newUser.profile = (_.invert(profile))[newUser.profile];
           if (bcrypt.compareSync(password, user.password) === true) {
-            const token = jsonwebtoken.sign({ user: newUserToken }, process.env.SECRET_KEY, { expiresIn: '7d' });
-            return response.status(200).send({
+            const token = jsonwebtoken.sign(
+              { user: newUserToken },
+              process.env.SECRET_KEY,
+              { expiresIn: '7d' }
+            );
+            return messageResponse(response, 200, {
               message: 'Login successful',
               token,
               user: newUser,
             });
           }
-          return response.status(401).send({
-            message: 'Invalid Username/Password',
+          return messageResponse(response, 401, {
+            message: 'Invalid Username/Password'
           });
         }
-        return response.status(401).send({
-          message: 'Invalid Username/Password',
+        return messageResponse(response, 401, {
+          message: 'Invalid Username/Password'
         });
       });
     });
@@ -124,14 +136,16 @@ const Users = {
     password = bcrypt.hashSync(password, 8);
     pool.connect((error, client, done) => {
       if (error) {
-        return response.status(500).send({ message: error.stack });
+        return messageResponse(response, 500, { message: error.stack });
       }
       client.query('UPDATE USERS set PASSWORD = $1 from RESETPASSWORD where users.id = RESETPASSWORD.userid and RESETPASSWORD.resetid = $2 RETURNING *;', [password, resetToken], (error1) => {
         done();
         if (error1) {
-          return response.status(500).send({ message: error1.stack });
+          return messageResponse(response, 500, { message: error1.stack });
         }
-        return response.status(200).send({ message: 'Your password was successfully changed' });
+        return messageResponse(response, 200, {
+          message: 'Your password was successfully changed'
+        });
       });
     });
   },
@@ -146,7 +160,7 @@ const Users = {
     const { email } = request.reqBody;
     pool.connect((error, client, done) => {
       if (error) {
-        return response.status(500).send({ message: error.stack });
+        return messageResponse(response, 500, { message: error.stack });
       }
       client.query(`SELECT ID,
         FIRST_NAME,
@@ -154,7 +168,7 @@ const Users = {
         EMAIL from USERS where EMAIL = $1;`, [email], (error1, result) => {
         done();
         if (error1) {
-          return response.status(500).send({ message: error1.stack });
+          return messageResponse(response, 500, { message: error1.stack });
         }
         if (result.rows.length > 0) {
           const user = result.rows[0];
@@ -167,7 +181,7 @@ const Users = {
           ], (error2, resultToken) => {
             done();
             if (error2) {
-              return response.status(500).send({ message: error2.stack });
+              return messageResponse(response, 500, { message: error2.stack });
             }
             const tokenReset = resultToken.rows[0].resetid.trim();
             mailOptions.to = `${user.email}`;
@@ -180,20 +194,19 @@ const Users = {
             `;
             transporter.sendMail(mailOptions, (errorSendMail, info) => {
               if (error) {
-                return response.status(500).send({ message: errorSendMail });
+                return messageResponse(response, 500, { message: errorSendMail });
               }
-              return response.status(200).send({
+              return messageResponse(response, 200, {
                 message: 'Reset password email sent',
                 info: info.response,
                 tokenReset
               });
             });
           });
-        } else {
-          return response.status(404).send({
-            message: 'No account with that email exists',
-          });
         }
+        messageResponse(response, 404, {
+          message: 'No account with that email exists'
+        });
       });
     });
   },
@@ -211,9 +224,11 @@ const Users = {
     };
     pool.connect((error, client, done) => {
       if (error) {
-        return response.status(500).send({ message: error.stack });
+        return messageResponse(response, 500, { message: error.stack });
       }
-      client.query(`INSERT INTO USERS(FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,DEPARTMENT,PROFILE,LOCATION)
+      client.query(`INSERT INTO
+        USERS(FIRST_NAME,LAST_NAME,EMAIL,PASSWORD,JOB_TITLE,
+          DEPARTMENT,PROFILE,LOCATION)
         VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *;`, [
         newUser.firstName,
         newUser.lastName,
@@ -226,13 +241,16 @@ const Users = {
       ], (error1, result) => {
         done();
         if (error1) {
-          return response.status(500).send({ message: error1.stack });
+          return messageResponse(response, 500, { message: error1.stack });
         }
         let resObj = result.rows[0];
         resObj = Users.removePassword(resObj);
         resObj.profile = (_.invert(profile))[resObj.profile];
-        const token = jsonwebtoken.sign({ user: { id: resObj.id, profile: resObj.profile } }, process.env.SECRET_KEY, { expiresIn: '7d' });
-        return response.status(201).send({
+        const token = jsonwebtoken.sign(
+          { user: { id: resObj.id, profile: resObj.profile } },
+          process.env.SECRET_KEY, { expiresIn: '7d' }
+        );
+        return messageResponse(response, 201, {
           message: 'Signup successful',
           token,
           user: resObj

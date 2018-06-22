@@ -1,4 +1,5 @@
 import { pool } from '../db';
+import { messageResponse } from '../helperFunctions/messageResponse';
 /**
 * It checks requests for reset tokens
 * @param {object} request - request object containing params and body
@@ -7,39 +8,65 @@ import { pool } from '../db';
 * @returns {object} - response object that has a status code of 400 may returned if the
 * requestid is in valid
 */
-const resetTokenChecker = (request, response, next) => {
+const resetTokenValidator = (request, response, next) => {
   if (typeof request.query.resetToken !== 'undefined') {
     if (!/[^a-zA-Z0-9]/.test(request.query.resetToken) && /^[a-zA-Z0-9]{10}$/.test(request.query.resetToken)) {
       request.query.resetToken = request.query.resetToken.trim();
       const dateNew = new Date();
       pool.connect((error, client, done) => {
         if (error) {
-          response.status(500).send({ message: error.stack });
+          return messageResponse(
+            response,
+            500,
+            { message: error.stack }
+          );
         }
         client.query('SELECT * FROM RESETPASSWORD where resetid = $1;', [request.query.resetToken], (error1, requestRow) => {
           done();
           if (error1) {
-            return response.status(500).send({ message: error1.stack });
+            return messageResponse(
+              response,
+              500,
+              {
+                message: error1.stack
+              }
+            );
           } else if (requestRow.rows.length === 1) {
             if (requestRow.rows[0].expirydate >= dateNew) {
-              next();
-            } else {
-              return response.status(401).send({
-                message: 'Token has expired'
-              });
+              return next();
             }
-          } else {
-            return response.status(401).send({
-              message: 'The token provided is invalid'
-            });
+            return messageResponse(
+              response,
+              401,
+              {
+                message: 'Token has expired'
+              }
+            );
           }
+          return messageResponse(
+            response,
+            401,
+            {
+              message: 'Token is invalid'
+            }
+          );
         });
       });
-    } else {
-      return response.status(401).send({ message: 'The token provided is invalid' });
     }
-  } else {
-    return response.status(401).send({ message: 'Missing reset token' });
+    return messageResponse(
+      response,
+      401,
+      {
+        message: 'Token is invalid'
+      }
+    );
   }
+  return messageResponse(
+    response,
+    401,
+    {
+      message: 'Missing reset token'
+    }
+  );
 };
-export default resetTokenChecker;
+export default resetTokenValidator;
