@@ -1,42 +1,35 @@
 import jwt from 'jsonwebtoken';
+import { messageResponse } from '../helperFunctions/messageResponse';
 
-const verifyToken = (request, response, next) => {
+export const verifyToken = (request, response, next) => {
   const bearerHeader = request.headers.authorization;
   const hasBearerHeader = typeof bearerHeader === 'string';
   if (hasBearerHeader && bearerHeader) {
     const bearerToken = bearerHeader;
-    jwt.verify(bearerToken, process.env.SECRET_KEY, (error, user) => {
+    return jwt.verify(bearerToken, process.env.SECRET_KEY, (error, user) => {
       if (error) {
-        return response.status(401).send({ message: 'Login Token invalid', error });
-      } else {
+        return messageResponse(response, 401, { message: 'Login Token invalid', error });
+      }
       request.decodedUser = user;
-      next();
-    }
-    });
-  } else {
-    return response.status(401).send({
-      message: 'Missing authentication token'
+      return next();
     });
   }
+  return messageResponse(response, 401, {
+    message: 'Missing authentication token'
+  });
 };
 
-const verifyTokenUI = (request, response) => {
+export const verifyTokenUI = (request, response) => {
   const bearerHeader = request.headers.authorization;
   const hasBearerHeader = typeof bearerHeader === 'string';
   if (hasBearerHeader && bearerHeader) {
     const bearerToken = bearerHeader;
-    jwt.verify(bearerToken, process.env.SECRET_KEY, (error) => {
+    return jwt.verify(bearerToken, process.env.SECRET_KEY, (error) => {
       if (error) {
-        return response.status(401).send();
-      } else {
-      return response.status(200).send({
-        profile: jwt.decode(bearerHeader).user.profile
-      });
-    }
+        return messageResponse(response, 401, { message: '' });
+      }
+      return messageResponse(response, 200, { profile: jwt.decode(bearerHeader).user.profile });
     });
-  } else {
-    return response.status(401).send();
   }
+  return messageResponse(response, 401, { message: '' });
 };
-
-export { verifyToken as default, verifyTokenUI };

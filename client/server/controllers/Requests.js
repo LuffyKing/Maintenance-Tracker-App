@@ -15,9 +15,12 @@ const Requests = {
 */
   getAllRequests: (request, response) => {
     const { decodedUser } = request;
-    const query = request.hasQuery ? `SELECT * FROM REQUESTS where STATUS='${request.query.mappedStatus}' and userid = '${decodedUser.user.id}'` :
+    const query = request.hasQuery ? `SELECT * FROM
+    REQUESTS where STATUS='${request.query.mappedStatus}' and
+    userid = '${decodedUser.user.id}'` :
       `SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}';`;
-    const notFoundMessage = request.hasQuery ? `You do not have any requests with the status = ${request.query.status}` :
+    const notFoundMessage = request.hasQuery ?
+      `You do not have any requests with the status = ${request.query.status}` :
       'You do not have any requests on TrackerHero, but it is not too late to start making them!';
     RequestsDatabaseHelper(
       request, response, query,
@@ -33,7 +36,9 @@ const Requests = {
 * of all the requests
 */
   getAllRequestsAdmin: (request, response) => {
-    const query = request.hasQuery ? `SELECT * FROM REQUESTS where STATUS=${request.query.mappedStatus}` : 'SELECT * FROM REQUESTS;';
+    const query = request.hasQuery ? `SELECT * FROM
+    REQUESTS where STATUS=${request.query.mappedStatus}` :
+      'SELECT * FROM REQUESTS;';
     RequestsDatabaseHelper(
       request, response, query,
       'There are no requests on TrackerHero, check back later!',
@@ -52,13 +57,18 @@ const Requests = {
     const { decodedUser, params } = request;
     if (decodedUser.user.profile === 'User') {
       RequestsDatabaseHelper(
-        request, response, `SELECT * FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}';`,
+        request, response, `SELECT * FROM REQUESTS
+        where userid = '${decodedUser.user.id}' and
+        id = '${params.requestid}';`,
         'You do not have any request on TrackerHero with that id',
         'get single request'
       );
     } else if (decodedUser.user.profile === 'Admin') {
       RequestsDatabaseHelper(
-        request, response, `select requests.*, users.first_name, users.last_name from requests inner join users on requests.userid = users.id where requests.id = '${params.requestid}';`,
+        request, response, `select requests.*,
+        users.first_name,
+        users.last_name from requests inner join users on
+        requests.userid = users.id where requests.id = '${params.requestid}';`,
         'There is not a request on TrackerHero with that id',
         'get single request'
       );
@@ -75,7 +85,9 @@ const Requests = {
   deleteARequest: (request, response) => {
     const { decodedUser, params } = request;
     RequestsDatabaseHelper(
-      request, response, `DELETE FROM REQUESTS where userid = '${decodedUser.user.id}' and id = '${params.requestid}' and status = 0 RETURNING *;`,
+      request, response, `DELETE FROM REQUESTS
+      where userid = '${decodedUser.user.id}'
+      and id = '${params.requestid}' and status = 0 RETURNING *;`,
       'You do not have any deleteable request on TrackerHero with that id',
       'delete single request'
     );
@@ -88,30 +100,28 @@ const Requests = {
 * a repair or maintenance request
 */
   createARequest: (request, response) => {
-    const {
-      title,
-      description,
-      location,
-      type,
-      imageUrl
-    } = request.reqBody;
     const { decodedUser } = request;
     const newUserValue = [
-      title,
-      description,
+      request.reqBody.title,
+      request.reqBody.description,
       reqstatus['Not Approved/Rejected'],
-      reqtype[type],
+      reqtype[request.reqBody.type],
       new Date(),
       new Date(),
-      location,
+      request.reqBody.location,
       decodedUser.user.id,
-      imageUrl
+      request.reqBody.imageUrl
     ];
     RequestsDatabaseHelper(
       request, response,
-      `INSERT INTO REQUESTS(${requestsColumns}, image_url) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *;`,
-      'Request creation failure', 'create a request', newUserValue, 'Your request was successfully created.',
-      201, 400
+      `INSERT INTO REQUESTS(${requestsColumns}, image_url)
+      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *;`,
+      'Request creation failure',
+      'create a request',
+      newUserValue,
+      'Your request was successfully created.',
+      201,
+      400
     );
   },
   /**
@@ -123,9 +133,6 @@ const Requests = {
 * the id provided in the request params id does not match an existing request
 */
   updateARequest: (request, response) => {
-    const {
-      requestid
-    } = request.params;
     const { reqBody, decodedUser } = request;
     const updateStatement = Object.keys(request.reqBody).map((key) => {
       if (key === 'type') {
@@ -134,7 +141,9 @@ const Requests = {
       return `${key} = $$${reqBody[key]}$$`;
     }).join(',');
     RequestsDatabaseHelper(
-      request, response, `UPDATE REQUESTS SET last_edited = $1,${updateStatement} where userid = '${decodedUser.user.id}' and status = 0 and id = '${requestid}' RETURNING *;`,
+      request, response, `UPDATE REQUESTS SET last_edited = $1,
+      ${updateStatement} where userid = '${decodedUser.user.id}' and
+      status = 0 and id = '${request.params.requestid}' RETURNING *;`,
       'You do not have any editable request on TrackerHero with that id',
       'update a request', [new Date()], 'Your request has been updated.'
     );
@@ -154,13 +163,24 @@ const Requests = {
     const { reqBody, status } = request;
     let query, values;
     if (status === 'Resolved') {
-      query = `UPDATE REQUESTS SET date_resolved = $1,last_edited = $2,status = $3,reason = $4  where id = '${requestid}' RETURNING *;`;
+      query = `UPDATE REQUESTS SET
+      date_resolved = $1, last_edited = $2, status = $3, reason = $4
+      where id = '${requestid}' RETURNING *;`;
       values = [new Date(), new Date(), reqstatus[status], reqBody.reason];
     } else {
-      query = `UPDATE REQUESTS SET last_edited = $1,status = $2,reason = $3  where id = '${requestid}' RETURNING *;`;
+      query = `UPDATE REQUESTS SET last_edited = $1, status = $2, reason = $3
+      where id = '${requestid}' RETURNING *;`;
       values = [new Date(), reqstatus[status], reqBody.reason];
     }
-    RequestsDatabaseHelper(request, response, query, 'Request not found', 'update a request', values, 'The request has been updated.');
+    RequestsDatabaseHelper(
+      request,
+      response,
+      query,
+      'Request not found',
+      'update a request',
+      values,
+      'The request has been updated.'
+    );
   },
   /**
 * @desc It inserts an image url into the request table
@@ -174,9 +194,18 @@ const Requests = {
     const {
       requestid
     } = request.params;
-    const query = `UPDATE REQUESTS SET image_url = $1 where id = '${requestid}' and status = 0 RETURNING *;`;
+    const query = `UPDATE REQUESTS SET
+    image_url = $1 where id = '${requestid}' and status = 0 RETURNING *;`;
     const values = [request.body.imageUrl];
-    RequestsDatabaseHelper(request, response, query, 'Request not found', 'update a request', values, 'The request has been updated.');
+    RequestsDatabaseHelper(
+      request,
+      response,
+      query,
+      'Request not found',
+      'update a request',
+      values,
+      'The request has been updated.'
+    );
   }
 };
 export default Requests;

@@ -1,32 +1,42 @@
 import _ from 'lodash';
 import { pool } from '../db';
 import { reqtype, reqstatus } from '../maps/mapObject';
-import signedUpload from '../validation/signatureGenerator';
+import { messageResponse } from '../helperFunctions/messageResponse';
+import signatureGenerator from '../validation/signatureGenerator';
 
-const statusChanger = (request, response, next, query, status, attempt, message404) => {
+export const statusChanger = (request, response, next, query, status, attempt, message404) => {
   pool.connect((error, client, done) => {
     if (error) {
-      response.status(500).send({ message: error.stack });
+      return messageResponse(
+        response,
+        500,
+        { message: error.stack }
+      );
     }
     client.query(query, (error1, requestRow) => {
       done();
       if (error1) {
-        return response.status(500).send({ message: error1.stack });
+        return messageResponse(
+          response,
+          500,
+          { message: error1.stack }
+        );
       }
       if (requestRow.rows.length > 0) {
         request.status = status;
         request.attempt = attempt;
-        next();
-      } else {
-        return response.status(404).send({
-          message: message404,
-        });
+        return next();
       }
+      return messageResponse(
+        response,
+        404,
+        { message: message404 }
+      );
     });
   });
 };
 
-const mapper = (requestRow) => {
+export const mapper = (requestRow) => {
   requestRow.rows.forEach((requestInd) => {
     requestInd.status = (_.invert(reqstatus))[requestInd.status];
     requestInd.type = (_.invert(reqtype))[requestInd.type];
@@ -34,15 +44,23 @@ const mapper = (requestRow) => {
   });
 };
 
-const RequestsDatabaseHelper = (request, response, query, messageErrCode, operation, value = [], messageSuccCode = '', successCode = 200, errorCode = 404) => {
+export const RequestsDatabaseHelper = (request, response, query, messageErrCode, operation, value = [], messageSuccCode = '', successCode = 200, errorCode = 404) => {
   pool.connect((error, client, done) => {
     if (error) {
-      response.status(500).send({ message: error.stack });
+      return messageResponse(
+        response,
+        500,
+        { message: error.stack }
+      );
     }
     client.query(query, value, (error1, requestRow) => {
       done();
       if (error1) {
-        return response.status(500).send({ message: error1.stack });
+        return messageResponse(
+          response,
+          500,
+          { message: error1.stack }
+        );
       }
       if (requestRow.rows.length) {
         let pluralOrSingularRequest;
@@ -73,28 +91,36 @@ const RequestsDatabaseHelper = (request, response, query, messageErrCode, operat
             requestRow.rows[0].image_url.match(publicIdRegex)[1] :
             false;
           const timestamp = Math.round((new Date()).getTime() / 1000);
-          return response.status(successCode).send({
-            message: messageSuccCode,
-            updatedRequest: requestRow.rows[0],
-            cloudinary: {
-              publicId,
-              signature: signedUpload(publicId, timestamp, process.env.APISECRET),
-              timestamp,
-              apiKey: process.env.APIKEY,
-              cloudinaryUrl: process.env.CLOUDINARY_URL,
-              cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
+          return messageResponse(
+            response,
+            successCode,
+            {
+              message: messageSuccCode,
+              updatedRequest: requestRow.rows[0],
+              cloudinary: {
+                publicId,
+                signature: signatureGenerator(publicId, timestamp, process.env.APISECRET),
+                timestamp,
+                apiKey: process.env.APIKEY,
+                cloudinaryUrl: process.env.CLOUDINARY_URL,
+                cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
+              }
             }
-          });
+          );
         } else if (operation === 'create a request') {
           mapper(requestRow);
-          return response.status(successCode).send({
-            message: messageSuccCode,
-            request: requestRow.rows[0],
-            cloudinary: {
-              cloudinaryUrl: process.env.CLOUDINARY_URL,
-              cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET
+          return messageResponse(
+            response,
+            successCode,
+            {
+              message: messageSuccCode,
+              request: requestRow.rows[0],
+              cloudinary: {
+                cloudinaryUrl: process.env.CLOUDINARY_URL,
+                cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET
+              }
             }
-          });
+          );
         } else if (operation === 'delete single request') {
           const publicIdRegex = /\b\/(\w+)\.\w+/;
           const publicId = requestRow.rows[0].image_url ?
@@ -102,26 +128,29 @@ const RequestsDatabaseHelper = (request, response, query, messageErrCode, operat
             false;
           const timestamp = Math.round((new Date()).getTime() / 1000);
           mapper(requestRow);
-          return response.status(successCode).send({
-            message: 'The following request has been deleted',
-            request: requestRow.rows[0],
-            cloudinary: {
-              cloudinaryUrl: process.env.CLOUDINARY_URL,
-              cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
-              publicId,
-              signature: signedUpload(publicId, timestamp, process.env.APISECRET),
-              timestamp,
-              apiKey: process.env.APIKEY
+          return messageResponse(
+            response,
+            successCode,
+            {
+              message: 'The following request has been deleted',
+              request: requestRow.rows[0],
+              cloudinary: {
+                cloudinaryUrl: process.env.CLOUDINARY_URL,
+                cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
+                publicId,
+                signature: signatureGenerator(publicId, timestamp, process.env.APISECRET),
+                timestamp,
+                apiKey: process.env.APIKEY
+              }
             }
-
-          });
+          );
         }
       }
-      return response.status(errorCode).send({
-        message: messageErrCode
-      });
+      return messageResponse(
+        response,
+        errorCode,
+        { message: messageErrCode }
+      );
     });
   });
 };
-
-export { statusChanger, RequestsDatabaseHelper };

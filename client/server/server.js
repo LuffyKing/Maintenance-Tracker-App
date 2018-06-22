@@ -35,9 +35,9 @@ app.use('/', UIRouter);
 
 app.use('/api/v1/*', badApiRequest);
 
-app.use((error, req, res, next) => {
+app.use((error, request, response, next) => {
   if (error instanceof URIError) {
-    return res.redirect('/badApiRequest');
+    return response.redirect('/badApiRequest');
   }
 });
 

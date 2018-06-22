@@ -1,4 +1,7 @@
 import validator from 'validator';
+
+import { messageResponse } from '../helperFunctions/messageResponse';
+
 /**
 * Checks if image url is url
 * @param {object} request - request object containing params and body
@@ -7,11 +10,14 @@ import validator from 'validator';
 * @returns {object} - response object that has a status code of 400 may returned if the
 * image url is invalid
 */
-const imageUrlChecker = (request, response, next) => {
+const imageUrlValidator = (request, response, next) => {
   if (validator.isURL(request.body.imageUrl)) {
-    next();
-  } else {
-    return response.status(404).send({ message: 'The image url provided is invalid which means the image does not exist' });
+    return next();
   }
+  return messageResponse(
+    response,
+    404,
+    { message: 'The image url provided is invalid which means the image does not exist' }
+  );
 };
-export { imageUrlChecker };
+export default imageUrlValidator;

@@ -1,6 +1,6 @@
 import { nonStringFieldHandler, emptyFieldsHandler, trimmer, getReqBody, invalidFieldHandler } from './createARequestValidator';
 
-const changePasswordChecker = (request, response, next) => {
+export const changePasswordValidator = (request, response, next) => {
   const reqBody = getReqBody(request, ['password']);
   // check if the fields are filled
   let reply;
@@ -20,6 +20,6 @@ const changePasswordChecker = (request, response, next) => {
     return reply;
   }
   trimmer(reqBody, request);
-  next();
+  return next();
 };
-export default changePasswordChecker;
+export default changePasswordValidator;

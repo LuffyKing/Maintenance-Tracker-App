@@ -1,7 +1,8 @@
 import { nonStringFieldHandler, emptyFieldsHandler, trimmer, getReqBody, invalidFieldHandler } from './createARequestValidator';
 import { pool } from '../db';
+import { messageResponse } from '../helperFunctions/messageResponse';
 
-const signUpAUserChecker = (request, response, next) => {
+const signUpAUserValidator = (request, response, next) => {
   const reqBody = getReqBody(request, [
     'firstName',
     'lastName',
@@ -33,7 +34,19 @@ const signUpAUserChecker = (request, response, next) => {
         trimmer(reqBody, request);
         request.failReason = 'Your sign up attempt was unsuccessful because';
         next();
-      }).catch(error => response.status(422).send({ message: error.message }))
-      .catch(error => response.status(500).send({ error })));
+      }).catch(error => messageResponse(
+        response,
+        422,
+        {
+          message: error.message
+        }
+      ))
+      .catch(error => messageResponse(
+        response,
+        500,
+        {
+          error
+        }
+      )));
 };
-export default signUpAUserChecker;
+export default signUpAUserValidator;
