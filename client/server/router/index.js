@@ -8,6 +8,7 @@ import ApproveStatusValidator from '../validation/ApproveStatusValidator';
 import { createARequestValidator } from '../validation/createARequestValidator';
 import changePasswordValidator from '../validation/changePasswordValidator';
 import duplicateRequestValidator from '../validation/duplicateRequestValidator';
+import editAUserValidator from '../validation/editAUserValidator';
 import getARequestValidator from '../validation/getARequestValidator';
 import { isAdmin, isUser } from '../validation/profileValidator';
 import imageUrlValidator from '../validation/imageUrlValidator';
@@ -156,6 +157,21 @@ router.put(
   reasonValidator,
   maxLengthValidator,
   Requests.updateARequestAdmin
+);
+
+router.put(
+  '/users/edit/',
+  verifyToken,
+  editAUserValidator,
+  maxLengthValidator,
+  Users.editAUser
+);
+
+router.put(
+  '/attachImageUser/',
+  verifyToken,
+  imageUrlValidator,
+  Users.insertImage
 );
 
 router.use(

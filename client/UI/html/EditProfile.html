@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit A Request</title>
+  <script type="text/javascript" src="/js2/tokenPostBoth.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/LandingPage.css">
+  <link rel="stylesheet" href="/css/signin.css">
+  <link rel="stylesheet" href="/css/signup.css">
+  <link rel="stylesheet" href="/css/MakeRequest.css">
+  <link rel="stylesheet" href="/css/EditRequest.css">
+</head>
+<body class="request displayNone"  onload="getEditDetails()">
+  <header>
+    <nav id="navbar">
+      <a class="default-primary-color text-primary-color Logo pacifico" href="/SigninPage.html">TrackerHero</a>
+      <ul class="default-primary-color text-primary-color">
+        <li><a href="/profile">Profile<i class="fas fa-user"></i></a></li>
+        <li><a onclick="routeToMyRequest()">My Requests<i class="far fa-eye"></i></a></li>
+        <li><a onclick="logout()" href="/SigninPage.html">Logout<i class="fas fa-door-open"></i></a></li>
+      </ul>
+      <a href="javascript:void(0);" id="hamburger" class="hamburger default-primary-color text-primary-color"><i class="fas fa-bars"></i></a>
+    </nav>
+  </header>
+  <main class="displayNone">
+    <section id="alerts" class="displayNone">
+      <p id="alertMessage"></p>
+      <span><i id="alertClose" class="fas fa-times"></i></span>
+    </section>
+    <section class="center-container">
+      <div  id="loginPanel2">
+        <div class="form__control">
+          <h3 class="sub-logo ubuntu">Submit the form to edit a maintenance or repair request!</h3>
+        </div>
+        <form id="editProfileForm" name="editProfileForm" action="javascript: editProfileSubmit();">
+          <div class="form__control">
+            <div class="form__control margin-right requestForm-mod">
+              <p class="form__input-Label text-primary-color">First name: </p>
+              <input id="firstName" type="text" name="firstName" value="Oyindamola" required>
+            </div>
+            <div class="form__control requestForm-mod">
+              <p class="form__input-Label text-primary-color">Last name: </p>
+              <input id="lastName" type="text" name="lastName" value="Aderinwale" required>
+            </div>
+          </div>
+          <div class="form__control">
+            <div class="form__control margin-right requestForm-mod">
+              <p class="form__input-Label text-primary-color">Email: </p>
+              <input id="email" type="email" name="email" value="ade@gmail.com" required>
+            </div>
+            <div class="form__control requestForm-mod">
+              <p class="form__input-Label text-primary-color">Job Title: </p>
+              <input id="jobTitle" type="text" name="jobTitle" value="A job" required>
+            </div>
+          </div>
+          <div class="form__control">
+            <div class="form__control margin-right requestForm-mod">
+              <p class="form__input-Label text-primary-color">Department: </p>
+              <input id="department" type="text" name="department" value="Brogramming" required>
+            </div>
+            <div class="form__control requestForm-mod">
+              <p class="form__input-Label text-primary-color">Location: </p>
+              <input id="userLocation" type="text" name="userLocation" value="Room 424 Cavanaugh Building" required>
+            </div>
+          </div>
+          <div class="form__control requestForm-mod">
+            <p class="form__input-Label">Profile Picture:</p>
+            <input id="imageOfUser" class="imageUpload" type="file" accept="image/*" name="imageOfUser">
+          </div>
+          <div class="form__control btnOveride" id="submitRow">
+            <button type="submit" name="button" class="form__button btn-white form__submit-button">Update</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer id="footer">
+    <ul class="default-primary-color text-primary-color">
+      <li><p>&copy; InVective Tech.</p></li>
+      <li><a href="#">Contact Us</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Help</a></li>
+    </ul>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha1/0.6.0/sha1.js"></script>
+  <script type="text/javascript" src="/js2/hamburgerDropdown.js"></script>
+  <script type="text/javascript" src="/js2/domUtilities.js"></script>
+  <script type="text/javascript" src="/js2/alertEvent.js"></script>
+  <script type="text/javascript" src="/js2/editProfile.js"></script>
+</body>
+</html>

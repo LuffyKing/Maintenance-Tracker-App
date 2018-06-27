@@ -1,6 +1,6 @@
 const getEditDetails = () => {
-  const form =  document.getElementById('editRequestForm');
-  fetch(`/api/v1/users/requests/${window.location.pathname.split('/')[3]}`, {
+  const form =  document.getElementById('editProfileForm');
+  fetch('/api/v1/auth/users/', {
     method: 'GET',
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -21,49 +21,39 @@ const getEditDetails = () => {
           center.appendChild(errorHeader);
           center.appendChild(divElement);
           main.appendChild(center);
-          main.classList.remove('displayNone')
-        })
+          main.classList.remove('displayNone');
+        });
       } else {
         jsonObj.then((result) => {
-          if (result.request.status !== 'Not Approved/Rejected') {
-            const center = document.createElement('center');
-            const divElement = document.createElement('h1');
-            const errorHeader = document.createElement('h1');
-            errorHeader.id = 'statusCodeMessage';
-            errorHeader.innerHTML = 'You do not have an editable request with that id ';
-            main.innerHTML = '';
-            divElement.innerHTML = `${result.message}`;
-            center.appendChild(errorHeader);
-            center.appendChild(divElement);
-            main.appendChild(center);
-            main.classList.remove('displayNone');
-          } else {
-            form.elements.title.value = result.request.title;
-            form.elements.type.value = result.request.type;
-            form.elements.requestLocation.value = result.request.location;
-            form.elements.description.value = result.request.description;
-            main.classList.remove('displayNone');
-          }
+          form.elements.firstName.value = result.user.first_name;
+          form.elements.lastName.value = result.user.last_name;
+          form.elements.email.value = result.user.email;
+          form.elements.jobTitle.value = result.user.job_title;
+          form.elements.userLocation.value = result.user.location;
+          form.elements.department.value = result.user.department;
+          main.classList.remove('displayNone');
         });
       }
     });
 };
 
-const editRequestSubmit = () => {
-  const form =  document.getElementById('editRequestForm');
-  const image = form.elements.imageOfRequest.files.length > 0 ?
-    form.elements.imageOfRequest.files[0] : undefined;
-  fetch(`/api/v1/users/requests/${window.location.pathname.split('/')[3]}`, {
+const editProfileSubmit = () => {
+  const form =  document.getElementById('editProfileForm');
+  const image = form.elements.imageOfUser.files.length > 0 ?
+    form.elements.imageOfUser.files[0] : undefined;
+  fetch('/api/v1/users/edit/', {
     method: 'PUT',
     headers: new Headers({
       'Content-Type': 'application/json',
       authorization: localStorage.token
     }),
     body: JSON.stringify({
-      title: form.elements.title.value,
-      type: form.elements.type.value,
-      location: form.elements.requestLocation.value,
-      description: form.elements.description.value
+      email: form.elements.email.value,
+      jobTitle: form.elements.jobTitle.value,
+      location: form.elements.userLocation.value,
+      department: form.elements.department.value,
+      firstName: form.elements.firstName.value,
+      lastName: form.elements.lastName.value
     })
   })
     .then(response => ({ jsonObj: response.json(), status: response.status }))
@@ -75,18 +65,18 @@ const editRequestSubmit = () => {
       } else {
         if (typeof image === 'undefined') {
           jsonObj.then((result) => {
-            window.location.replace(`${window.location.origin}/requests/${result.updatedRequest.id}`);
+            window.location.replace(`${window.location.origin}/profile`);
           });
         } else {
           jsonObj.then((result) => {
             const formData = new FormData();
             formData.append('file', image);
-            if (typeof result.updatedRequest.image_url === 'string') {
+            if (typeof result.user.imageUrl === 'string') {
               formData.append('public_id', `${result.cloudinary.publicId}`);
               formData.append('api_key', `${result.cloudinary.apiKey}`);
               formData.append('timestamp', `${result.cloudinary.timestamp}`);
               formData.append('signature', `${result.cloudinary.signature}`);
-            } else{
+            } else {
               formData.append('upload_preset', result.cloudinary.cloudinaryUploadPreset);
             }
             fetch(`${result.cloudinary.cloudinaryUrl}upload`,
@@ -94,10 +84,11 @@ const editRequestSubmit = () => {
                 method: 'POST',
                 body: formData
               }
-            ).then(response => ({ cloudinaryObj: response.json(), status: response.status })).then(({ cloudinaryObj, status }) => {
+            ).then(response => ({ cloudinaryObj: response.json(), status: response.status }))
+            .then(({ cloudinaryObj, status }) => {
               if (status === 200) {
                 cloudinaryObj.then((imageResult) => {
-                  fetch(`/api/v1/attachImage/${result.updatedRequest.id}`, {
+                  fetch('/api/v1/attachImageUser', {
                     method: 'PUT',
                     headers: new Headers({
                       'Content-Type': 'application/json',
@@ -111,7 +102,7 @@ const editRequestSubmit = () => {
                     imageInsertResult: response.json()
                   })).then(({ status }) => {
                     if (status === 200) {
-                      window.location.replace(`${window.location.origin}/requests/${result.updatedRequest.id}`);
+                      window.location.replace(`${window.location.origin}/profile`);
                     } else {
                       imageInsertResult.then((result) => {
                         alertAction('requestApproved', 'requestDisapproved', result.message);

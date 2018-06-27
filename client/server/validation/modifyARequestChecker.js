@@ -6,7 +6,7 @@ import { messageResponse } from '../helperFunctions/messageResponse';
 * @param {object} reqBody - object containing the relevant field values
 * @returns {Array.<string>} - an array of filled fields as strings
 */
-const filledFieldsFinder = (reqBody) => {
+export const filledFieldsFinder = (reqBody) => {
   const arrayOfFields = Object.keys(reqBody);
   const filledFieldsObj = arrayOfFields.filter(element =>
     Object.prototype.toString.call(reqBody[element]) !== '[object Undefined]'

@@ -2,7 +2,7 @@ addEventListener('DOMContentLoaded', () => {
   fetch('/verify', {
     method: 'POST',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       authorization: localStorage.token
     }
   }).then(response => ({ status: response.status, jsonObj: response.json() }))
