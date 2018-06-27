@@ -16,7 +16,9 @@ const responseHandler = (response, file) => response.sendFile(path.resolve(__dir
 
 routeHandler('/', 'LandingPage.html');
 
-routeHandler('/forgotPassword', 'LandingPage.html');
+routeHandler('/forgotPassword', 'ForgotPasswordPage.html');
+
+routeHandler('/users/edit', 'EditProfile.html');
 
 routeHandler('/UserViewRequests.html', 'UserViewRequests.html');
 

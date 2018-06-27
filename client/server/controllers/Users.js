@@ -6,6 +6,7 @@ import { pool } from '../db';
 import { profile } from '../maps/mapObject';
 import { transporter, mailOptions } from '../nodemailer';
 import { messageResponse } from '../helperFunctions/messageResponse';
+import signatureGenerator from '../validation/signatureGenerator';
 /**
  * An  object that handles the requests api operation
  */
@@ -24,8 +25,95 @@ const Users = {
       job_title: user.job_title,
       department: user.department,
       profile: user.profile,
-      location: user.location
+      location: user.location,
+      imageUrl: user.image_url
     };
+  },
+  /**
+* @desc It edits the details of the user
+* @param {object} request - request object containing params and body
+* @param {object} response - response object that conveys the result of the request
+* @returns {object} - response object that has a status code of 200, 500 if there is
+* a database error and 404 if the user was not found
+*/
+  editAUser(request, response) {
+    const { reqBody, decodedUser } = request;
+    const updateStatement = Object.keys(request.reqBody)
+      .map(key => `${key.split(/(?=[A-Z])/).join('_')} = $$${reqBody[key]}$$`)
+      .join(',');
+    pool.connect((error, client, done) => {
+      if (error) {
+        return messageResponse(response, 500, { message: error.stack });
+      }
+      client.query(
+        `UPDATE USERS SET
+        ${updateStatement} where id = $1 RETURNING *;`,
+        [decodedUser.user.id], (error1, result) => {
+          done();
+          if (error1) {
+            return messageResponse(response, 500, { message: error1.stack });
+          }
+          if (result.rows.length > 0) {
+            const publicIdRegex = /\b\/(\w+)\.\w+/;
+            const publicId = result.rows[0].image_url ?
+              result.rows[0].image_url.match(publicIdRegex)[1] :
+              false;
+            const timestamp = Math.round((new Date()).getTime() / 1000);
+            const user = result.rows[0];
+            user.profile = (_.invert(profile))[user.profile];
+            return messageResponse(response, 200, {
+              message: 'User details updated',
+              user: Users.removePassword(user),
+              cloudinary: {
+                publicId,
+                signature: signatureGenerator(publicId, timestamp, process.env.APISECRET),
+                timestamp,
+                apiKey: process.env.APIKEY,
+                cloudinaryUrl: process.env.CLOUDINARY_URL,
+                cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET
+              }
+            });
+          }
+          return messageResponse(response, 404, {
+            message: 'User not found'
+          });
+        }
+      );
+    });
+  }, /**
+  * @desc It edits the details of the user
+  * @param {object} request - request object containing params and body
+  * @param {object} response - response object that conveys the result of the request
+  * @returns {object} - response object that has a status code of 200, 500 if there is
+  * a database error and 404 if the user was not found
+  */
+  insertImage(request, response) {
+    const { decodedUser } = request;
+    const values = [request.body.imageUrl];
+    pool.connect((error, client, done) => {
+      if (error) {
+        return messageResponse(response, 500, { message: error.stack });
+      }
+      client.query(
+        `UPDATE USERS SET
+        image_url = $1 where id = '${decodedUser.user.id}' RETURNING *;`,
+        values,
+        (error1, result) => {
+          done();
+          if (error1) {
+            return messageResponse(response, 500, { message: error1.stack });
+          }
+          if (result.rows.length > 0) {
+            return messageResponse(response, 200, {
+              message: 'Image url updated',
+            });
+          }
+          return messageResponse(response, 404, {
+            message: 'User not found'
+          });
+        }
+      );
+    });
   },
   /**
 * @desc It retrieves the details of an authenticated user
